@@ -4,6 +4,9 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
+class Name {
+
+};
 class Game
 {
 private:
