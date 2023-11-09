@@ -4,23 +4,26 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
-class Name {
+#include "../include/Hero.hpp"
 
-};
 class Game
 {
-private:
-    int width_ = 1920, height_ = 1080;
-    std::string window_title = "Nighcall";
-public:
+  public:
     int getWidth() {
-        return width_;
+      return width_;
     }
     int getHeight() {
-        return height_;
+      return height_;
     }
     std::string getWindowTitle() {
-        return window_title;
+      return window_title_;
     }
     void gameCycle(sf::RenderWindow &window);
+
+  private:
+    int width_ = 1920, height_ = 1080;
+
+    Hero hero;
+
+    std::string window_title_ = "Nighcall";
 };
