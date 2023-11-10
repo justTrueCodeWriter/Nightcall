@@ -1,1 +1,11 @@
-/home/amid/.config/nvim/.vimspector.json
+{
+  "configurations": {
+    "CPP: Run current script": {
+      "adapter": "vscode-cpptools",
+      "configuration": {
+        "request": "launch",
+        "program": "Nightcall.out"
+      }
+    }
+  }
+}

@@ -5,4 +5,5 @@ int main() {
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
     game.gameCycle(window);
+    window.close();
 }

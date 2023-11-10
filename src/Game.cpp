@@ -12,9 +12,9 @@ void Game::gameCycle(sf::RenderWindow &window) {
     while (window.pollEvent(event))
     {
       if (event.type == sf::Event::Closed)
-        window.close();
+        return;
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
-        window.close();
+        return;
     } 
 
     hero.move(time);
