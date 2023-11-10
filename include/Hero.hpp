@@ -3,17 +3,18 @@
 
 class Hero {
   public:
-    void render(sf::RenderWindow &window);
-
-    float x_ = 0, y_ = 0;
-    float walk_speed_ = 0.5;
-    float run_speed_ = 0.1;
-
     sf::Texture texture;
     sf::Sprite sprite;
+
+    Hero();
+
+    void render(sf::RenderWindow &window);
+    void move(float time);
   private:
-  
-    void walk();
+    float x_ = 0, y_ = 0;
+    float walk_speed_ = 0.5;
+    float run_speed_ = 0.6;
+
     void jump();
     void punch();
 
