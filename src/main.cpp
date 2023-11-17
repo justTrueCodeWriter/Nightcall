@@ -1,4 +1,5 @@
 #include "../include/Game.hpp"
+#include <iostream>
 int main() {
     Game game;
     sf::RenderWindow window(sf::VideoMode(game.getWidth(), game.getHeight()), game.getWindowTitle(), sf::Style::Fullscreen);
