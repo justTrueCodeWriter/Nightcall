@@ -18,6 +18,6 @@ class Hero {
 
     void jump();
     void punch();
-    void dash(float time, bool &isConsistent);
+    float dash(float time, bool &isConsistent);
 
 };

@@ -47,16 +47,14 @@ void Hero::move(float time) {
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*33), 79, 33, 43));
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || isConsistent) {
-      dash(time, isConsistent);
-      sprite.setPosition(x_, y_); 
-      return; 
+      speed = dash(time, isConsistent);
     }
     else {
       current_frame += 0.01*time;
       if (current_frame > 12) current_frame = 0;
-      if (side_ > 1)
+      if (side_ > 0)
         sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*36), 244, 36, 42));
-      else if  (side_ < 1)
+      else if  (side_ < 0)
         sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*36)+36, 244, -36, 42));
     }
 
@@ -64,15 +62,18 @@ void Hero::move(float time) {
     sprite.setPosition(x_, y_); 
 }
 
-void Hero::dash(float time, bool &isConsistent) {
+float Hero::dash(float time, bool &isConsistent) {
  static float current_frame = 0;  
  isConsistent = true;
 
- if (current_frame > 10) {
+ if (current_frame > 6) {
    current_frame = 0;
    isConsistent = false;
  }
- current_frame += 0.2*time;
- sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*46)+44, 292, -44, 43));
- x_ += side_*run_speed_*8*time;
+ current_frame += 0.03*time;
+ if (side_ > 0)
+  sprite.setTextureRect(sf::IntRect(33+(int(current_frame)*58), 768, 58, 42));
+ else if (side_ < 0)
+  sprite.setTextureRect(sf::IntRect(33+(int(current_frame)*58)+58, 768, -58, 42));
+ return run_speed_*3;
 }
