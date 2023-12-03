@@ -1,6 +1,9 @@
 #include "../include/Game.hpp"
+#include "../include/Level.hpp"
 void Game::gameCycle(sf::RenderWindow &window) {
- 
+
+  Map* map = new Map; 
+
   sf::Clock clock;
 
 
@@ -17,10 +20,10 @@ void Game::gameCycle(sf::RenderWindow &window) {
         return;
     } 
 
-    hero.move(time);
+    map->hero.move(time);
 
     window.clear(sf::Color::White);  
-    window.draw(hero.sprite);
+    window.draw(map->hero.sprite);
     window.display();
   }
 }

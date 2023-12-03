@@ -4,7 +4,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
-#include "../include/Hero.hpp"
 
 class Game
 {
@@ -22,8 +21,6 @@ class Game
 
   private:
     int width_ = 1920, height_ = 1080;
-
-    Hero hero;
 
     std::string window_title_ = "Nighcall";
 };
