@@ -1,7 +1,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include "../include/Object.hpp"
 
-class Hero {
+class Hero : public Object {
   public:
     Hero();
 

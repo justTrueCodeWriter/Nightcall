@@ -1,8 +1,19 @@
 #include "../include/Game.hpp"
-#include "../include/Level.hpp"
+
+void Game::Level::initMap(int level_number) {
+}
+
+void Game::Level::deInitMap() {
+}
+
+void Game::Level::initObjects(int level_number) {
+}
+
+void Game::Level::deInitObjects() {
+}
+
 void Game::gameCycle(sf::RenderWindow &window) {
 
-  Map* map = new Map; 
 
   sf::Clock clock;
 
@@ -20,10 +31,10 @@ void Game::gameCycle(sf::RenderWindow &window) {
         return;
     } 
 
-    map->hero.move(time);
+    //map->hero.move(time);
 
     window.clear(sf::Color::White);  
-    window.draw(map->hero.sprite);
+    //window.draw(map->hero.sprite);
     window.display();
   }
 }
