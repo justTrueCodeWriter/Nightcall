@@ -8,6 +8,9 @@ class Hero : public Object {
 
     sf::Sprite sprite;
 
+    void load(float time);
+    sf::Sprite getSprite();
+
     void render(sf::RenderWindow &window);
     void move(float time);
   private:

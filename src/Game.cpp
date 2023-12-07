@@ -1,6 +1,9 @@
 #include "../include/Game.hpp"
+#include "../include/Hero.hpp"
 
 void Game::Level::initMap(int level_number) {
+  objects = new Object*[1];
+  objects[0] = new Hero;
 }
 
 void Game::Level::deInitMap() {
@@ -17,6 +20,8 @@ void Game::gameCycle(sf::RenderWindow &window) {
 
   sf::Clock clock;
 
+  Level level;
+  level.initMap(1);
 
   while (window.isOpen())
   {
@@ -31,10 +36,10 @@ void Game::gameCycle(sf::RenderWindow &window) {
         return;
     } 
 
-    //map->hero.move(time);
+    level.objects[0]->load(time);
 
     window.clear(sf::Color::White);  
-    //window.draw(map->hero.sprite);
+    window.draw(level.objects[0]->getSprite());
     window.display();
   }
 }
