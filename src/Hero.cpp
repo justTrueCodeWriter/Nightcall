@@ -8,7 +8,10 @@ Hero::Hero() {
   sprite.setScale(2, 2);
 }
 
-void Hero::load(float time) { move(time); }
+void Hero::update(float time) { 
+  move(time); 
+}
+
 sf::Sprite Hero::getSprite() { return sprite; }
 
 void Hero::move(float time) {

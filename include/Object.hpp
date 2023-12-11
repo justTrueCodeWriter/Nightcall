@@ -4,7 +4,7 @@
 
 class Object {
   public:
-    virtual void load(float time){};
+    virtual void update(float time){};
     virtual sf::Sprite getSprite(){ return sf::Sprite(); };
 };
 #endif

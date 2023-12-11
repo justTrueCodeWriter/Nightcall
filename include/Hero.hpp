@@ -8,7 +8,7 @@ class Hero : public Object {
 
     sf::Sprite sprite;
 
-    void load(float time);
+    void update(float time);
     sf::Sprite getSprite();
 
     void render(sf::RenderWindow &window);

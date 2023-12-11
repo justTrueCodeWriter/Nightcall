@@ -2,14 +2,14 @@
 #include "../include/Hero.hpp"
 
 void Game::Level::initMap(int level_number) {
-  objects = new Object*[1];
-  objects[0] = new Hero;
 }
 
 void Game::Level::deInitMap() {
 }
 
 void Game::Level::initObjects(int level_number) {
+  objects = new Object*[1];
+  objects[0] = new Hero;
 }
 
 void Game::Level::deInitObjects() {
@@ -21,7 +21,7 @@ void Game::gameCycle(sf::RenderWindow &window) {
   sf::Clock clock;
 
   Level level;
-  level.initMap(1);
+  level.initObjects(1);
 
   while (window.isOpen())
   {
@@ -36,10 +36,12 @@ void Game::gameCycle(sf::RenderWindow &window) {
         return;
     } 
 
-    level.objects[0]->load(time);
+    for (int i = 0; i < sizeof(level.objects)/sizeof(level.objects[0]); i++) 
+      level.objects[i]->update(time);
 
     window.clear(sf::Color::White);  
-    window.draw(level.objects[0]->getSprite());
+    for (int i = 0; i < sizeof(level.objects)/sizeof(level.objects[0]); i++) 
+      window.draw(level.objects[i]->getSprite());
     window.display();
   }
 }
