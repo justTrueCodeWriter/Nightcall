@@ -1,6 +1,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include "../include/Object.hpp"
+#include "Object.hpp"
 
 class Hero : public Object {
   public:
@@ -11,7 +11,6 @@ class Hero : public Object {
     void update(float time);
     sf::Sprite getSprite();
 
-    void render(sf::RenderWindow &window);
     void move(float time);
   private:
     sf::Texture texture;

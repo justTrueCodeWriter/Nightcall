@@ -5,6 +5,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include "../include/Object.hpp"
+#include <vector>
 
 class Game
 {
@@ -17,14 +18,16 @@ class Game
 
     class Level {
       public:
-        Object** objects;
-        char *map_;
+        std::vector <Object*> objects;
         
         void initMap(int level_number);
-        void initObjects(int level_number);
+        int initObjects(int level_number);
         void deInitMap();
         void deInitObjects();
         void checkCollision(Object* objects1, Object* objects2);
+      private: 
+        char **map_mask;
+        void createMapByMask();
     };
 
   private:
