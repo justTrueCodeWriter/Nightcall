@@ -4,6 +4,11 @@
 
 class Tile : public Object {
    public: 
-    void update(float time){};
-    sf::Sprite getSprite(){ return sf::Sprite(); };
+    Tile(float x, float y);
+    void update(float time){ return; };
+    sf::Sprite getSprite();
+   private:
+    float x_ = 0, y_ = 0;
+    sf::Texture texture;
+    sf::Sprite sprite;
 };

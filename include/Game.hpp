@@ -29,7 +29,6 @@ class Game
         char **map_mask;
         std::vector<char> possible_objects = {'#'};
         void createMapByMask();
-        void createObjectVector();
     };
 
   private:

@@ -5,7 +5,6 @@ Hero::Hero() {
   y_ = 900;
   texture.loadFromFile("media/img/Fifteen.png");
   sprite.setTexture(texture);
-  sprite.setScale(2, 2);
 }
 
 void Hero::update(float time) { 
