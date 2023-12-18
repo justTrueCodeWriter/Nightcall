@@ -27,7 +27,9 @@ class Game
         void checkCollision(Object* objects1, Object* objects2);
       private: 
         char **map_mask;
+        std::vector<char> possible_objects = {'#'};
         void createMapByMask();
+        void createObjectVector();
     };
 
   private:

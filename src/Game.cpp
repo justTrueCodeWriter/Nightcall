@@ -1,6 +1,7 @@
 #include "../include/Game.hpp"
 #include "../include/Hero.hpp"
 #include "../include/Tile.hpp"
+#include <string.h>
 
 void Game::Level::initMap(int level_number) {
   char *map[30] = {
@@ -38,6 +39,17 @@ void Game::Level::initMap(int level_number) {
   map_mask = map;  
   
 }
+
+void Game::Level::createObjectVector() {
+  int map_w = sizeof(map_mask[0])/sizeof(char);
+  for (int i = 0; i < possible_objects.size(); i++) {
+    for (int j = 0; j < map_w; j++) {
+      if (strchr(map_mask[j], possible_objects[i])) {
+      }
+    }
+  }
+}
+
 void Game::Level::createMapByMask() {
   int map_h = sizeof(**map_mask)/sizeof(*map_mask);
   int map_w = sizeof(map_mask[0])/sizeof(char);
