@@ -44,9 +44,8 @@ void Game::Level::createMapByMask() {
   for (int i = 0; i < map_h; i++) {
     for (int j = 0; j < map_w; j++) {
      if (map_mask[i][j] == '=') {
-       // TODO: push vector of tiles to vector of objects
+      objects.push_back(new Tile); 
      }
-         
     }
   }
 }
