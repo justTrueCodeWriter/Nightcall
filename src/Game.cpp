@@ -68,6 +68,8 @@ void Game::Level::initMap(int level_number) {
   map_mask.push_back("=                                                              =");
   map_mask.push_back("=                                                              =");
   map_mask.push_back("================================================================");
+
+  std::cout << map_mask[0].data() << std::endl;
   
 }
 
