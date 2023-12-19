@@ -5,7 +5,7 @@
 #include <string.h>
 
 void Game::Level::initMap(int level_number) {
-  char *map[30] = {
+  /*std::string map[30] = {
                       "================================================================",
                       "=                                                              =",
                       "=                                                              =",
@@ -38,23 +38,53 @@ void Game::Level::initMap(int level_number) {
                       "================================================================"
                     }; 
   map_mask = map;  
+  */
+  map_mask.push_back("================================================================");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("================================================================");
   
 }
 
 void Game::Level::createMapByMask() {
-  int map_h = sizeof(**map_mask)/sizeof(*map_mask);
-  int map_w = sizeof(map_mask[0])/sizeof(char);
-  for (int i = 0; i < map_h; i++) {
-    for (int j = 0; j < map_w; j++) {
-     if (map_mask[i][j] == '=') {
-       objects.push_back(new Tile(j*32, i*32));
-     }
+  //int map_h = (sizeof(map_mask)/sizeof(map_mask[0]));
+  for (int i = 0; i < 30; i++) {
+       std::cout << "Correct" << std::endl;
+     if (map_mask[i].find('=')) {
+       objects.push_back(new Tile(i*32, i*32));
+       std::cout << "Find!" << std::endl;
     }
   }
+
 }
 
 void Game::Level::deInitMap() {
-  delete [] map_mask;
+  //delete [] map_mask;
 }
 
 int Game::Level::initObjects(int level_number) {
@@ -92,7 +122,7 @@ void Game::gameCycle(sf::RenderWindow &window) {
   int objects_amount = level.initObjects(1);
   std::cout << objects_amount << std::endl;
 
-  sf::View Camera(sf::FloatRect(0, 0, 400, 400));
+  sf::View Camera(sf::FloatRect(0, 0, 800, 800));
 
   while (window.isOpen())
   {
@@ -113,15 +143,15 @@ void Game::gameCycle(sf::RenderWindow &window) {
 
     Camera.setCenter(level.objects[0]->getSprite().getPosition());
 
-    for (int i = 0; i < objects_amount; i++) 
+    for (int i = 0; i < objects_amount; i++) {
         level.objects[i]->update(time);
     }
 
-    window.setView(Camera);
+    //window.setView(Camera);
     window.clear(sf::Color::White);  
     window.draw(backgroundSprite);
-    /*for (int i = 0; i < objects_amount; i++) 
+    for (int i = 0; i < objects_amount; i++) 
       window.draw(level.objects[i]->getSprite());
-      */
     window.display();
+  }
 }
