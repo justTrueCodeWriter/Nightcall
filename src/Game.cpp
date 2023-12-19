@@ -5,7 +5,47 @@
 #include <string.h>
 
 void Game::Level::initMap(int level_number) {
-  /*std::string map[30] = {
+
+  std::cout << map_mask[0][1] << std::endl;
+
+  /*
+  map_mask.push_back("================================================================");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("=                                                              =");
+  map_mask.push_back("================================================================");
+  */
+
+}
+
+void Game::Level::createMapByMask() {
+  //int map_h = sizeof(map_mask)/sizeof(map_mask[0]);
+  //int map_w = map_mask[0].capacity();
+  std::string map[30] = {
                       "================================================================",
                       "=                                                              =",
                       "=                                                              =",
@@ -38,48 +78,13 @@ void Game::Level::initMap(int level_number) {
                       "================================================================"
                     }; 
   map_mask = map;  
-  */
-  map_mask.push_back("================================================================");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("=                                                              =");
-  map_mask.push_back("================================================================");
 
-  std::cout << map_mask[0].data() << std::endl;
-  
-}
-
-void Game::Level::createMapByMask() {
-  //int map_h = (sizeof(map_mask)/sizeof(map_mask[0]));
+  std::cout << map_mask[1].data() << std::endl;
   for (int i = 0; i < 30; i++) {
-       std::cout << "Correct" << std::endl;
-     if (map_mask[i].find('=')) {
-       objects.push_back(new Tile(i*32, i*32));
-       std::cout << "Find!" << std::endl;
+    for (int j = 0; j < 64; j++) {
+      if (map_mask[i][j] == '=') {
+        objects.push_back(new Tile(j*20, i*20));
+      }
     }
   }
 
@@ -124,7 +129,7 @@ void Game::gameCycle(sf::RenderWindow &window) {
   int objects_amount = level.initObjects(1);
   std::cout << objects_amount << std::endl;
 
-  sf::View Camera(sf::FloatRect(0, 0, 800, 800));
+  sf::View Camera(sf::FloatRect(0, 0, 600, 300));
 
   while (window.isOpen())
   {
