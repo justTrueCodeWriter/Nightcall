@@ -42,61 +42,65 @@ void Game::Level::initMap(int level_number) {
 
 }
 
-void Game::Level::createMapByMask() {
+void Game::Level::createObjectsByMask() {
   //int map_h = sizeof(map_mask)/sizeof(map_mask[0]);
   //int map_w = map_mask[0].capacity();
-  std::string map[30] = {
-                      "================================================================",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "=                                                              =",
-                      "================================================================"
+  std::string map[35] = {
+                      "===============================================================",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=                                                             =",
+                      "=  H                                                          =",
+                      "==============================================================="
                     }; 
   map_mask = map;  
 
-  std::cout << map_mask[1].data() << std::endl;
-  for (int i = 0; i < 30; i++) {
+  for (int i = 0; i < 35; i++) {
     for (int j = 0; j < 64; j++) {
-      if (map_mask[i][j] == '=') {
-        objects.push_back(new Tile(j*20, i*20));
-      }
+      if (map_mask[i][j] == 'H')
+        objects.push_back(new Hero);
+      else if (map_mask[i][j] == '=') 
+        objects.push_back(new Tile(j*30, i*30));
     }
   }
 
 }
 
 void Game::Level::deInitMap() {
-  //delete [] map_mask;
+  delete [] map_mask;
 }
 
 int Game::Level::initObjects(int level_number) {
-  objects.push_back(new Hero);
-  createMapByMask();
+  createObjectsByMask();
   /*
   int map_w = sizeof(map_mask[0])/sizeof(char);
   int entrances_count = 0;
