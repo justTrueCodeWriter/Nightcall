@@ -1,9 +1,8 @@
 #include "../include/Hero.hpp"
 
-Hero::Hero() {
+Hero::Hero(sf::Texture texture) {
   x_ = 50;
   y_ = 900;
-  texture.loadFromFile("media/img/Fifteen.png");
   sprite.setTexture(texture);
 }
 

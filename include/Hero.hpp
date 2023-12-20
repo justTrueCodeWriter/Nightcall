@@ -4,14 +4,13 @@
 
 class Hero : public Object {
   public:
-    Hero();
+    Hero(sf::Texture texture);
 
     void update(float time);
     sf::Sprite getSprite();
 
   private:
     sf::Sprite sprite;
-    sf::Texture texture;
     float x_ = 0, y_ = 0;
     float walk_speed_ = 0.5;
     float run_speed_ = 0.6;
