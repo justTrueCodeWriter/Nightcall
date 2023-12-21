@@ -6,4 +6,12 @@ Tile::Tile(float x, float y, sf::Texture texture) {
   sprite.setPosition(x, y);
 }
 
+void Tile::sendMessage() {
+
+}
+
+void Tile::getMessage() {
+
+}
+
 sf::Sprite Tile::getSprite(){ return sprite; };

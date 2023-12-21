@@ -6,6 +6,8 @@ class Hero : public Object {
   public:
     Hero(sf::Texture texture);
 
+    void sendMessage(); 
+    void getMessage();
     void update(float time);
     sf::Sprite getSprite();
 

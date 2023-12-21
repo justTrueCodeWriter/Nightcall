@@ -84,12 +84,14 @@ void Game::Level::createObjectsByMask() {
                     }; 
   map_mask = map;  
 
+  std::cout << "correct load" << std::endl;
+
   for (int i = 0; i < 35; i++) {
     for (int j = 0; j < 64; j++) {
       if (map_mask[i][j] == 'H')
-        objects.push_back(new Hero);
-      else if (map_mask[i][j] == '=') 
-        objects.push_back(new Tile(j*30, i*30));
+        objects.push_back(new Hero(resource_manager->textures[1]));
+      else if (map_mask[i][j] == '=')
+        objects.push_back(new Tile(j*30, i*30, resource_manager->textures[2]));
     }
   }
 
@@ -122,14 +124,15 @@ void Game::Level::deInitObjects() {
 
 void Game::gameCycle(sf::RenderWindow &window) {
 
-  sf::Texture backgroundTexture;
-  backgroundTexture.loadFromFile("media/img/background.png");
-  sf::Sprite backgroundSprite(backgroundTexture);
+  Level level;
+
+  level.resource_manager->loadTextures();
+
+  sf::Sprite backgroundSprite(level.resource_manager->textures[0]);
   backgroundSprite.setScale(1.7, 1.7);
 
   sf::Clock clock;
 
-  Level level;
   int objects_amount = level.initObjects(1);
   std::cout << objects_amount << std::endl;
 

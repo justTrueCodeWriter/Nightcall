@@ -4,7 +4,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
-#include "../include/Object.hpp"
+#include "Object.hpp"
+#include "ResourceManager.hpp"
 #include <vector>
 
 class Game
@@ -19,6 +20,7 @@ class Game
     class Level {
       public:
         std::vector <Object*> objects;
+        ResourceManager *resource_manager;
         
         void initMap(int level_number);
         int initObjects(int level_number);
@@ -27,7 +29,6 @@ class Game
         void checkCollision(Object* objects1, Object* objects2);
       private: 
         std::string *map_mask;
-        std::vector<char> possible_objects = {'#'};
         void createObjectsByMask();
     };
 

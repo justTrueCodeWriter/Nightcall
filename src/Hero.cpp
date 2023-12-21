@@ -1,9 +1,19 @@
 #include "../include/Hero.hpp"
+#include <iostream>
 
 Hero::Hero(sf::Texture texture) {
   x_ = 50;
   y_ = 900;
+
   sprite.setTexture(texture);
+}
+
+void Hero::sendMessage() {
+
+}
+
+void Hero::getMessage() {
+
 }
 
 void Hero::update(float time) { 

@@ -2,11 +2,12 @@
 
 class ResourceManager {
   public:
+    ResourceManager(char *possibleObjectTypes);
 
     std::vector<sf::Texture> textures;
-    char possibleTypes[3] = {'H', '#', 'B'};
+    char possibleObjectTypes_[3] = {'B', 'H', '='};
 
     void loadTextures();
-    sf::Texture getTexture(char message);
+    sf::Texture *getTexture(char message);
 
 };

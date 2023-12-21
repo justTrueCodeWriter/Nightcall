@@ -5,6 +5,9 @@
 class Tile : public Object {
    public: 
     Tile(float x, float y, sf::Texture texture);
+
+    void sendMessage(); 
+    void getMessage();
     void update(float time){ return; };
     sf::Sprite getSprite();
 

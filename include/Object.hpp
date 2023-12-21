@@ -4,6 +4,8 @@
 
 class Object {
   public:
+    virtual void sendMessage(){};
+    virtual void getMessage(){};
     virtual void update(float time){};
     virtual sf::Sprite getSprite(){ return sf::Sprite(); };
 };
