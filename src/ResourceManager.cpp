@@ -9,11 +9,13 @@ void ResourceManager::loadTextures() {
     "media/img/Fifteen.png",
     "media/img/usual_tile.png"};
 
+  for (auto filename : filenames) {
     sf::Texture texture;
-    std::cout << texture.loadFromFile("media/img/background.png") << std::endl;
+    std::cout << texture.loadFromFile(filename) << std::endl;
     textures.push_back(texture);
 
     std::cout << "test" << std::endl;
+  }
 }
 
 sf::Texture *ResourceManager::getTexture(char message) {

@@ -4,6 +4,10 @@
 #include <iostream>
 #include <string.h>
 
+Game::Level::Level() {
+  resource_manager = new ResourceManager;
+}
+
 void Game::Level::initMap(int level_number) {
 
   std::cout << map_mask[0][1] << std::endl;
@@ -124,16 +128,17 @@ void Game::Level::deInitObjects() {
 
 void Game::gameCycle(sf::RenderWindow &window) {
 
-  Level level;
+  Level *level;
+  level = new Level();
 
-  level.resource_manager->loadTextures();
+  level->resource_manager->loadTextures();
 
-  sf::Sprite backgroundSprite(level.resource_manager->textures[0]);
+  sf::Sprite backgroundSprite(level->resource_manager->textures[0]);
   backgroundSprite.setScale(1.7, 1.7);
 
   sf::Clock clock;
 
-  int objects_amount = level.initObjects(1);
+  int objects_amount = level->initObjects(1);
   std::cout << objects_amount << std::endl;
 
   sf::View Camera(sf::FloatRect(0, 0, 600, 300));
@@ -146,26 +151,26 @@ void Game::gameCycle(sf::RenderWindow &window) {
     while (window.pollEvent(event))
     {
       if (event.type == sf::Event::Closed) {
-        level.deInitObjects();
+        level->deInitObjects();
         return;
       }
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
-        level.deInitObjects();
+        level->deInitObjects();
         return;
       }
     } 
 
-    Camera.setCenter(level.objects[0]->getSprite().getPosition());
+    Camera.setCenter(level->objects[0]->getSprite().getPosition());
 
     for (int i = 0; i < objects_amount; i++) {
-        level.objects[i]->update(time);
+        level->objects[i]->update(time);
     }
 
     //window.setView(Camera);
     window.clear(sf::Color::White);  
     window.draw(backgroundSprite);
     for (int i = 0; i < objects_amount; i++) 
-      window.draw(level.objects[i]->getSprite());
+      window.draw(level->objects[i]->getSprite());
     window.display();
   }
 }

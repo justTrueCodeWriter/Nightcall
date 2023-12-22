@@ -19,6 +19,7 @@ class Game
 
     class Level {
       public:
+        Level();
         std::vector <Object*> objects;
         ResourceManager *resource_manager;
         
