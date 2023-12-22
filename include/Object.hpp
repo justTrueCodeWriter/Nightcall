@@ -7,6 +7,7 @@ class Object {
     virtual void sendMessage(){};
     virtual void getMessage(){};
     virtual void update(float time){};
+    virtual void setSprite(sf::Texture texture){}
     virtual sf::Sprite getSprite(){ return sf::Sprite(); };
 };
 #endif

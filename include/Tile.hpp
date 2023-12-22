@@ -4,11 +4,12 @@
 
 class Tile : public Object {
    public: 
-    Tile(float x, float y, sf::Texture texture);
+    Tile(float x, float y);
 
     void sendMessage(); 
     void getMessage();
     void update(float time){ return; };
+    void setSprite(sf::Texture texture);
     sf::Sprite getSprite();
 
    private:

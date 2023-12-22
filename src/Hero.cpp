@@ -1,11 +1,12 @@
 #include "../include/Hero.hpp"
+#include "../include/ResourceManager.hpp"
 #include <iostream>
 
-Hero::Hero(sf::Texture texture) {
-  x_ = 50;
-  y_ = 900;
+class ResourceManager;
 
-  sprite.setTexture(texture);
+Hero::Hero(float x, float y) {
+  x_ = x;
+  y_ = y;
 }
 
 void Hero::sendMessage() {
@@ -18,6 +19,10 @@ void Hero::getMessage() {
 
 void Hero::update(float time) { 
   move(time); 
+}
+
+void Hero::setSprite(sf::Texture texture) {
+  sprite.setTexture(texture); 
 }
 
 sf::Sprite Hero::getSprite() { return sprite; }

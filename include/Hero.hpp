@@ -4,11 +4,12 @@
 
 class Hero : public Object {
   public:
-    Hero(sf::Texture texture);
+    Hero(float x, float y);
 
     void sendMessage(); 
     void getMessage();
     void update(float time);
+    void setSprite(sf::Texture texture);
     sf::Sprite getSprite();
 
   private:
