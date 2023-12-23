@@ -1,4 +1,5 @@
 #include "../include/Tile.hpp"
+#include "iostream"
 
 Tile::Tile(float x, float y) {
   x_ = x, y_ = y;

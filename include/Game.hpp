@@ -36,6 +36,7 @@ class Game
     std::vector <Object*> objects;
 
     int width_ = 1920, height_ = 1080;
+    int hero_index = 0;
 
     std::string window_title_ = "Nighcall";
 };

@@ -38,8 +38,8 @@ void Game::Level::initMap() {
                       "=                                                             =",
                       "=                                                             =",
                       "=                                                             =",
-                      "=                                                             =",
                       "=  H                                                          =",
+                      "=                                                             =",
                       "==============================================================="
                     }; 
 
@@ -55,6 +55,7 @@ void Game::Level::deInitMap() {
 }
 
 int Game::initObjects() {
+  static int objects_counter = 0;
   level.initMap();
   std::vector<std::string> map_mask = *level.getMapMask();
 
@@ -63,14 +64,16 @@ int Game::initObjects() {
   std::cout << "correct in initObjects" << std::endl;
 
   for (int i = 0; i < 35; i++) {
-    for (int j = 0; j < 64; j++) {
+    for (int j = 0; j < 63; j++) {
       if (map_mask[i][j] == 'H') {
-        objects.push_back(new Hero(i*30, j*30));
-        objects[objects.capacity()-1]->setSprite(*resource_manager->getTexture(map_mask[i][j]));
+        hero_index = objects_counter;
+        objects.push_back(new Hero(j*30, i*30));
+        objects.back()->setSprite(*resource_manager->getTexture(map_mask[i][j]));
       }
       else if (map_mask[i][j] == '=') {
         objects.push_back(new Tile(j*30, i*30));
-        objects[objects.capacity()-1]->setSprite(*resource_manager->getTexture(map_mask[i][j]));
+        objects.back()->setSprite(*resource_manager->getTexture(map_mask[i][j]));
+        objects_counter++;
       }
     }
   }
@@ -99,14 +102,12 @@ void Game::gameCycle(sf::RenderWindow &window) {
   resource_manager = new ResourceManager;
 
   resource_manager->loadTextures();
-  std::cout << resource_manager->textures.data() << std::endl;
   sf::Sprite backgroundSprite(*resource_manager->getTexture('B'));
   backgroundSprite.setScale(1.7, 1.7);
 
   sf::Clock clock;
   
   int objects_amount = initObjects();
-  std::cout << objects_amount << std::endl;
 
   sf::View Camera(sf::FloatRect(0, 0, 600, 300));
 
@@ -127,10 +128,19 @@ void Game::gameCycle(sf::RenderWindow &window) {
       }
     } 
 
-    Camera.setCenter(objects[0]->getSprite().getPosition());
+    Camera.setCenter(objects[hero_index]->getSprite().getPosition());
+
 
     for (int i = 0; i < objects_amount; i++) {
-        objects[i]->update(time);
+      objects[i]->update(time);
+    }
+
+    for (int i = 0; i < objects_amount; i++) {
+      if (i != hero_index) {
+        if (objects[i]->getSprite().getGlobalBounds().intersects(objects[hero_index]->getSprite().getGlobalBounds()) == true) {
+          std::cout << "intersects" << std::endl;
+        }
+      }
     }
 
     //window.setView(Camera);
