@@ -43,8 +43,6 @@ void Game::Level::initMap() {
                       "==============================================================="
                     }; 
 
-  std::cout << "correct in initMap" << std::endl;
-  std::cout << map[10] << std::endl;
   map_mask.swap(map);
 }
 
@@ -58,10 +56,6 @@ int Game::initObjects() {
   static int objects_counter = 0;
   level.initMap();
   std::vector<std::string> map_mask = *level.getMapMask();
-
-  std::cout << map_mask[10] << std::endl;
-
-  std::cout << "correct in initObjects" << std::endl;
 
   for (int i = 0; i < 35; i++) {
     for (int j = 0; j < 63; j++) {
@@ -77,7 +71,6 @@ int Game::initObjects() {
       }
     }
   }
-  std::cout << "correct out initObjects" << std::endl;
   /*
   int map_w = sizeof(map_mask[0])/sizeof(char);
   int entrances_count = 0;
