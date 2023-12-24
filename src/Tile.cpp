@@ -11,7 +11,4 @@ void Tile::setSprite(sf::Texture texture) {
   sprite.setPosition(x_, y_);
 }
 
-sf::Sprite Tile::getSprite(){ return sprite; };
-
-void Tile::sendMessage(std::string message) { message_ = message; }
-std::string Tile::getMessage() { return message_; }
+char Tile::getType() { return '='; }

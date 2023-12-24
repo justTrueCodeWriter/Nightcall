@@ -3,6 +3,7 @@
 #include "../include/Tile.hpp"
 #include <iostream>
 #include <string.h>
+#include <string>
 
 void Game::Level::initMap() {
   std::vector<std::string> map = {
@@ -13,6 +14,7 @@ void Game::Level::initMap() {
                       "=                                                             =",
                       "=                                                             =",
                       "=                                                             =",
+                      "=     H                                                       =",
                       "=                                                             =",
                       "=                                                             =",
                       "=                                                             =",
@@ -34,12 +36,11 @@ void Game::Level::initMap() {
                       "=                                                             =",
                       "=                                                             =",
                       "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=  H                                                          =",
-                      "=                                                             =",
+                      "=     =                                                       =",
+                      "=      =                                                      =",
+                      "=       =                                                     =",
+                      "=        =                                                    =",
+                      "=         =                                                   =",
                       "==============================================================="
                     }; 
 
@@ -61,11 +62,11 @@ int Game::initObjects() {
     for (int j = 0; j < 63; j++) {
       if (map_mask[i][j] == 'H') {
         hero_index = objects_counter;
-        objects.push_back(new Hero(j*30, i*30));
+        objects.push_back(new Hero(j*60, i*60));
         objects.back()->setSprite(*resource_manager->getTexture(map_mask[i][j]));
       }
       else if (map_mask[i][j] == '=') {
-        objects.push_back(new Tile(j*30, i*30));
+        objects.push_back(new Tile(j*60, i*60));
         objects.back()->setSprite(*resource_manager->getTexture(map_mask[i][j]));
         objects_counter++;
       }
@@ -93,10 +94,11 @@ void Game::deInitObjects() {
 void Game::Collider::getHeroMessage(std::string message) { message_ = message; }
 
 void Game::Collider::processCollision(std::vector<Object*> objects, int objects_amount, int hero_index) {
+  std::string message = "collide ";
     for (int i = 0; i < objects_amount; i++) {
       if (i != hero_index && objects[i]->getSprite().getGlobalBounds().intersects(objects[hero_index]->getSprite().getGlobalBounds())) {
           getHeroMessage(objects[hero_index]->getMessage());
-          std::cout << message_ << std::endl;
+          objects[hero_index]->sendMessage(message+objects[i]->getType());
         }
     }
 }
@@ -141,8 +143,8 @@ void Game::gameCycle(sf::RenderWindow &window) {
 
     collider.processCollision(objects, objects_amount, hero_index);
     
-    //window.setView(Camera);
-    window.clear(sf::Color::White);  
+    window.setView(Camera);
+    window.clear(sf::Color::Black);  
     window.draw(backgroundSprite);
     for (int i = 0; i < objects_amount; i++) 
       window.draw(objects[i]->getSprite());

@@ -17,10 +17,7 @@ void Hero::setSprite(sf::Texture texture) {
   sprite.setTexture(texture); 
 }
 
-sf::Sprite Hero::getSprite() { return sprite; }
-
-void Hero::sendMessage(std::string message) { message_ = message; }
-std::string Hero::getMessage() { return message_; }
+char Hero::getType() { return 'H'; }
 
 void Hero::move(float time) {
   
@@ -45,6 +42,7 @@ void Hero::move(float time) {
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*46), 292, 44, 43));
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+      isConsistent = false;
       side_ = -1;
       speed = walk_speed_/2;
       
@@ -53,6 +51,7 @@ void Hero::move(float time) {
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*33)+33, 79, -33, 43));
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+      isConsistent = false;
       side_ = 1;
       speed = walk_speed_/2;
 
@@ -64,6 +63,9 @@ void Hero::move(float time) {
       sendMessage("attack");
       speed = dash(time, isConsistent);
     }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && (message_.find("collide")!=std::string::npos)) {
+      std::cout << "jump" << std::endl;
+    }
     else {
       current_frame += 0.01*time;
       if (current_frame > 12) current_frame = 0;
@@ -74,7 +76,10 @@ void Hero::move(float time) {
     }
 
     x_ += side_*speed*time;
+    if (!(message_.find("collide")!=std::string::npos || isConsistent))
+      y_ += 0.9*time;
     sprite.setPosition(x_, y_); 
+    message_.clear();
 }
 
 float Hero::dash(float time, bool &isConsistent) {

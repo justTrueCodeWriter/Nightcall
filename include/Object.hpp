@@ -4,10 +4,14 @@
 
 class Object {
   public:
-    virtual void sendMessage(std::string message){};
-    virtual std::string getMessage(){ return std::string(); };
+    std::string message_ = "";
+    sf::Sprite sprite;
+
+    void sendMessage(std::string message){ message_ = message; };
+    std::string getMessage(){ return message_; };
+    sf::Sprite getSprite(){ return sprite; };
     virtual void update(float time){};
     virtual void setSprite(sf::Texture texture){}
-    virtual sf::Sprite getSprite(){ return sf::Sprite(); };
+    virtual char getType(){ return char(); };
 };
 #endif
