@@ -90,6 +90,17 @@ void Game::deInitObjects() {
   objects.clear();
 }
 
+void Game::Collider::getHeroMessage(std::string message) { message_ = message; }
+
+void Game::Collider::processCollision(std::vector<Object*> objects, int objects_amount, int hero_index) {
+    for (int i = 0; i < objects_amount; i++) {
+      if (i != hero_index && objects[i]->getSprite().getGlobalBounds().intersects(objects[hero_index]->getSprite().getGlobalBounds())) {
+          getHeroMessage(objects[hero_index]->getMessage());
+          std::cout << message_ << std::endl;
+        }
+    }
+}
+
 void Game::gameCycle(sf::RenderWindow &window) {
 
   resource_manager = new ResourceManager;
@@ -128,14 +139,8 @@ void Game::gameCycle(sf::RenderWindow &window) {
       objects[i]->update(time);
     }
 
-    for (int i = 0; i < objects_amount; i++) {
-      if (i != hero_index) {
-        if (objects[i]->getSprite().getGlobalBounds().intersects(objects[hero_index]->getSprite().getGlobalBounds()) == true) {
-          std::cout << "intersects" << std::endl;
-        }
-      }
-    }
-
+    collider.processCollision(objects, objects_amount, hero_index);
+    
     //window.setView(Camera);
     window.clear(sf::Color::White);  
     window.draw(backgroundSprite);

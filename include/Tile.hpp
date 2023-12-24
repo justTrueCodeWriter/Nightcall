@@ -6,13 +6,14 @@ class Tile : public Object {
    public: 
     Tile(float x, float y);
 
-    void sendMessage(); 
-    void getMessage();
+    void sendMessage(std::string message);
+    std::string getMessage();
     void update(float time){ return; };
     void setSprite(sf::Texture texture);
     sf::Sprite getSprite();
 
    private:
-    float x_ = 0, y_ = 0;
     sf::Sprite sprite;
+    std::string message_ = "";
+    float x_ = 0, y_ = 0;
 };

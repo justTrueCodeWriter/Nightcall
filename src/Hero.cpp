@@ -9,14 +9,6 @@ Hero::Hero(float x, float y) {
   y_ = y;
 }
 
-void Hero::sendMessage() {
-
-}
-
-void Hero::getMessage() {
-
-}
-
 void Hero::update(float time) { 
   move(time); 
 }
@@ -26,6 +18,9 @@ void Hero::setSprite(sf::Texture texture) {
 }
 
 sf::Sprite Hero::getSprite() { return sprite; }
+
+void Hero::sendMessage(std::string message) { message_ = message; }
+std::string Hero::getMessage() { return message_; }
 
 void Hero::move(float time) {
   
@@ -66,6 +61,7 @@ void Hero::move(float time) {
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*33), 79, 33, 43));
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || isConsistent) {
+      sendMessage("attack");
       speed = dash(time, isConsistent);
     }
     else {

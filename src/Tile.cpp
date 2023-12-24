@@ -5,14 +5,6 @@ Tile::Tile(float x, float y) {
   x_ = x, y_ = y;
 }
 
-void Tile::sendMessage() {
-
-}
-
-void Tile::getMessage() {
-
-}
-
 void Tile::setSprite(sf::Texture texture) {
   sprite.setTexture(texture);
   sprite.scale(0.5, 0.5);
@@ -20,3 +12,6 @@ void Tile::setSprite(sf::Texture texture) {
 }
 
 sf::Sprite Tile::getSprite(){ return sprite; };
+
+void Tile::sendMessage(std::string message) { message_ = message; }
+std::string Tile::getMessage() { return message_; }

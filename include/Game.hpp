@@ -1,3 +1,4 @@
+#include <SFML/Graphics/Rect.hpp>
 #include <string>
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Graphics.hpp>
@@ -18,7 +19,6 @@ class Game
     void gameCycle(sf::RenderWindow &window);
     int initObjects();
     void deInitObjects();
-    void checkCollision(Object* objects1, Object* objects2);
 
     class Level {
       public:
@@ -29,10 +29,19 @@ class Game
         std::vector<std::string> map_mask;
     };
 
+    class Collider {
+      public:
+        void getHeroMessage(std::string message);
+        void processCollision(std::vector <Object*> objects, int objects_amount, int hero_index);
+      private:
+        std::string message_ = "";
+    };
+
   private:
 
     Level level;
     ResourceManager *resource_manager;
+    Collider collider;
     std::vector <Object*> objects;
 
     int width_ = 1920, height_ = 1080;
