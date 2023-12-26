@@ -1,14 +1,12 @@
 #include "../include/Tile.hpp"
+#include "../include/ResourceManager.hpp"
 #include "iostream"
 
-Tile::Tile(float x, float y) {
+UsualTile::UsualTile(float x, float y) {
   x_ = x, y_ = y;
-}
-
-void Tile::setSprite(sf::Texture texture) {
-  sprite.setTexture(texture);
+  sprite.setTexture(*ResourceManager::getInstance().getTexture('='));
   sprite.scale(0.5, 0.5);
   sprite.setPosition(x_, y_);
 }
 
-char Tile::getType() { return '='; }
+char UsualTile::getType() { return '='; }

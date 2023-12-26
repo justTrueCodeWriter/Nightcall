@@ -9,7 +9,7 @@
 #include "ResourceManager.hpp"
 #include <vector>
 
-class Game
+class Game 
 {
   public:
     int getWidth() { return width_; }
@@ -40,7 +40,6 @@ class Game
   private:
 
     Level level;
-    ResourceManager *resource_manager;
     Collider collider;
     std::vector <Object*> objects;
 

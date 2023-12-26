@@ -7,7 +7,6 @@ class Hero : public Object {
     Hero(float x, float y);
 
     void update(float time);
-    void setSprite(sf::Texture texture);
     char getType();
 
   private:

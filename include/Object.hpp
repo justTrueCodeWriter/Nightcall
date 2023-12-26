@@ -11,7 +11,6 @@ class Object {
     std::string getMessage(){ return message_; };
     sf::Sprite getSprite(){ return sprite; };
     virtual void update(float time){};
-    virtual void setSprite(sf::Texture texture){}
     virtual char getType(){ return char(); };
 };
 #endif

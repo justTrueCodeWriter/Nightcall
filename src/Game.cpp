@@ -62,12 +62,10 @@ int Game::initObjects() {
     for (int j = 0; j < 63; j++) {
       if (map_mask[i][j] == 'H') {
         hero_index = objects_counter;
-        objects.push_back(new Hero(j*60, i*60));
-        objects.back()->setSprite(*resource_manager->getTexture(map_mask[i][j]));
+        objects.push_back(new Hero(j*64, i*64));
       }
       else if (map_mask[i][j] == '=') {
-        objects.push_back(new Tile(j*60, i*60));
-        objects.back()->setSprite(*resource_manager->getTexture(map_mask[i][j]));
+        objects.push_back(new UsualTile(j*64, i*64));
         objects_counter++;
       }
     }
@@ -105,10 +103,7 @@ void Game::Collider::processCollision(std::vector<Object*> objects, int objects_
 
 void Game::gameCycle(sf::RenderWindow &window) {
 
-  resource_manager = new ResourceManager;
-
-  resource_manager->loadTextures();
-  sf::Sprite backgroundSprite(*resource_manager->getTexture('B'));
+  sf::Sprite backgroundSprite(*ResourceManager::getInstance().getTexture('B'));
   backgroundSprite.setScale(1.7, 1.7);
 
   sf::Clock clock;
@@ -135,7 +130,6 @@ void Game::gameCycle(sf::RenderWindow &window) {
     } 
 
     Camera.setCenter(objects[hero_index]->getSprite().getPosition());
-
 
     for (int i = 0; i < objects_amount; i++) {
       objects[i]->update(time);
