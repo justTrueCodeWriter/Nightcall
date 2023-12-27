@@ -5,13 +5,14 @@
 ResourceManager::ResourceManager() {
   std::vector<std::string> filenames = {
     "media/img/background.png",
-    "media/img/Fifteen.png",
-    "media/img/usual_tile.png"};
+    "media/img/fifteen.png",
+    "media/img/usual_tile.png",
+    "media/img/swordsman.png"};
 
   for (auto filename : filenames) {
-    sf::Texture *texture = new sf::Texture;
-    texture->loadFromFile(filename);
-    textures.push_back(*texture);
+    sf::Texture texture;
+    texture.loadFromFile(filename);
+    textures.push_back(texture);
   }
 }
 

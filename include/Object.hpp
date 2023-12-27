@@ -4,6 +4,7 @@
 
 class Object {
   public:
+    float x_ = 0, y_ = 0;
     std::string message_ = "";
     sf::Sprite sprite;
 

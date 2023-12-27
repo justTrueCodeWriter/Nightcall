@@ -7,7 +7,7 @@ int main() {
     sf::Music music;
     music.openFromFile("media/music/background_music.wav");
     music.setLoop(true);
-    music.play();
+    //music.play();
 
     sf::RenderWindow window(sf::VideoMode(game.getWidth(), game.getHeight()), game.getWindowTitle(), sf::Style::Fullscreen);
     window.setVerticalSyncEnabled(true);

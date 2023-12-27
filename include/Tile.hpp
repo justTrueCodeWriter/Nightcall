@@ -8,7 +8,4 @@ class UsualTile : public Object {
 
     void update(float time){ return; };
     char getType();
-
-   private:
-    float x_ = 0, y_ = 0;
 };

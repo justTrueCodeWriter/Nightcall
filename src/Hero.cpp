@@ -3,24 +3,28 @@
 #include <iostream>
 
 Hero::Hero(float x, float y) {
-  x_ = x;
-  y_ = y;
+  x_ = x, y_ = y;
   sprite.setTexture(*ResourceManager::getInstance().getTexture('H'));
 }
 
 void Hero::update(float time) { 
-  move(time); 
+  static bool isAttack = false;
+  if (message_=="collide S" && !isAttack)
+    return; 
+  move(time, isAttack); 
 }
 
 char Hero::getType() { return 'H'; }
 
-void Hero::move(float time) {
+void Hero::move(float time, bool& isAttack) {
   
     float speed = 0;
     static float current_frame = 0;
-    static bool isConsistent = false;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+      sendMessage("interact");
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
       side_ = -1;
       speed = run_speed_;
 
@@ -37,7 +41,7 @@ void Hero::move(float time) {
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*46), 292, 44, 44));
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-      isConsistent = false;
+      isAttack = false;
       side_ = -1;
       speed = walk_speed_/2;
       
@@ -46,7 +50,7 @@ void Hero::move(float time) {
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*33)+33, 79, -33, 44));
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-      isConsistent = false;
+      isAttack = false;
       side_ = 1;
       speed = walk_speed_/2;
 
@@ -54,9 +58,9 @@ void Hero::move(float time) {
       if (current_frame > 8) current_frame = 0;
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*33), 79, 33, 44));
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || isConsistent) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || isAttack) {
       sendMessage("attack");
-      speed = dash(time, isConsistent);
+      speed = dash(time, isAttack);
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
       if (message_.find("collide")!=std::string::npos)
@@ -70,6 +74,9 @@ void Hero::move(float time) {
         else if  (side_ < 0)
           sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32)+32, 650, -32, 44));
       }
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+      y_ += 0.9*time;
     }
     else {
       current_frame += 0.01*time;
@@ -90,19 +97,17 @@ void Hero::move(float time) {
     }
 
     x_ += side_*speed*time;
-    if ((message_.find("collide")==std::string::npos) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-      y_ += 0.9*time;
     sprite.setPosition(x_, y_); 
     message_.clear();
 }
 
-float Hero::dash(float time, bool &isConsistent) {
+float Hero::dash(float time, bool &isAttack) {
  static float current_frame = 0;  
- isConsistent = true;
+ isAttack = true;
 
  if (current_frame > 6) {
    current_frame = 0;
-   isConsistent = false;
+   isAttack = false;
  }
  current_frame += 0.03*time;
  if (side_ > 0)

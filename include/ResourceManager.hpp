@@ -3,7 +3,7 @@
 class ResourceManager {
   private:
     std::vector<sf::Texture> textures;
-    char possibleObjectTypes_[3] = {'B', 'H', '='};
+    char possibleObjectTypes_[4] = {'B', 'H', '=', 'S'};
     ResourceManager();
     ResourceManager(const ResourceManager&);
   public:
@@ -12,7 +12,6 @@ class ResourceManager {
       return instance;
     }
 
-    //void loadTextures();
     sf::Texture* getTexture(char message);
 
 };

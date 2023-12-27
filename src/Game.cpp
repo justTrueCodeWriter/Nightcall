@@ -1,6 +1,7 @@
 #include "../include/Game.hpp"
 #include "../include/Hero.hpp"
 #include "../include/Tile.hpp"
+#include "../include/Swordsman.hpp"
 #include <iostream>
 #include <string.h>
 #include <string>
@@ -40,7 +41,7 @@ void Game::Level::initMap() {
                       "=      =                                                      =",
                       "=       =                                                     =",
                       "=        =                                                    =",
-                      "=         =                                                   =",
+                      "=         =  S                                                =",
                       "==============================================================="
                     }; 
 
@@ -60,13 +61,19 @@ int Game::initObjects() {
 
   for (int i = 0; i < 35; i++) {
     for (int j = 0; j < 63; j++) {
-      if (map_mask[i][j] == 'H') {
-        hero_index = objects_counter;
-        objects.push_back(new Hero(j*64, i*64));
-      }
-      else if (map_mask[i][j] == '=') {
-        objects.push_back(new UsualTile(j*64, i*64));
-        objects_counter++;
+      switch (map_mask[i][j]) {
+        case'H':
+          hero_index = objects_counter;
+          objects.push_back(new Hero(j*64, i*64));
+          break;
+        case '=':
+          objects.push_back(new UsualTile(j*64, i*64));
+          objects_counter++;
+          break;
+        case 'S':
+          objects.push_back(new Swordsman(j*64, i*64));
+          objects_counter++;
+          break;
       }
     }
   }
@@ -92,11 +99,13 @@ void Game::deInitObjects() {
 void Game::Collider::getHeroMessage(std::string message) { message_ = message; }
 
 void Game::Collider::processCollision(std::vector<Object*> objects, int objects_amount, int hero_index) {
-  std::string message = "collide ";
+  std::string title = "collide ";
     for (int i = 0; i < objects_amount; i++) {
       if (i != hero_index && objects[i]->getSprite().getGlobalBounds().intersects(objects[hero_index]->getSprite().getGlobalBounds())) {
+          objects[hero_index]->sendMessage(title+objects[i]->getType());
           getHeroMessage(objects[hero_index]->getMessage());
-          objects[hero_index]->sendMessage(message+objects[i]->getType());
+          objects[i]->sendMessage(message_);
+          objects[i]->getMessage();
         }
     }
 }
