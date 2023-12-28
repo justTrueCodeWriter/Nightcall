@@ -42,11 +42,12 @@ class Game
     Level level;
     Collider collider;
     std::vector <Object*> objects;
-    //TODO: system of message {
+    //TODO: 
+    //game singleton init in menu
+    //system of message {
     //list of message
     //sendMessage to objects
     //}
-    //game singleton
     //collide cube on foot of hero
 
     int width_ = 1920, height_ = 1080;
