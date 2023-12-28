@@ -6,5 +6,7 @@ class Door : public Object {
 
     void update(float time);
     char getType();
+  private:
+    bool isOpen = false;
 
 };

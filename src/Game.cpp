@@ -2,6 +2,8 @@
 #include "../include/Hero.hpp"
 #include "../include/Tile.hpp"
 #include "../include/Swordsman.hpp"
+#include "../include/Button.hpp"
+#include "../include/Door.hpp"
 #include <iostream>
 #include <string.h>
 #include <string>
@@ -15,7 +17,7 @@ void Game::Level::initMap() {
                       "=                                                             =",
                       "=                                                             =",
                       "=                                                             =",
-                      "=     H                                                       =",
+                      "=                                                             =",
                       "=                                                             =",
                       "=                                                             =",
                       "=                                                             =",
@@ -39,9 +41,9 @@ void Game::Level::initMap() {
                       "=                                                             =",
                       "=     =                                                       =",
                       "=      =                                                      =",
-                      "=       =                                                     =",
-                      "=        =                                                    =",
-                      "=         =  S                                                =",
+                      "=       =       H                                             =",
+                      "=        =           =                                        =",
+                      "=         =  S  b    d                                        =",
                       "==============================================================="
                     }; 
 
@@ -72,6 +74,14 @@ int Game::initObjects() {
           break;
         case 'S':
           objects.push_back(new Swordsman(j*64, i*64));
+          objects_counter++;
+          break;
+        case 'b':
+          objects.push_back(new Button(j*64, i*64));
+          objects_counter++;
+          break;
+        case 'd':
+          objects.push_back(new Door(j*64, i*64));
           objects_counter++;
           break;
       }
