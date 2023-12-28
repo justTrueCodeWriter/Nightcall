@@ -35,13 +35,13 @@ void Game::Level::initMap() {
                       "=                                                             =",
                       "=                                                             =",
                       "=                                                             =",
-                      "=                                                             =",
+                      "=     H                                                       =",
                       "=                                                             =",
                       "=                                                             =",
                       "=                                                             =",
                       "=     =                                                       =",
                       "=      =                                                      =",
-                      "=       =       H                                             =",
+                      "=       =                                                     =",
                       "=        =           =                                        =",
                       "=         =  S  b    d                                        =",
                       "==============================================================="
@@ -152,7 +152,15 @@ void Game::gameCycle(sf::RenderWindow &window) {
 
     for (int i = 0; i < objects_amount; i++) {
       objects[i]->update(time);
+      //sendMessage
     }
+
+    /*
+    for ( messages list) {
+      for ( for objects list ) {
+      }
+    }
+    */
 
     collider.processCollision(objects, objects_amount, hero_index);
     
