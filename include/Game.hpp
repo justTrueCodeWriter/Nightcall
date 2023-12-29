@@ -8,13 +8,15 @@
 #include "Object.hpp"
 #include "ResourceManager.hpp"
 #include <vector>
+#include <list>
 
 class Game 
 {
   public:
-    int getWidth() { return width_; }
-    int getHeight() { return height_; }
-    std::string getWindowTitle() { return window_title_; }
+    static Game& getInstance() {
+      static Game instance;
+      return instance;
+    }
 
     void gameCycle(sf::RenderWindow &window);
     int initObjects();
@@ -38,20 +40,18 @@ class Game
     };
 
   private:
+    Game(){}; 
+    Game(const Game&){};
 
     Level level;
     Collider collider;
     std::vector <Object*> objects;
+    std::list<std::string> message_buffer;
     //TODO: 
-    //game singleton init in menu
-    //system of message {
-    //list of message
-    //sendMessage to objects
+    //-system of message {
+    //-sendMessage to objects
     //}
-    //collide cube on foot of hero
+    //-collide cube on foot of hero
 
-    int width_ = 1920, height_ = 1080;
     int hero_index = 0;
-
-    std::string window_title_ = "Nighcall";
 };
