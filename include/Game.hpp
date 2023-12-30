@@ -7,6 +7,7 @@
 #include <SFML/System.hpp>
 #include "Object.hpp"
 #include "ResourceManager.hpp"
+#include "Message.hpp"
 #include <vector>
 #include <list>
 
@@ -46,7 +47,7 @@ class Game
     Level level;
     Collider collider;
     std::vector <Object*> objects;
-    std::list<std::string> message_buffer;
+    std::list<Message> message_buffer;
     //TODO: 
     //-system of message {
     //-sendMessage to objects

@@ -9,8 +9,10 @@ Swordsman::Swordsman(float x, float y) {
 }
 
 void Swordsman::update(float time) {
-  if (message_=="attack")
+  if (message_.object_type == 'H' && message_.action == ATTACK) {
     std::cout << "killed by hero" << std::endl;
+    return;
+  }
   move(time);
 }
 

@@ -10,9 +10,8 @@ Button::Button(float x, float y) {
 }
 
 void Button::update(float time) {
-  if (message_ == "interact") {
-    sendMessage("activate");
-    std::cout << message_ << std::endl;
+  if (message_.action == INTERACT) {
+    message_ = {getType(), ACTIVATE, x_, y_};
   }
 }
 

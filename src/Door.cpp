@@ -9,6 +9,11 @@ Door::Door(float x, float y) {
 }
 
 void Door::update(float time) {
+
+  if (message_.object_type == 'b' && message_.action == ACTIVATE) {
+    isOpen = !isOpen;
+  }
+
   if (isOpen) {
     sprite.setTextureRect(sf::IntRect(415, 106, 53, 86));
   }

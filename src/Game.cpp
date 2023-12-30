@@ -112,10 +112,7 @@ void Game::Collider::processCollision(std::vector<Object*> objects, int objects_
   std::string title = "collide ";
     for (int i = 0; i < objects_amount; i++) {
       if (i != hero_index && objects[i]->getSprite().getGlobalBounds().intersects(objects[hero_index]->getSprite().getGlobalBounds())) {
-          objects[hero_index]->sendMessage(title+objects[i]->getType());
-          getHeroMessage(objects[hero_index]->getMessage());
-          objects[i]->sendMessage(message_);
-          objects[i]->getMessage();
+          // TODO: PROCESS BASE COLLIDES
         }
     }
 }
@@ -151,18 +148,17 @@ void Game::gameCycle(sf::RenderWindow &window) {
     Camera.setCenter(objects[hero_index]->getSprite().getPosition());
 
     for (int i = 0; i < objects_amount; i++) {
-      objects[i]->update(time);
-      //sendMessage
+      objects[i]->sendMessage();
     }
 
-    /*
-    for ( messages list) {
-      for ( for objects list ) {
+    for (auto message : message_buffer) {
+      for (int i = 0; i< objects_amount; i++) {
+        objects[i]->getMessage(message);
+        objects[i]->update(time);
       }
     }
-    */
 
-    collider.processCollision(objects, objects_amount, hero_index);
+    //collider.processCollision(objects, objects_amount, hero_index);
     
     window.setView(Camera);
     window.clear(sf::Color::Black);  
