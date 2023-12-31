@@ -148,14 +148,14 @@ void Game::gameCycle(sf::RenderWindow &window) {
     Camera.setCenter(objects[hero_index]->getSprite().getPosition());
 
     for (int i = 0; i < objects_amount; i++) {
-      objects[i]->sendMessage();
+      message_buffer.push_back(objects[i]->sendMessage());
     }
-
     for (auto message : message_buffer) {
       for (int i = 0; i< objects_amount; i++) {
-        objects[i]->getMessage(message);
+        objects[i]->getMessage(*message);
         objects[i]->update(time);
       }
+      message_buffer.pop_front();
     }
 
     //collider.processCollision(objects, objects_amount, hero_index);

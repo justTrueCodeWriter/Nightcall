@@ -10,7 +10,7 @@ class Object {
     sf::Sprite sprite;
 
     void getMessage(Message message){ message_ = message; };
-    Message sendMessage(){ return message_; };
+    Message* sendMessage(){ return &message_; };
     sf::Sprite getSprite(){ return sprite; };
     virtual void update(float time){};
     virtual char getType(){ return char(); };

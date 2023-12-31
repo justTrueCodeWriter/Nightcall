@@ -1,15 +1,17 @@
 #include "../include/Hero.hpp"
 #include "../include/ResourceManager.hpp"
 #include <iostream>
+#include <math.h>
 
 Hero::Hero(float x, float y) {
   x_ = x, y_ = y;
   sprite.setTexture(*ResourceManager::getInstance().getTexture('H'));
+  sprite.setPosition(x_, y_); 
 }
 
 void Hero::update(float time) { 
   static bool isAttack = false;
-  if (message_.object_type=='=' && !isAttack)
+  if (fabs(message_.x - x_) <= 1 && fabs(message_.y - y_)<=1 && message_.object_type=='=' && !isAttack)
     return; 
   move(time, isAttack); 
 }
@@ -76,6 +78,9 @@ void Hero::move(float time, bool& isAttack) {
         else if  (side_ < 0)
           sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32)+32, 650, -32, 44));
     }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+      y_ += 0.9*time;
+    }
     else {
       current_frame += 0.01*time;
       /*if (message_.find("collide")!=std::string::npos) {
@@ -88,10 +93,12 @@ void Hero::move(float time, bool& isAttack) {
       else {
       */
         if (current_frame > 4) current_frame = 0;
-        if (side_ > 0)
+        if (side_ > 0) {
           sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32), 650, 32, 44));
-        else if  (side_ < 0)
+        }
+        else if  (side_ < 0) {
           sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32)+32, 650, -32, 44));
+        }
       //}
     }
 
