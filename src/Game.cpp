@@ -149,14 +149,18 @@ void Game::gameCycle(sf::RenderWindow &window) {
 
     for (int i = 0; i < objects_amount; i++) {
       message_buffer.push_back(objects[i]->sendMessage());
+      printf("%c\n", objects[i]->sendMessage().object_type);
     }
+
     for (auto message : message_buffer) {
-      for (int i = 0; i< objects_amount; i++) {
-        objects[i]->getMessage(*message);
-        objects[i]->update(time);
+      for (int i = 0; i < objects_amount; i++) {
+        //printf("%c %d %f %f\n", message.object_type, message.action, message.x, message.y);
+        objects[i]->getMessage(message);
+        objects[i]->update(time/(objects_amount*1.0));
       }
-      message_buffer.pop_front();
     }
+
+    message_buffer.clear();
 
     //collider.processCollision(objects, objects_amount, hero_index);
     

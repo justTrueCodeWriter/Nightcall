@@ -11,7 +11,7 @@ Hero::Hero(float x, float y) {
 
 void Hero::update(float time) { 
   static bool isAttack = false;
-  if (fabs(message_.x - x_) <= 1 && fabs(message_.y - y_)<=1 && message_.object_type=='=' && !isAttack)
+  if (fabs(message_.x - x_)<=10.0 && fabs(message_.y - y_)<=10.0 && message_.object_type=='=' && !isAttack)
     return; 
   move(time, isAttack); 
 }

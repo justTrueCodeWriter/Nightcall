@@ -12,7 +12,7 @@ Swordsman::Swordsman(float x, float y) {
 }
 
 void Swordsman::update(float time) {
-  if (fabs(message_.x - x_) <= 1.0 && fabs(message_.y - y_) <=1.0 && message_.object_type == 'H' && message_.action == ATTACK) {
+  if (fabs(message_.x - x_)<=20.0 && fabs(message_.y - y_)<=20.0 && message_.object_type == 'H' && message_.action == ATTACK) {
     std::cout << "killed by hero" << std::endl;
     return;
   }

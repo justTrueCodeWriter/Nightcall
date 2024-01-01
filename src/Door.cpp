@@ -1,5 +1,6 @@
 #include "../include/Door.hpp"
 #include "../include/ResourceManager.hpp"
+#include <math.h>
 
 Door::Door(float x, float y) {
   x_ = x, y_ = y; 
@@ -10,7 +11,7 @@ Door::Door(float x, float y) {
 
 void Door::update(float time) {
 
-  if (message_.object_type == 'b' && message_.action == ACTIVATE) {
+  if (fabs(message_.x - x_)<=10.0 && fabs(message_.y - y_)<=10.0 && message_.object_type == 'b' && message_.action == ACTIVATE) {
     isOpen = !isOpen;
   }
 
