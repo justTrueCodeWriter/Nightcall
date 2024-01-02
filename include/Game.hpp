@@ -47,7 +47,7 @@ class Game
     Level level;
     Collider collider;
     std::vector <Object*> objects;
-    std::list<Message> message_buffer;
+    std::list<Message*> message_buffer;
     //TODO: 
     //-system of message {
     //-sendMessage to objects

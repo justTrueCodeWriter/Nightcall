@@ -43,7 +43,7 @@ void Game::Level::initMap() {
                       "=      =                                                      =",
                       "=       =                                                     =",
                       "=        =           =                                        =",
-                      "=         =  S  b    d                                        =",
+                      "=         =  S      bd                                        =",
                       "==============================================================="
                     }; 
 
@@ -147,9 +147,16 @@ void Game::gameCycle(sf::RenderWindow &window) {
 
     Camera.setCenter(objects[hero_index]->getSprite().getPosition());
 
-    for (int i = 0; i < objects_amount; i++) {
-      message_buffer.push_back(objects[i]->sendMessage());
-      printf("%c\n", objects[i]->sendMessage().object_type);
+    int i = 0;
+    for (std::vector<Object*>::iterator it = objects.begin(); it != objects.end(); ++it) {
+      Message *message = objects[i]->sendMessage(); 
+      if (message->action == DIED) {
+        it = objects.erase(it);
+      }
+      else {
+        message_buffer.push_back(message);
+      }
+      i++;
     }
 
     for (auto message : message_buffer) {

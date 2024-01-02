@@ -4,7 +4,9 @@
 enum Action {
   ATTACK,
   INTERACT,
-  ACTIVATE
+  ACTIVATE,
+  DIED,
+  COLLIDE
 };
 
 struct Message {

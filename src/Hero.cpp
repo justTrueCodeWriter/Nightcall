@@ -7,12 +7,20 @@ Hero::Hero(float x, float y) {
   x_ = x, y_ = y;
   sprite.setTexture(*ResourceManager::getInstance().getTexture('H'));
   sprite.setPosition(x_, y_); 
+  inMessage_ = new Message();
+  outMessage_ = new Message();
 }
 
 void Hero::update(float time) { 
   static bool isAttack = false;
-  if (fabs(message_.x - x_)<=10.0 && fabs(message_.y - y_)<=10.0 && message_.object_type=='=' && !isAttack)
+  if (fabs(inMessage_->x - x_)<=30.0 && fabs(inMessage_->y - y_)<=30.0 && inMessage_->action==ATTACK && inMessage_->object_type!=getType()) {
+    printf("killed by enemy\n");
+    outMessage_->object_type = getType();
+    outMessage_->action = DIED;
+    outMessage_->x = x_;
+    outMessage_->y = y_;
     return; 
+  }
   move(time, isAttack); 
 }
 
@@ -24,7 +32,10 @@ void Hero::move(float time, bool& isAttack) {
     static float current_frame = 0;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-     message_ = {getType(), INTERACT, x_, y_}; 
+     outMessage_->object_type = getType();
+     outMessage_->action = INTERACT;
+     outMessage_->x = x_;
+     outMessage_->y = y_;
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
       side_ = -1;
@@ -61,7 +72,10 @@ void Hero::move(float time, bool& isAttack) {
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*33), 79, 33, 44));
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || isAttack) {
-      message_ = {getType(), ATTACK, x_, y_};
+      outMessage_->object_type = getType();
+      outMessage_->action = ATTACK;
+      outMessage_->x = x_;
+      outMessage_->y = y_;
       speed = dash(time, isAttack);
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){

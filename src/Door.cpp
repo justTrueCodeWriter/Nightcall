@@ -7,11 +7,13 @@ Door::Door(float x, float y) {
   sprite.setTexture(*ResourceManager::getInstance().getTexture('d'));
   sprite.setTextureRect(sf::IntRect(7, 10, 53, 86));
   sprite.setPosition(x_, y_);
+  inMessage_ = new Message();
+  outMessage_ = new Message();
 }
 
 void Door::update(float time) {
 
-  if (fabs(message_.x - x_)<=10.0 && fabs(message_.y - y_)<=10.0 && message_.object_type == 'b' && message_.action == ACTIVATE) {
+  if (fabs(inMessage_->x - x_)<=64.0 && fabs(inMessage_->y - y_)<=32.0 && inMessage_->object_type == 'b' && inMessage_->action == ACTIVATE) {
     isOpen = !isOpen;
   }
 

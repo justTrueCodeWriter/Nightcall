@@ -6,11 +6,12 @@
 class Object {
   public:
     float x_ = 0, y_ = 0;
-    Message message_;
+    Message *inMessage_;
+    Message *outMessage_;
     sf::Sprite sprite;
 
-    void getMessage(Message message){ message_ = message; };
-    Message sendMessage(){ return message_; };
+    void getMessage(Message *message){ inMessage_ = message; };
+    Message *sendMessage(){ return outMessage_; };
     sf::Sprite getSprite(){ return sprite; };
     virtual void update(float time){};
     virtual char getType(){ return char(); };
