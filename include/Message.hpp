@@ -2,6 +2,7 @@
 #define MESSAGE_HPP
 
 enum Action {
+  NONE, 
   ATTACK,
   INTERACT,
   ACTIVATE,

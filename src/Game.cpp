@@ -148,7 +148,7 @@ void Game::gameCycle(sf::RenderWindow &window) {
     Camera.setCenter(objects[hero_index]->getSprite().getPosition());
 
     int i = 0;
-    for (std::vector<Object*>::iterator it = objects.begin(); it != objects.end(); ++it) {
+    for (std::vector<Object*>::iterator it = objects.begin(); it != objects.end(); it++) {
       Message *message = objects[i]->sendMessage(); 
       if (message->action == DIED) {
         it = objects.erase(it);

@@ -15,11 +15,11 @@ Swordsman::Swordsman(float x, float y) {
 
 void Swordsman::update(float time) {
   if (fabs(inMessage_->x - x_)<=30.0 && fabs(inMessage_->y - y_)<=30.0 && inMessage_->object_type == 'H' && inMessage_->action == ATTACK) {
+    printf("Swordsman killed\n");
     outMessage_->object_type = getType();
     outMessage_->action = DIED;
     outMessage_->x = x_;
     outMessage_->y = y_;
-    std::cout << "killed by hero" << std::endl;
     return;
   }
   move(time);
