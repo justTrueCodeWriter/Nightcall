@@ -9,5 +9,6 @@ class Swordsman : public Object {
 
   private:
     short side_ = 1;
+    float speed = 0.5;
     void move(float time);
 };

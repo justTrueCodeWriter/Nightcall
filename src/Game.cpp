@@ -106,8 +106,6 @@ void Game::deInitObjects() {
   objects.clear();
 }
 
-void Game::Collider::getHeroMessage(std::string message) { message_ = message; }
-
 void Game::Collider::processCollision(std::vector<Object*> objects, int objects_amount, int hero_index) {
   std::string title = "collide ";
     for (int i = 0; i < objects_amount; i++) {

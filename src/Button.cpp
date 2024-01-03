@@ -18,6 +18,7 @@ void Button::update(float time) {
     outMessage_->action = ACTIVATE;
     outMessage_->x = x_;
     outMessage_->y = y_;
+    inMessage_->action = NONE;
   }
 }
 

@@ -34,10 +34,8 @@ class Game
 
     class Collider {
       public:
-        void getHeroMessage(std::string message);
         void processCollision(std::vector <Object*> objects, int objects_amount, int hero_index);
       private:
-        std::string message_ = "";
     };
 
   private:

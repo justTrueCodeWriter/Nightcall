@@ -15,6 +15,7 @@ void Door::update(float time) {
 
   if (fabs(inMessage_->x - x_)<=64.0 && fabs(inMessage_->y - y_)<=32.0 && inMessage_->object_type == 'b' && inMessage_->action == ACTIVATE) {
     isOpen = !isOpen;
+    inMessage_->action = NONE;
   }
 
   if (isOpen) {

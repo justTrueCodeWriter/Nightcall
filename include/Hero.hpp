@@ -14,6 +14,6 @@ class Hero : public Object {
 
     void move(float time, bool& isAttack);
     void jump();
-    float dash(float time, bool &isConsistent);
+    float dash(float time, bool &isAttack);
 
 };
