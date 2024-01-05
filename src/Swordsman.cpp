@@ -13,6 +13,12 @@ Swordsman::Swordsman(float x, float y) {
   outMessage_ = new Message();
 }
 
+Swordsman::~Swordsman() {
+  delete inMessage_;
+  delete outMessage_;
+  std::cout << "Deleted" << std::endl;
+}
+
 void Swordsman::update(float time) {
   if (fabs(inMessage_->x - x_)<=30.0 && fabs(inMessage_->y - y_)<=30.0 && inMessage_->object_type == 'H' && inMessage_->action == ATTACK) {
     printf("Swordsman killed\n");

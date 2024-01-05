@@ -3,6 +3,7 @@
 class Hero : public Object {
   public:
     Hero(float x, float y);
+    ~Hero();
 
     void update(float time);
     char getType();

@@ -11,6 +11,10 @@ Button::Button(float x, float y) {
   inMessage_ = new Message();
   outMessage_ = new Message();
 }
+Button::~Button() {
+  delete inMessage_;
+  delete outMessage_;
+}
 
 void Button::update(float time) {
   if (fabs(inMessage_->x - x_)<=30.0 && fabs(inMessage_->y - y_)<=30.0 && inMessage_->action == INTERACT) {

@@ -103,6 +103,9 @@ int Game::initObjects() {
 }
 
 void Game::deInitObjects() {
+  //for (auto object : objects) {
+    //delete object;
+  //}
   objects.clear();
 }
 
@@ -149,6 +152,7 @@ void Game::gameCycle(sf::RenderWindow &window) {
     for (std::vector<Object*>::iterator it = objects.begin(); it != objects.end(); it++) {
       Message *message = objects[i]->sendMessage(); 
       if (message->action == DIED) {
+        //delete objects[i];
         it = objects.erase(it);
       }
       else {

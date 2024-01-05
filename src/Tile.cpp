@@ -11,6 +11,11 @@ UsualTile::UsualTile(float x, float y) {
   outMessage_ = new Message();
 }
 
+UsualTile::~UsualTile() {
+  delete inMessage_;
+  delete outMessage_;
+}
+
 char UsualTile::getType() { return '='; }
 
 void UsualTile::update(float time) {

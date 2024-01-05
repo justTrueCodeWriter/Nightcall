@@ -11,6 +11,11 @@ Door::Door(float x, float y) {
   outMessage_ = new Message();
 }
 
+Door::~Door() {
+  delete inMessage_;
+  delete outMessage_;
+}
+
 void Door::update(float time) {
 
   if (fabs(inMessage_->x - x_)<=64.0 && fabs(inMessage_->y - y_)<=32.0 && inMessage_->object_type == 'b' && inMessage_->action == ACTIVATE) {

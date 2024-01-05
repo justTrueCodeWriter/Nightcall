@@ -5,6 +5,8 @@
 
 class Object {
   public:
+    virtual ~Object(){};
+
     float x_ = 0, y_ = 0;
     Message *inMessage_;
     Message *outMessage_;

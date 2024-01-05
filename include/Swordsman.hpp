@@ -3,6 +3,7 @@
 class Swordsman : public Object {
   public:
     Swordsman(float x, float y);
+    ~Swordsman();
 
     void update(float time);
     char getType();

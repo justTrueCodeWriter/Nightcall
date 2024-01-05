@@ -2,6 +2,7 @@
 #include "../include/ResourceManager.hpp"
 #include <iostream>
 #include <math.h>
+#include <unistd.h>
 
 Hero::Hero(float x, float y) {
   x_ = x, y_ = y;
@@ -9,6 +10,12 @@ Hero::Hero(float x, float y) {
   sprite.setPosition(x_, y_); 
   inMessage_ = new Message();
   outMessage_ = new Message();
+}
+
+Hero::~Hero() {
+  delete inMessage_;
+  delete outMessage_; 
+  std::cout << "Deleted" << std::endl;
 }
 
 void Hero::update(float time) { 
@@ -36,6 +43,7 @@ void Hero::move(float time, bool& isAttack) {
      outMessage_->action = INTERACT;
      outMessage_->x = x_;
      outMessage_->y = y_;
+     usleep(200*1000);
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
       side_ = -1;
