@@ -1,9 +1,10 @@
 #include "../include/Game.hpp"
 #include "../include/Hero.hpp"
-#include "../include/Tile.hpp"
+#include "../include/UsualTile.hpp"
 #include "../include/Swordsman.hpp"
 #include "../include/Button.hpp"
 #include "../include/Door.hpp"
+#include "../include/UsualSpikes.hpp"
 #include <iostream>
 #include <string.h>
 #include <string>
@@ -44,7 +45,7 @@ void Game::Level::initMap() {
                       "=       =                                                     =",
                       "=        =           =                                        =",
                       "=         =  S      bd                                        =",
-                      "==============================================================="
+                      "==========================^===================================="
                     }; 
 
   map_mask.swap(map);
@@ -82,6 +83,10 @@ int Game::initObjects() {
           break;
         case 'd':
           objects.push_back(new Door(j*64, i*64));
+          objects_counter++;
+          break;
+        case '^':
+          objects.push_back(new UsualSpikes(j*64, i*64));
           objects_counter++;
           break;
       }

@@ -10,17 +10,20 @@ Hero::Hero(float x, float y) {
   sprite.setPosition(x_, y_); 
   inMessage_ = new Message();
   outMessage_ = new Message();
+  collide_rect = new sf::FloatRect(x_+sprite.getGlobalBounds().width/2, y_+sprite.getGlobalBounds().height, 1, 1);
+
 }
 
 Hero::~Hero() {
   delete inMessage_;
   delete outMessage_; 
+  delete collide_rect;
   std::cout << "Deleted" << std::endl;
 }
 
 void Hero::update(float time) { 
   static bool isAttack = false;
-  if (fabs(inMessage_->x - x_)<=20.0 && fabs(inMessage_->y - y_)<=20.0 && inMessage_->action==ATTACK && inMessage_->object_type!=getType() && !isAttack) {
+  if (fabs(inMessage_->x - x_)<=20.0 && fabs(inMessage_->y - y_)<=30.0 && inMessage_->action==ATTACK && inMessage_->object_type!=getType() && !isAttack) {
     printf("Hero killed\n");
     outMessage_->object_type = getType();
     outMessage_->action = DIED;
@@ -123,8 +126,11 @@ void Hero::move(float time, bool& isAttack) {
     }
 
     x_ += side_*speed*time;
-    //if (inMessage_->action == COLLIDE && fabs(inMessage_->x-x_)>=32 && fabs(inMessage_->y-y_)>=32.0 && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-      //y_ += 0.9*time;
+    /*if (inMessage_->action == COLLIDE && 
+         &&
+        !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+      y_ += 0.9*time;
+      */
     sprite.setPosition(x_, y_); 
 }
 
