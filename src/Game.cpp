@@ -103,9 +103,6 @@ int Game::initObjects() {
 }
 
 void Game::deInitObjects() {
-  //for (auto object : objects) {
-    //delete object;
-  //}
   objects.clear();
 }
 
@@ -118,7 +115,7 @@ void Game::Collider::processCollision(std::vector<Object*> objects, int objects_
     }
 }
 
-void Game::gameCycle(sf::RenderWindow &window) {
+void Game::gameLoop(sf::RenderWindow &window) {
 
   sf::Sprite backgroundSprite(*ResourceManager::getInstance().getTexture('B'));
   backgroundSprite.setScale(1.7, 1.7);
@@ -136,10 +133,6 @@ void Game::gameCycle(sf::RenderWindow &window) {
     sf::Event event;
     while (window.pollEvent(event))
     {
-      if (event.type == sf::Event::Closed) {
-        deInitObjects();
-        return;
-      }
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
         deInitObjects();
         return;
@@ -152,7 +145,6 @@ void Game::gameCycle(sf::RenderWindow &window) {
     for (std::vector<Object*>::iterator it = objects.begin(); it != objects.end(); it++) {
       Message *message = objects[i]->sendMessage(); 
       if (message->action == DIED) {
-        //delete objects[i];
         it = objects.erase(it);
       }
       else {
@@ -175,7 +167,7 @@ void Game::gameCycle(sf::RenderWindow &window) {
     
     window.setView(Camera);
     window.clear(sf::Color::Black);  
-    window.draw(backgroundSprite);
+    //window.draw(backgroundSprite);
     for (int i = 0; i < objects_amount; i++) 
       window.draw(objects[i]->getSprite());
     window.display();

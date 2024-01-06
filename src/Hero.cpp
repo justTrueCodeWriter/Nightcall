@@ -43,7 +43,7 @@ void Hero::move(float time, bool& isAttack) {
      outMessage_->action = INTERACT;
      outMessage_->x = x_;
      outMessage_->y = y_;
-     usleep(200*1000);
+     usleep(50*1000);
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
       side_ = -1;
@@ -123,7 +123,7 @@ void Hero::move(float time, bool& isAttack) {
     }
 
     x_ += side_*speed*time;
-    if (inMessage_->action == COLLIDE && fabs(inMessage_->x-x_)>=32 && fabs(inMessage_->y-y_)>=32.0 && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    //if (inMessage_->action == COLLIDE && fabs(inMessage_->x-x_)>=32 && fabs(inMessage_->y-y_)>=32.0 && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
       //y_ += 0.9*time;
     sprite.setPosition(x_, y_); 
 }

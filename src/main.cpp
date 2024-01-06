@@ -8,6 +8,6 @@ int main() {
     music.openFromFile("media/music/background_music.wav");
     music.setLoop(true);
     //music.play();
-    menu.startGame();
+    menu.menuLoop();
 
 }

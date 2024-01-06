@@ -19,7 +19,7 @@ class Game
       return instance;
     }
 
-    void gameCycle(sf::RenderWindow &window);
+    void gameLoop(sf::RenderWindow &window);
     int initObjects();
     void deInitObjects();
 

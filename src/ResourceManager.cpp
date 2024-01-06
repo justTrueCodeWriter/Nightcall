@@ -5,6 +5,7 @@
 ResourceManager::ResourceManager() {
   std::vector<std::string> filenames = {
     "media/img/background.png",
+    "media/img/menu_background.png",
     "media/img/fifteen.png",
     "media/img/usual_tile.png",
     "media/img/swordsman.png",
