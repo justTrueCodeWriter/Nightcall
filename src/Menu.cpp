@@ -51,6 +51,7 @@ void Menu::menuLoop() {
       if (event.type == sf::Event::Closed) {
         return;
       }
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) { return; }
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
         switch (menu_choice) {
           case START:

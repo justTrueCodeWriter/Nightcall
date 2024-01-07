@@ -10,7 +10,7 @@ Hero::Hero(float x, float y) {
   sprite.setPosition(x_, y_); 
   inMessage_ = new Message();
   outMessage_ = new Message();
-  collide_rect = {x_+sprite.getGlobalBounds().width/2, y_+sprite.getGlobalBounds().height, 1, 1};
+  collide_rect = {x_, y_+sprite.getGlobalBounds().height, 10, 10};
 
 }
 
@@ -36,17 +36,10 @@ void Hero::update(float time) {
 char Hero::getType() { return 'H'; }
 
 void Hero::checkCollision() {
-  if ((collide_rect.left >= inMessage_->sprite_rect.left) && 
-      (collide_rect.left <= (inMessage_->sprite_rect.left+inMessage_->sprite_rect.width))) {
-    //std::cout << inMessage_->sprite_rect.left << " " << inMessage_->sprite_rect.width << std::endl;
-    if (collide_rect.top <= inMessage_->sprite_rect.top && collide_rect.top >= (inMessage_->sprite_rect.top + inMessage_->sprite_rect.height)) {
+    if (inMessage_->action == COLLIDE && inMessage_->sprite_rect.intersects(sprite.getGlobalBounds())) {
       std::cout << "intersects" << std::endl;
       isGround = true;
     }
-    else {
-      isGround = false;
-    }
-  }
 
 }
 
@@ -106,6 +99,7 @@ void Hero::move(float time, bool& isAttack) {
       speed = dash(time, isAttack);
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+      isGround = false;
       if (inMessage_->action == COLLIDE)
         y_ -= 0.5 * time;
       else {
@@ -142,8 +136,9 @@ void Hero::move(float time, bool& isAttack) {
     }
 
     x_ += side_*speed*time;
-    //if ((isGround==false) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)==false))
-      //y_ += 0.9*time;
+    if ((isGround==false) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)==false))
+    //if (inMessage_->action == COLLIDE && inMessage_->sprite_rect.intersects(sprite.getGlobalBounds())==false && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)==false))
+      y_ += 0.9*time;
     sprite.setPosition(x_, y_); 
 }
 
