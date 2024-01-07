@@ -5,5 +5,5 @@ class UsualSpikes : public Object {
     UsualSpikes(float x, float y);
     ~UsualSpikes();
     char getType();
-    void update();
+    void update(float time);
 };

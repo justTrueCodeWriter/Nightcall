@@ -19,11 +19,9 @@ UsualTile::~UsualTile() {
 char UsualTile::getType() { return '='; }
 
 void UsualTile::update(float time) {
-
   outMessage_->object_type = getType();
   outMessage_->action = COLLIDE;
   outMessage_->x = x_;
   outMessage_->y = y_;
-  outMessage_->width = sprite.getGlobalBounds().width;
-  outMessage_->width = sprite.getGlobalBounds().height;
+  outMessage_->sprite_rect = sprite.getGlobalBounds();
 }

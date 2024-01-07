@@ -50,7 +50,7 @@ void Swordsman::move(float time) {
   }
 
   x_+=side_*speed*time;
-  std::cout << x_ << std::endl;
+  //std::cout << x_ << std::endl;
 
   sprite.setPosition(x_, y_);
 

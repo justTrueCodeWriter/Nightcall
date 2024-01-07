@@ -17,9 +17,10 @@ UsualSpikes::~UsualSpikes() {
 
 char UsualSpikes::getType() { return '^'; }
 
-void UsualSpikes::update() {
+void UsualSpikes::update(float time) {
   outMessage_->object_type = getType();
   outMessage_->action = ATTACK;
   outMessage_->x = x_;
   outMessage_->y = y_;
+  //outMessage_->sprite_rect = sprite.getGlobalBounds();
 }
