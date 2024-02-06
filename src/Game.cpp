@@ -115,7 +115,6 @@ void Game::Collider::processCollision(std::vector<Object*> objects, int objects_
   std::string title = "collide ";
     for (int i = 0; i < objects_amount; i++) {
       if (i != hero_index && objects[i]->getSprite().getGlobalBounds().intersects(objects[hero_index]->getSprite().getGlobalBounds())) {
-          // TODO: PROCESS BASE COLLIDES
         }
     }
 }

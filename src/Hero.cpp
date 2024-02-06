@@ -22,12 +22,16 @@ Hero::~Hero() {
 
 void Hero::update(float time) { 
   static bool isAttack = false;
-  if (fabs(inMessage_->x - x_)<=20.0 && fabs(inMessage_->y - y_)<=30.0 && inMessage_->action==ATTACK && inMessage_->object_type!=getType() && !isAttack) {
+  float sprite_x_center = x_+sprite.getGlobalBounds().width/2;
+  float sprite_y_center = y_+sprite.getGlobalBounds().height/2;
+
+  if (inMessage_->sprite_rect.left <= sprite_x_center && (inMessage_->sprite_rect.left+inMessage_->sprite_rect.width >= sprite_x_center) && 
+      inMessage_->sprite_rect.top <= sprite_y_center && (inMessage_->sprite_rect.top+inMessage_->sprite_rect.height >= sprite_y_center) && 
+      inMessage_->action==ATTACK && inMessage_->object_type!=getType() && !isAttack) {
     printf("Hero killed\n");
     outMessage_->object_type = getType();
     outMessage_->action = DIED;
-    outMessage_->x = x_;
-    outMessage_->y = y_;
+    outMessage_->sprite_rect = sprite.getGlobalBounds();
     return; 
   }
   move(time, isAttack); 
@@ -40,7 +44,6 @@ void Hero::checkCollision() {
       std::cout << "intersects" << std::endl;
       isGround = true;
     }
-
 }
 
 void Hero::move(float time, bool& isAttack) {
@@ -50,13 +53,14 @@ void Hero::move(float time, bool& isAttack) {
 
     checkCollision();
 
+// ------------ INTERACTION WITH OBJECTS ON MAP -----------
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
      outMessage_->object_type = getType();
      outMessage_->action = INTERACT;
-     outMessage_->x = x_;
-     outMessage_->y = y_;
+     outMessage_->sprite_rect = sprite.getGlobalBounds();
      usleep(50*1000);
     }
+// ------------ RUN LEFT -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
       side_ = -1;
       speed = run_speed_;
@@ -65,6 +69,7 @@ void Hero::move(float time, bool& isAttack) {
       if (current_frame > 10) current_frame = 0;
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*46)+44, 292, -44, 44));
     }
+// ------------ RUN RIGHT -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
       side_ = 1;
       speed = run_speed_;
@@ -73,6 +78,7 @@ void Hero::move(float time, bool& isAttack) {
       if (current_frame > 10) current_frame = 0;
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*46), 292, 44, 44));
     }
+// ------------ GO LEFT -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
       isAttack = false;
       side_ = -1;
@@ -82,6 +88,7 @@ void Hero::move(float time, bool& isAttack) {
       if (current_frame > 8) current_frame = 0;
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*33)+33, 79, -33, 44));
     }
+// ------------ GO RIGHT -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
       isAttack = false;
       side_ = 1;
@@ -91,13 +98,14 @@ void Hero::move(float time, bool& isAttack) {
       if (current_frame > 8) current_frame = 0;
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*33), 79, 33, 44));
     }
+// ------------ ATTACK -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || isAttack) {
       outMessage_->object_type = getType();
       outMessage_->action = ATTACK;
-      outMessage_->x = x_;
-      outMessage_->y = y_;
+      outMessage_->sprite_rect = sprite.getGlobalBounds();
       speed = dash(time, isAttack);
     }
+// ------------ JUMP -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
       isGround = false;
       if (inMessage_->action == COLLIDE)
@@ -112,9 +120,11 @@ void Hero::move(float time, bool& isAttack) {
           sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32)+32, 650, -32, 44));
       }
     }
+// ------------ FLY DOWN(TEMPORERILY) -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
       y_ += 0.9*time;
     }
+// ------------ STAY STILL -----------
     else {
       current_frame += 0.01*time;
       if (inMessage_->action == COLLIDE) {

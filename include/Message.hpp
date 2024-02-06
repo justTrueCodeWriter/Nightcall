@@ -8,13 +8,14 @@ enum Action {
   INTERACT,
   ACTIVATE,
   DIED,
-  COLLIDE
+  COLLIDE,
+  MOVE
 };
 
 struct Message {
   char object_type;
   Action action;
-  float x = 0, y = 0;
+  //float x = 0, y = 0;
   //float width = 0, height = 0;
   sf::FloatRect sprite_rect;
 };

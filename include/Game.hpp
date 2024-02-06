@@ -46,11 +46,5 @@ class Game
     Collider collider;
     std::vector <Object*> objects;
     std::list<Message*> message_buffer;
-    //TODO: 
-    //-system of message {
-    //-sendMessage to objects
-    //}
-    //-collide cube on foot of hero
-
     int hero_index = 0;
 };

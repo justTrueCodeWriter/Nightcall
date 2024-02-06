@@ -20,12 +20,12 @@ Swordsman::~Swordsman() {
 }
 
 void Swordsman::update(float time) {
-  if (fabs(inMessage_->x - x_)<=30.0 && fabs(inMessage_->y - y_)<=30.0 && inMessage_->object_type == 'H' && inMessage_->action == ATTACK) {
+  const float defeat_distance = 30.0;
+  if (fabs(inMessage_->sprite_rect.left - x_)<=defeat_distance && fabs(inMessage_->sprite_rect.top - y_)<=defeat_distance && inMessage_->object_type == 'H' && inMessage_->action == ATTACK) {
     printf("Swordsman killed\n");
     outMessage_->object_type = getType();
     outMessage_->action = DIED;
-    outMessage_->x = x_;
-    outMessage_->y = y_;
+    outMessage_->sprite_rect = sprite.getGlobalBounds();
     return;
   }
   if (outMessage_->action!=DIED)
@@ -56,6 +56,5 @@ void Swordsman::move(float time) {
 
   outMessage_->object_type = getType();
   outMessage_->action = ATTACK;
-  outMessage_->x = x_;
-  outMessage_->y = y_;
+  outMessage_->sprite_rect = sprite.getGlobalBounds();
 }

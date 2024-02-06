@@ -16,13 +16,19 @@ Button::~Button() {
   delete outMessage_;
 }
 
+//TODO: fix button activation
 void Button::update(float time) {
-  if (fabs(inMessage_->x - x_)<=30.0 && fabs(inMessage_->y - y_)<=30.0 && inMessage_->action == INTERACT) {
+  const float activation_distance = 30.0;
+  float sprite_width = sprite.getLocalBounds().width;
+  float sprite_height = sprite.getGlobalBounds().width;
+  if ((inMessage_->sprite_rect.left+inMessage_->sprite_rect.width - x_<=activation_distance || inMessage_->sprite_rect.left-x_+sprite_width<=activation_distance) && 
+    (inMessage_->sprite_rect.top+inMessage_->sprite_rect.height - y_<=activation_distance || inMessage_->sprite_rect.top-y_+sprite_height<=activation_distance) && 
+    inMessage_->action == INTERACT) {
+
     outMessage_->object_type = getType();
     outMessage_->action = ACTIVATE;
-    outMessage_->x = x_;
-    outMessage_->y = y_;
     inMessage_->action = NONE;
+
   }
 }
 
