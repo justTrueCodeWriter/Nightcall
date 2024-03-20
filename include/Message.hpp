@@ -2,6 +2,8 @@
 #define MESSAGE_HPP
 #include "SFML/Graphics.hpp"
 
+class Object;
+
 enum Action {
   NONE, 
   ATTACK,
@@ -15,8 +17,16 @@ enum Action {
 struct Message {
   char object_type;
   Action action;
-  //float x = 0, y = 0;
-  //float width = 0, height = 0;
+  union {
+    struct {
+      Object *who;
+    } died;
+    struct {
+      int direction;
+      float dmg;
+    } attack;
+  };
   sf::FloatRect sprite_rect;
+	Object* sender;
 };
 #endif

@@ -9,13 +9,9 @@ Swordsman::Swordsman(float x, float y) {
   sprite.setTextureRect(sf::IntRect(19, 35, 35, 29));
   sprite.scale(2, 2);
   sprite.setPosition(x_, y_); 
-  inMessage_ = new Message();
-  outMessage_ = new Message();
 }
 
 Swordsman::~Swordsman() {
-  delete inMessage_;
-  delete outMessage_;
   std::cout << "Deleted" << std::endl;
 }
 
@@ -57,4 +53,22 @@ void Swordsman::move(float time) {
   outMessage_->object_type = getType();
   outMessage_->action = ATTACK;
   outMessage_->sprite_rect = sprite.getGlobalBounds();
+}
+
+void Swordsman::sendMessage(Message* msg) {
+    if (msg->sender == this) return;
+    switch (msg->action)
+    {
+    case ATTACK:
+        if (dynamic_cast<Hero*> (msg->sender) == nullptr)
+            return;
+
+        //check collision of attack rect and my rect
+
+        break;
+
+    case MOVE:
+
+        break;
+    }
 }

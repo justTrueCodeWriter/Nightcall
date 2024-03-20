@@ -5,9 +5,10 @@
 #include "../include/Button.hpp"
 #include "../include/Door.hpp"
 #include "../include/UsualSpikes.hpp"
+
 #include <iostream>
-#include <string.h>
 #include <string>
+#include <algorithm>
 
 void Game::Level::initMap() {
   std::vector<std::string> map = {
@@ -145,27 +146,22 @@ void Game::gameLoop(sf::RenderWindow &window) {
 
     Camera.setCenter(objects[hero_index]->getSprite().getPosition());
 
-    int i = 0;
-    for (std::vector<Object*>::iterator it = objects.begin(); it != objects.end(); it++) {
-      Message *message = objects[i]->sendMessage(); 
-      if (message->action == DIED) {
-        it = objects.erase(it);
-      }
-      else {
-        message_buffer.push_back(message);
-      }
-      i++;
+    for (auto &obj : objects) {
+      obj->update(time);
     }
 
-    for (auto message : message_buffer) {
-      for (int i = 0; i < objects_amount; i++) {
-        //printf("%c %d %f %f\n", message.object_type, message.action, message.x, message.y);
-        objects[i]->getMessage(message);
-        objects[i]->update(time/(objects_amount*1.0));
+    while (!message_buffer.empty()) {
+      Message *msg = message_buffer.back();
+      message_buffer.pop_back();
+      if (msg->action == DIED) {
+        auto it = std::find(objects.begin(), objects.end(), msg->died.who);
+        objects.erase(it);
       }
+      for (auto obj : objects) {
+        obj->sendMessage(msg);
+      }
+      delete msg;
     }
-
-    message_buffer.clear();
 
     //collider.processCollision(objects, objects_amount, hero_index);
     

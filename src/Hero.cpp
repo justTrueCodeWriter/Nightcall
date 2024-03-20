@@ -8,16 +8,11 @@ Hero::Hero(float x, float y) {
   x_ = x, y_ = y;
   sprite.setTexture(*ResourceManager::getInstance().getTexture('H'));
   sprite.setPosition(x_, y_); 
-  inMessage_ = new Message();
-  outMessage_ = new Message();
   collide_rect = {x_, y_+sprite.getGlobalBounds().height, 10, 10};
 
 }
 
 Hero::~Hero() {
-  delete inMessage_;
-  delete outMessage_; 
-  std::cout << "Deleted" << std::endl;
 }
 
 void Hero::update(float time) { 
@@ -166,4 +161,8 @@ float Hero::dash(float time, bool &isAttack) {
   else if (side_ < 0)
     sprite.setTextureRect(sf::IntRect(33+(int(current_frame)*58)+58, 768, -58, 44));
   return run_speed_*3;
+}
+
+void Hero::sendMessage(Message* msg) {
+
 }

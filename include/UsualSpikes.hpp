@@ -6,4 +6,5 @@ class UsualSpikes : public Object {
     ~UsualSpikes();
     char getType();
     void update(float time);
+    void sendMessage(Message* msg);
 };

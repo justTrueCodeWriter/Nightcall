@@ -8,12 +8,9 @@ class Object {
     virtual ~Object(){};
 
     float x_ = 0, y_ = 0;
-    Message *inMessage_;
-    Message *outMessage_;
     sf::Sprite sprite;
 
-    void getMessage(Message *message){ inMessage_ = message; };
-    Message *sendMessage(){ return outMessage_; };
+    virtual void sendMessage(Message* msg);
     sf::Sprite getSprite(){ return sprite; };
     virtual void update(float time){};
     virtual char getType(){ return char(); };
