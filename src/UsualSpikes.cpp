@@ -6,13 +6,9 @@ UsualSpikes::UsualSpikes(float x, float y) {
   sprite.setTexture(*ResourceManager::getInstance().getTexture('^'));
   sprite.scale(0.65, 0.5);
   sprite.setPosition(x_, y_);
-  inMessage_ = new Message();
-  outMessage_ = new Message();
 }
 
 UsualSpikes::~UsualSpikes() {
-  delete inMessage_;
-  delete outMessage_;
 }
 
 char UsualSpikes::getType() { return '^'; }

@@ -7,6 +7,7 @@ class Hero : public Object {
 
     void update(float time);
     char getType();
+    void sendMessage(Message* msg);
 
   private:
     float walk_speed_ = 0.5;

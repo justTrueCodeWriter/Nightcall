@@ -7,13 +7,9 @@ Door::Door(float x, float y) {
   sprite.setTexture(*ResourceManager::getInstance().getTexture('d'));
   sprite.setTextureRect(sf::IntRect(7, 10, 53, 86));
   sprite.setPosition(x_, y_);
-  inMessage_ = new Message();
-  outMessage_ = new Message();
 }
 
 Door::~Door() {
-  delete inMessage_;
-  delete outMessage_;
 }
 
 void Door::update(float time) {
