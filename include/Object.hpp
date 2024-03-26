@@ -10,9 +10,8 @@ class Object {
     float x_ = 0, y_ = 0;
     sf::Sprite sprite;
 
-    virtual void sendMessage(Message* msg);
+    virtual void sendMessage(Message* message);
     sf::Sprite getSprite(){ return sprite; };
     virtual void update(float time){};
-    virtual char getType(){ return char(); };
 };
 #endif

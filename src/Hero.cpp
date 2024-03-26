@@ -1,4 +1,5 @@
 #include "../include/Hero.hpp"
+#include "../include/Game.hpp"
 #include "../include/ResourceManager.hpp"
 #include <iostream>
 #include <math.h>
@@ -20,39 +21,27 @@ void Hero::update(float time) {
   float sprite_x_center = x_+sprite.getGlobalBounds().width/2;
   float sprite_y_center = y_+sprite.getGlobalBounds().height/2;
 
-  if (inMessage_->sprite_rect.left <= sprite_x_center && (inMessage_->sprite_rect.left+inMessage_->sprite_rect.width >= sprite_x_center) && 
-      inMessage_->sprite_rect.top <= sprite_y_center && (inMessage_->sprite_rect.top+inMessage_->sprite_rect.height >= sprite_y_center) && 
-      inMessage_->action==ATTACK && inMessage_->object_type!=getType() && !isAttack) {
-    printf("Hero killed\n");
-    outMessage_->object_type = getType();
-    outMessage_->action = DIED;
-    outMessage_->sprite_rect = sprite.getGlobalBounds();
-    return; 
-  }
+  /* 
+   * if (collision_with_enemy and not attack)
+   *  
+   *  return;
+  */
   move(time, isAttack); 
 }
 
-char Hero::getType() { return 'H'; }
-
-void Hero::checkCollision() {
-    if (inMessage_->action == COLLIDE && inMessage_->sprite_rect.intersects(sprite.getGlobalBounds())) {
-      std::cout << "intersects" << std::endl;
-      isGround = true;
-    }
-}
+// char Hero::getType() { return 'H'; }
 
 void Hero::move(float time, bool& isAttack) {
   
     float speed = 0;
     static float current_frame = 0;
 
-    checkCollision();
-
 // ------------ INTERACTION WITH OBJECTS ON MAP -----------
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-     outMessage_->object_type = getType();
-     outMessage_->action = INTERACT;
-     outMessage_->sprite_rect = sprite.getGlobalBounds();
+     Game::getInstance()
+     // outMessage_->object_type = getType();
+     // outMessage_->action = INTERACT;
+     // outMessage_->sprite_rect = sprite.getGlobalBounds();
      usleep(50*1000);
     }
 // ------------ RUN LEFT -----------
@@ -95,17 +84,14 @@ void Hero::move(float time, bool& isAttack) {
     }
 // ------------ ATTACK -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || isAttack) {
-      outMessage_->object_type = getType();
-      outMessage_->action = ATTACK;
-      outMessage_->sprite_rect = sprite.getGlobalBounds();
+      // outMessage_->object_type = getType();
+      // outMessage_->action = ATTACK;
+      // outMessage_->sprite_rect = sprite.getGlobalBounds();
       speed = dash(time, isAttack);
     }
 // ------------ JUMP -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
       isGround = false;
-      if (inMessage_->action == COLLIDE)
-        y_ -= 0.5 * time;
-      else {
         y_ -= 0.9*time;
         current_frame += 0.01*time;
         if (current_frame > 4) current_frame = 0;
@@ -113,7 +99,6 @@ void Hero::move(float time, bool& isAttack) {
           sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32), 650, 32, 44));
         else if  (side_ < 0)
           sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32)+32, 650, -32, 44));
-      }
     }
 // ------------ FLY DOWN(TEMPORERILY) -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
@@ -122,14 +107,14 @@ void Hero::move(float time, bool& isAttack) {
 // ------------ STAY STILL -----------
     else {
       current_frame += 0.01*time;
-      if (inMessage_->action == COLLIDE) {
-        if (current_frame > 12) current_frame = 0;
-        if (side_ > 0)
-          sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*36), 244, 36, 44));
-        else if  (side_ < 0)
-          sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*36)+36, 244, -36, 44));
-      }
-      else {
+      // if (inMessage_->action == COLLIDE) {
+      //   if (current_frame > 12) current_frame = 0;
+      //   if (side_ > 0)
+      //     sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*36), 244, 36, 44));
+      //   else if  (side_ < 0)
+      //     sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*36)+36, 244, -36, 44));
+      // }
+      // else {
         if (current_frame > 4) current_frame = 0;
         if (side_ > 0) {
           sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32), 650, 32, 44));
@@ -137,13 +122,10 @@ void Hero::move(float time, bool& isAttack) {
         else if  (side_ < 0) {
           sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32)+32, 650, -32, 44));
         }
-      }
     }
 
     x_ += side_*speed*time;
-    if ((isGround==false) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)==false))
-    //if (inMessage_->action == COLLIDE && inMessage_->sprite_rect.intersects(sprite.getGlobalBounds())==false && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)==false))
-      y_ += 0.9*time;
+    y_ += 0.9*time;
     sprite.setPosition(x_, y_); 
 }
 
@@ -163,6 +145,6 @@ float Hero::dash(float time, bool &isAttack) {
   return run_speed_*3;
 }
 
-void Hero::sendMessage(Message* msg) {
+void Hero::sendMessage(Message* message) {
 
 }

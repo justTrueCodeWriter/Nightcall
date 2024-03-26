@@ -6,5 +6,5 @@ class Button : public Object {
     ~Button();
 
     void update(float time);
-    char getType();
+    void sendMessage(Message* message);
 };

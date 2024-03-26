@@ -7,6 +7,5 @@ class UsualTile : public Object {
     UsualTile(float x, float y);
     ~UsualTile();
 
-    void update(float time);
-    char getType();
+    void update(float time){};
 };

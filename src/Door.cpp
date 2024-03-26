@@ -14,11 +14,6 @@ Door::~Door() {
 
 void Door::update(float time) {
 
-  if (fabs(inMessage_->sprite_rect.left - x_)<=64.0 && fabs(inMessage_->sprite_rect.top - y_)<=32.0 && inMessage_->object_type == 'b' && inMessage_->action == ACTIVATE) {
-    isOpen = !isOpen;
-    inMessage_->action = NONE;
-  }
-
   if (isOpen) {
     sprite.setTextureRect(sf::IntRect(415, 106, 53, 86));
   }
@@ -27,4 +22,13 @@ void Door::update(float time) {
   }
 }
 
-char Door::getType() { return 'd'; }
+// char Door::getType() { return 'd'; }
+
+void Door::sendMessage(Message* message) {
+    if (message->sender == this) return;
+    switch (message->action) {
+      case ACTIVATE:
+
+        break;
+    }
+}

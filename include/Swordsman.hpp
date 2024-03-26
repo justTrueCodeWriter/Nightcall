@@ -6,8 +6,7 @@ class Swordsman : public Object {
     ~Swordsman();
 
     void update(float time);
-    char getType();
-    void sendMessage(Message* msg);
+    void sendMessage(Message* message);
 
   private:
     short side_ = 1;

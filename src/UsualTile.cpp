@@ -1,6 +1,6 @@
 #include "../include/UsualTile.hpp"
 #include "../include/ResourceManager.hpp"
-#include "iostream"
+#include <iostream>
 
 UsualTile::UsualTile(float x, float y) {
   x_ = x, y_ = y;
@@ -12,10 +12,4 @@ UsualTile::UsualTile(float x, float y) {
 UsualTile::~UsualTile() {
 }
 
-char UsualTile::getType() { return '='; }
-
-void UsualTile::update(float time) {
-  outMessage_->object_type = getType();
-  outMessage_->action = COLLIDE;
-  outMessage_->sprite_rect = sprite.getGlobalBounds();
-}
+// char UsualTile::getType() { return '='; }

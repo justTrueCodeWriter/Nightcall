@@ -28,7 +28,7 @@ void Swordsman::update(float time) {
     move(time);
 }
 
-char Swordsman::getType() { return 'S'; }
+// char Swordsman::getType() { return 'S'; }
 
 void Swordsman::move(float time) {
   float frame_life = 12;
@@ -50,17 +50,17 @@ void Swordsman::move(float time) {
 
   sprite.setPosition(x_, y_);
 
-  outMessage_->object_type = getType();
-  outMessage_->action = ATTACK;
-  outMessage_->sprite_rect = sprite.getGlobalBounds();
+  // outMessage_->object_type = getType();
+  // outMessage_->action = ATTACK;
+  // outMessage_->sprite_rect = sprite.getGlobalBounds();
 }
 
-void Swordsman::sendMessage(Message* msg) {
-    if (msg->sender == this) return;
-    switch (msg->action)
+void Swordsman::sendMessage(Message* message) {
+    if (message->sender == this) return;
+    switch (message->action)
     {
     case ATTACK:
-        if (dynamic_cast<Hero*> (msg->sender) == nullptr)
+        if (dynamic_cast<Hero*> (message->sender) == nullptr)
             return;
 
         //check collision of attack rect and my rect

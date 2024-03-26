@@ -1,6 +1,5 @@
 #include "../include/Game.hpp"
 #include "../include/Hero.hpp"
-#include "../include/UsualTile.hpp"
 #include "../include/Swordsman.hpp"
 #include "../include/Button.hpp"
 #include "../include/Door.hpp"
@@ -71,8 +70,7 @@ int Game::initObjects() {
           objects.push_back(new Hero(j*64, i*64));
           break;
         case '=':
-          objects.push_back(new UsualTile(j*64, i*64));
-          objects_counter++;
+          tiles.push_back(new UsualTile(j*64, i*64));
           break;
         case 'S':
           objects.push_back(new Swordsman(j*64, i*64));
@@ -93,31 +91,12 @@ int Game::initObjects() {
       }
     }
   }
-  /*
-  int map_w = sizeof(map_mask[0])/sizeof(char);
-  int entrances_count = 0;
-  for (int i = 0; i < possible_objects.size(); i++) {
-    for (int j = 0; j < map_w; j++) {
-      if (strchr(map_mask[j], possible_objects[i])) {
-       entrances_count++;
-      }
-    }
-    if (entrances_count) {}
-  }*/
 
   return objects.size();
 }
 
 void Game::deInitObjects() {
   objects.clear();
-}
-
-void Game::Collider::processCollision(std::vector<Object*> objects, int objects_amount, int hero_index) {
-  std::string title = "collide ";
-    for (int i = 0; i < objects_amount; i++) {
-      if (i != hero_index && objects[i]->getSprite().getGlobalBounds().intersects(objects[hero_index]->getSprite().getGlobalBounds())) {
-        }
-    }
 }
 
 void Game::gameLoop(sf::RenderWindow &window) {
@@ -151,19 +130,18 @@ void Game::gameLoop(sf::RenderWindow &window) {
     }
 
     while (!message_buffer.empty()) {
-      Message *msg = message_buffer.back();
+      Message *message = message_buffer.back();
       message_buffer.pop_back();
-      if (msg->action == DIED) {
-        auto it = std::find(objects.begin(), objects.end(), msg->died.who);
+      if (message->action == DIED) {
+        auto it = std::find(objects.begin(), objects.end(), message->died.who);
         objects.erase(it);
       }
       for (auto obj : objects) {
-        obj->sendMessage(msg);
+        obj->sendMessage(message);
       }
-      delete msg;
+      delete message;
     }
 
-    //collider.processCollision(objects, objects_amount, hero_index);
     
     window.setView(Camera);
     window.clear(sf::Color::Black);  

@@ -6,8 +6,7 @@ class Hero : public Object {
     ~Hero();
 
     void update(float time);
-    char getType();
-    void sendMessage(Message* msg);
+    void sendMessage(Message* message);
 
   private:
     float walk_speed_ = 0.5;
@@ -17,7 +16,6 @@ class Hero : public Object {
 
     sf::FloatRect collide_rect;
 
-    void checkCollision();
     void move(float time, bool& isAttack);
     void jump();
     float dash(float time, bool &isAttack);

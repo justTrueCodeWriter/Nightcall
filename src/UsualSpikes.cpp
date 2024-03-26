@@ -11,10 +11,10 @@ UsualSpikes::UsualSpikes(float x, float y) {
 UsualSpikes::~UsualSpikes() {
 }
 
-char UsualSpikes::getType() { return '^'; }
+// char UsualSpikes::getType() { return '^'; }
 
 void UsualSpikes::update(float time) {
-  outMessage_->object_type = getType();
-  outMessage_->action = ATTACK;
-  outMessage_->sprite_rect = sprite.getGlobalBounds();
+  // outMessage_->object_type = getType();
+  // outMessage_->action = ATTACK;
+  // outMessage_->sprite_rect = sprite.getGlobalBounds();
 }

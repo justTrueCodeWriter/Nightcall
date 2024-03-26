@@ -6,6 +6,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include "Object.hpp"
+#include "UsualTile.hpp"
 #include "ResourceManager.hpp"
 #include "Message.hpp"
 #include <vector>
@@ -22,6 +23,7 @@ class Game
     void gameLoop(sf::RenderWindow &window);
     int initObjects();
     void deInitObjects();
+    void sendMessage(Message* message);
 
     class Level {
       public:
@@ -32,19 +34,13 @@ class Game
         std::vector<std::string> map_mask;
     };
 
-    class Collider {
-      public:
-        void processCollision(std::vector <Object*> objects, int objects_amount, int hero_index);
-      private:
-    };
-
   private:
     Game(){}; 
     Game(const Game&){};
 
     Level level;
-    Collider collider;
     std::vector <Object*> objects;
+    std::vector<UsualTile*> tiles;
     std::list<Message*> message_buffer;
     int hero_index = 0;
 };
