@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include "Message.hpp"
 
+//TODO: fix object symlinks
+
 class Object {
   public:
     virtual ~Object(){};

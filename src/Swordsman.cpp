@@ -1,5 +1,6 @@
 #include "../include/Swordsman.hpp"
 #include "../include/ResourceManager.hpp"
+#include "../include/Hero.hpp"
 #include <iostream>
 #include <math.h>
 
@@ -17,14 +18,6 @@ Swordsman::~Swordsman() {
 
 void Swordsman::update(float time) {
   const float defeat_distance = 30.0;
-  if (fabs(inMessage_->sprite_rect.left - x_)<=defeat_distance && fabs(inMessage_->sprite_rect.top - y_)<=defeat_distance && inMessage_->object_type == 'H' && inMessage_->action == ATTACK) {
-    printf("Swordsman killed\n");
-    outMessage_->object_type = getType();
-    outMessage_->action = DIED;
-    outMessage_->sprite_rect = sprite.getGlobalBounds();
-    return;
-  }
-  if (outMessage_->action!=DIED)
     move(time);
 }
 

@@ -38,7 +38,7 @@ void Hero::move(float time, bool& isAttack) {
 
 // ------------ INTERACTION WITH OBJECTS ON MAP -----------
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-     Game::getInstance()
+     Game::getInstance();
      // outMessage_->object_type = getType();
      // outMessage_->action = INTERACT;
      // outMessage_->sprite_rect = sprite.getGlobalBounds();
