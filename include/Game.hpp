@@ -21,7 +21,7 @@ class Game
     }
 
     void gameLoop(sf::RenderWindow &window);
-    int initObjects();
+    void initObjects();
     void deInitObjects();
     void sendMessage(Message* message);
 

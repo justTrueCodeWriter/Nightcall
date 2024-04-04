@@ -18,3 +18,7 @@ void UsualSpikes::update(float time) {
   // outMessage_->action = ATTACK;
   // outMessage_->sprite_rect = sprite.getGlobalBounds();
 }
+
+void UsualSpikes::sendMessage(Message* message) {
+
+}

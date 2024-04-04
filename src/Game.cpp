@@ -6,49 +6,22 @@
 #include "../include/UsualSpikes.hpp"
 
 #include <iostream>
+#include <ostream>
 #include <string>
 #include <algorithm>
+#include <fstream>
 
 void Game::Level::initMap() {
-  std::vector<std::string> map = {
-                      "===============================================================",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=     H                                                       =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=                                                             =",
-                      "=     =                                                       =",
-                      "=      =                                                      =",
-                      "=       =                                                     =",
-                      "=        =           =                                        =",
-                      "=         =  S      bd                                        =",
-                      "==========================^===================================="
-                    }; 
+  std::ifstream fin;
+  std::string line;
 
-  map_mask.swap(map);
+  fin.open("media/maps/map.txt");
+
+  while (std::getline(fin, line))
+    map_mask.push_back(line);
+
+  fin.close();
+
 }
 
 std::vector<std::string>* Game::Level::getMapMask() { return &map_mask; }
@@ -57,10 +30,12 @@ void Game::Level::deInitMap() {
   map_mask.clear();
 }
 
-int Game::initObjects() {
+void Game::initObjects() {
   static int objects_counter = 0;
-  level.initMap();
-  std::vector<std::string> map_mask = *level.getMapMask();
+  level.initMap();  
+  std::vector<std::string> map_mask = *level.getMapMask(); 
+
+  //FIXME: fix fixMapMask termination
 
   for (int i = 0; i < 35; i++) {
     for (int j = 0; j < 63; j++) {
@@ -92,7 +67,6 @@ int Game::initObjects() {
     }
   }
 
-  return objects.size();
 }
 
 void Game::deInitObjects() {
@@ -106,7 +80,7 @@ void Game::gameLoop(sf::RenderWindow &window) {
 
   sf::Clock clock;
   
-  int objects_amount = initObjects();
+  initObjects();
 
   sf::View Camera(sf::FloatRect(0, 0, 600, 300));
 
@@ -146,8 +120,10 @@ void Game::gameLoop(sf::RenderWindow &window) {
     window.setView(Camera);
     window.clear(sf::Color::Black);  
     //window.draw(backgroundSprite);
-    for (int i = 0; i < objects_amount; i++) 
-      window.draw(objects[i]->getSprite());
+    for (auto object : objects) 
+      window.draw(object->getSprite());
+    for (auto tile : tiles)
+      window.draw(tile->getSprite());
     window.display();
   }
 }

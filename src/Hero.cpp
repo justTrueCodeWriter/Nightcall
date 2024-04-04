@@ -125,7 +125,7 @@ void Hero::move(float time, bool& isAttack) {
     }
 
     x_ += side_*speed*time;
-    y_ += 0.9*time;
+    //y_ += 0.9*time;
     sprite.setPosition(x_, y_); 
 }
 
