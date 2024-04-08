@@ -6,12 +6,13 @@
 #include "../include/UsualSpikes.hpp"
 
 #include <iostream>
-#include <ostream>
 #include <string>
 #include <algorithm>
 #include <fstream>
+#include <vector>
 
 void Game::Level::initMap() {
+  std::vector<std::string> map;
   std::ifstream fin;
   std::string line;
 
@@ -35,10 +36,8 @@ void Game::initObjects() {
   level.initMap();  
   std::vector<std::string> map_mask = *level.getMapMask(); 
 
-  //FIXME: fix fixMapMask termination
-
-  for (int i = 0; i < 35; i++) {
-    for (int j = 0; j < 63; j++) {
+  for (int i = 0; i < 34; i++) {
+    for (int j = 0; j < 65; j++) {
       switch (map_mask[i][j]) {
         case'H':
           hero_index = objects_counter;
