@@ -9,5 +9,5 @@ class Button : public Object {
     void sendMessage(Message* message);
   private:
     static int id_counter;
-    int id;
+    int id = 0;
 };

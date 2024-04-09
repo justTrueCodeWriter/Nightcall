@@ -74,6 +74,11 @@ void Game::deInitObjects() {
   objects.clear();
 }
 
+void Game::sendMessage(Message* message) { 
+  message_buffer.push_back(message); 
+  std::cout << message_buffer.size() << std::endl;
+}
+
 void Game::gameLoop(sf::RenderWindow &window) {
 
   sf::Sprite backgroundSprite(*ResourceManager::getInstance().getTexture('B'));

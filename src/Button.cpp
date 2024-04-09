@@ -1,5 +1,6 @@
 #include "../include/Button.hpp"
 #include "../include/ResourceManager.hpp"
+#include "../include/Game.hpp"
 #include <iostream>
 
 int Button::id_counter = 0;
@@ -10,7 +11,6 @@ Button::Button(float x, float y) {
   sprite.setTexture(*ResourceManager::getInstance().getTexture('b'));
   sprite.scale(0.08, 0.08);
   sprite.setPosition(x_, y_);
-  std::cout << id << std::endl;
   id_counter++;
 }
 Button::~Button() {
@@ -29,8 +29,15 @@ void Button::sendMessage(Message* message) {
 
     if (message->sender == this) return;
     switch (message->action) {
-      case ACTIVATE:
-        
+      case INTERACT:
+        std::cout << "INTERACT" << std::endl;
+        if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) {
+          Message* msg = new Message;
+          msg->action = ACTIVATE;
+          msg->sender = this;
+          msg->activate.id = id;
+          Game::getInstance().sendMessage(msg);
+        }
         break;
     }
 }

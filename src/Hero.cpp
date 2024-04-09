@@ -21,15 +21,8 @@ void Hero::update(float time) {
   float sprite_x_center = x_+sprite.getGlobalBounds().width/2;
   float sprite_y_center = y_+sprite.getGlobalBounds().height/2;
 
-  /* 
-   * if (collision_with_enemy and not attack)
-   *  
-   *  return;
-  */
   move(time, isAttack); 
 }
-
-// char Hero::getType() { return 'H'; }
 
 void Hero::move(float time, bool& isAttack) {
   
@@ -38,10 +31,10 @@ void Hero::move(float time, bool& isAttack) {
 
 // ------------ INTERACTION WITH OBJECTS ON MAP -----------
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-     Game::getInstance();
-     // outMessage_->object_type = getType();
-     // outMessage_->action = INTERACT;
-     // outMessage_->sprite_rect = sprite.getGlobalBounds();
+     Message *message = new Message;
+     message->action = INTERACT;
+     message->sender = this;
+     Game::getInstance().sendMessage(message);
      usleep(50*1000);
     }
 // ------------ RUN LEFT -----------
@@ -66,7 +59,7 @@ void Hero::move(float time, bool& isAttack) {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
       isAttack = false;
       side_ = -1;
-      speed = walk_speed_/2;
+      speed = walk_speed_/2.0;
       
       current_frame += 0.008*time;
       if (current_frame > 8) current_frame = 0;
@@ -76,7 +69,7 @@ void Hero::move(float time, bool& isAttack) {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
       isAttack = false;
       side_ = 1;
-      speed = walk_speed_/2;
+      speed = walk_speed_/2.0;
 
       current_frame += 0.008*time;
       if (current_frame > 8) current_frame = 0;
@@ -84,9 +77,10 @@ void Hero::move(float time, bool& isAttack) {
     }
 // ------------ ATTACK -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || isAttack) {
-      // outMessage_->object_type = getType();
-      // outMessage_->action = ATTACK;
-      // outMessage_->sprite_rect = sprite.getGlobalBounds();
+      Message* message = new Message;
+      message->action = ATTACK;
+      message->sender = this;
+      Game::getInstance().sendMessage(message);
       speed = dash(time, isAttack);
     }
 // ------------ JUMP -----------

@@ -9,5 +9,7 @@ class Door : public Object {
     void sendMessage(Message* message);
   private:
     bool isOpen = false;
+    static int id_counter;
+    int id = 0;
 
 };

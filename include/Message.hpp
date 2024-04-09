@@ -5,28 +5,33 @@
 class Object;
 
 enum Action {
-  NONE, 
-  ATTACK,
-  INTERACT,
-  ACTIVATE,
+  ACTIVATE, // DOOR/TRAP
+  ATTACK, 
   DIED,
-  COLLIDE,
+  INTERACT,// WITH BUTTON/TILE
   MOVE
 };
 
 struct Message {
-  char object_type;
+  Message(){};
   Action action;
+	Object* sender;
   union {
     struct {
-      Object *who;
-    } died;
+      int id = 0;
+    } activate;
     struct {
       int direction;
       float dmg;
     } attack;
+    struct {
+      Object *who;
+    } died;
+    struct {
+    } interact;
+    struct {
+      
+    } move;
   };
-  sf::FloatRect sprite_rect;
-	Object* sender;
 };
 #endif
