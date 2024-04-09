@@ -3,14 +3,14 @@
 #include <iostream>
 
 Button::Button(float x, float y) {
-  id_counter = 0;
-  id = id_counter;
+  //id_counter = 0;
+  //id = id_counter;
   x_ = x, y_ = y;
   sprite.setTexture(*ResourceManager::getInstance().getTexture('b'));
   sprite.scale(0.08, 0.08);
   sprite.setPosition(x_, y_);
   std::cout << id << std::endl;
-  id_counter++;
+  //id_counter++;
 }
 Button::~Button() {
 }

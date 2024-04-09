@@ -35,9 +35,11 @@ void Game::initObjects() {
   static int objects_counter = 0;
   level.initMap();  
   std::vector<std::string> map_mask = *level.getMapMask(); 
+  int map_height = map_mask.size();
+  int map_width = map_mask[0].size();
 
-  for (int i = 0; i < 34; i++) {
-    for (int j = 0; j < 65; j++) {
+  for (int i = 0; i < map_height; i++) {
+    for (int j = 0; j < map_width; j++) {
       switch (map_mask[i][j]) {
         case'H':
           hero_index = objects_counter;
