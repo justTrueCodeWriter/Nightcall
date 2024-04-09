@@ -17,14 +17,13 @@ Hero::~Hero() {
 }
 
 void Hero::update(float time) { 
-  static bool isAttack = false;
   float sprite_x_center = x_+sprite.getGlobalBounds().width/2;
   float sprite_y_center = y_+sprite.getGlobalBounds().height/2;
 
-  move(time, isAttack); 
+  move(time); 
 }
 
-void Hero::move(float time, bool& isAttack) {
+void Hero::move(float time) {
   
     float speed = 0;
     static float current_frame = 0;
@@ -81,7 +80,7 @@ void Hero::move(float time, bool& isAttack) {
       message->action = ATTACK;
       message->sender = this;
       Game::getInstance().sendMessage(message);
-      speed = dash(time, isAttack);
+      speed = dash(time);
     }
 // ------------ JUMP -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
@@ -123,7 +122,7 @@ void Hero::move(float time, bool& isAttack) {
     sprite.setPosition(x_, y_); 
 }
 
-float Hero::dash(float time, bool &isAttack) {
+float Hero::dash(float time) {
   static float current_frame = 0;  
   isAttack = true;
 
@@ -140,5 +139,18 @@ float Hero::dash(float time, bool &isAttack) {
 }
 
 void Hero::sendMessage(Message* message) {
+  if (message->sender == this) return;
 
+  switch (message->action) {
+    case ATTACK:
+      if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds()) &&
+          !isAttack) {
+        Message* msg = new Message;
+        msg->action = DIED;
+        msg->sender = this;
+        msg->died.who = this;
+        Game::getInstance().sendMessage(msg);
+      }
+      break;
+  }
 }

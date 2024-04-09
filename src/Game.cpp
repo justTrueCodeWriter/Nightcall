@@ -74,10 +74,7 @@ void Game::deInitObjects() {
   objects.clear();
 }
 
-void Game::sendMessage(Message* message) { 
-  message_buffer.push_back(message); 
-  std::cout << message_buffer.size() << std::endl;
-}
+void Game::sendMessage(Message *message) { message_buffer.push_back(message); }
 
 void Game::gameLoop(sf::RenderWindow &window) {
 
@@ -103,7 +100,7 @@ void Game::gameLoop(sf::RenderWindow &window) {
       }
     } 
 
-    Camera.setCenter(objects[hero_index]->getSprite().getPosition());
+    Camera.setCenter(objects[hero_index]->getSprite().getPosition()); // FIXME: FIX HERO INDEX DETECTION
 
     for (auto &obj : objects) {
       obj->update(time);

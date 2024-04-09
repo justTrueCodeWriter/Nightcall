@@ -13,11 +13,12 @@ class Hero : public Object {
     float run_speed_ = 0.6;
     short side_ = 1;
     bool isGround = false;
+    bool isAttack = false;
 
     sf::FloatRect collide_rect;
 
-    void move(float time, bool& isAttack);
+    void move(float time);
     void jump();
-    float dash(float time, bool &isAttack);
+    float dash(float time);
 
 };

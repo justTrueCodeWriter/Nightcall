@@ -1,6 +1,7 @@
 #include "../include/Swordsman.hpp"
 #include "../include/ResourceManager.hpp"
 #include "../include/Hero.hpp"
+#include "../include/Game.hpp"
 #include <iostream>
 #include <math.h>
 
@@ -26,7 +27,12 @@ void Swordsman::update(float time) {
 void Swordsman::move(float time) {
   float frame_life = 12;
   static float current_frame = 0;
- 
+
+  Message* message = new Message;
+  message->action = ATTACK;
+  message->sender = this;
+  Game::getInstance().sendMessage(message);
+
   if (current_frame > frame_life) {
     current_frame = 0;
     side_ = -side_;
@@ -53,12 +59,19 @@ void Swordsman::sendMessage(Message* message) {
     switch (message->action)
     {
     case ATTACK:
+      if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) {
         if (dynamic_cast<Hero*> (message->sender) == nullptr)
             return;
+        Message* msg = new Message;
+        msg->action = DIED;
+        msg->sender = this;
+        msg->died.who = this;
+        Game::getInstance().sendMessage(msg);
 
+      }
         //check collision of attack rect and my rect
 
-        break;
+      break;
 
     case MOVE:
 
