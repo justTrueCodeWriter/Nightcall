@@ -1,5 +1,6 @@
 #include "../include/UsualSpikes.hpp"
 #include "../include/ResourceManager.hpp"
+#include "../include/Game.hpp"
 
 UsualSpikes::UsualSpikes(float x, float y) {
   x_ = x, y_ = y; 
@@ -11,12 +12,11 @@ UsualSpikes::UsualSpikes(float x, float y) {
 UsualSpikes::~UsualSpikes() {
 }
 
-// char UsualSpikes::getType() { return '^'; }
-
 void UsualSpikes::update(float time) {
-  // outMessage_->object_type = getType();
-  // outMessage_->action = ATTACK;
-  // outMessage_->sprite_rect = sprite.getGlobalBounds();
+  Message* message = new Message;
+  message->action = ATTACK;
+  message->sender = this;
+  Game::getInstance().sendMessage(message);
 }
 
 void UsualSpikes::sendMessage(Message* message) {

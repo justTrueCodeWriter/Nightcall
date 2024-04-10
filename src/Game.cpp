@@ -100,7 +100,7 @@ void Game::gameLoop(sf::RenderWindow &window) {
       }
     } 
 
-    Camera.setCenter(objects[hero_index]->getSprite().getPosition()); // FIXME: FIX HERO INDEX DETECTION
+    Camera.setCenter(objects[hero_index]->getSprite().getPosition()); 
 
     for (auto &obj : objects) {
       obj->update(time);
@@ -112,6 +112,11 @@ void Game::gameLoop(sf::RenderWindow &window) {
       if (message->action == DIED) {
         auto it = std::find(objects.begin(), objects.end(), message->died.who);
         objects.erase(it);
+        hero_index = 0;
+        for (auto obj : objects) {
+          if (dynamic_cast<Hero*>(obj)) break;
+          hero_index++;
+        }
       }
       for (auto obj : objects) {
         obj->sendMessage(message);

@@ -34,7 +34,7 @@ void Hero::move(float time) {
      message->action = INTERACT;
      message->sender = this;
      Game::getInstance().sendMessage(message);
-     usleep(50*1000);
+     usleep(60*1000);
     }
 // ------------ RUN LEFT -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {

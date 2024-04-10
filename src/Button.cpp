@@ -30,7 +30,6 @@ void Button::sendMessage(Message* message) {
     if (message->sender == this) return;
     switch (message->action) {
       case INTERACT:
-        std::cout << "INTERACT" << std::endl;
         if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) {
           Message* msg = new Message;
           msg->action = ACTIVATE;
