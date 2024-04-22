@@ -11,7 +11,8 @@ ResourceManager::ResourceManager() {
     "media/img/swordsman.png",
     "media/img/button.png",
     "media/img/door.png",
-    "media/img/usual_spikes.png"};
+    "media/img/usual_spikes.png",
+    "media/img/shooter.png"};
 
   for (auto filename : filenames) {
     sf::Texture texture;

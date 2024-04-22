@@ -1,34 +1,32 @@
-#include "../include/Swordsman.hpp"
+#include "../include/Shooter.hpp"
 #include "../include/ResourceManager.hpp"
 #include "../include/Hero.hpp"
 #include "../include/Game.hpp"
 
-Swordsman::Swordsman(float x, float y) {
+Shooter::Shooter(float x, float y) {
   x_ = x, y_ = y;
-  sprite.setTexture(*ResourceManager::getInstance().getTexture('S'));
-  sprite.setTextureRect(sf::IntRect(19, 35, 35, 29));
-  sprite.scale(2, 2);
+  sprite.setTexture(*ResourceManager::getInstance().getTexture('s'));
+  sprite.setTextureRect(sf::IntRect(198, 164, 36, 27));
+  sprite.scale(2.5, 2.5);
   sprite.setPosition(x_, y_); 
 }
 
-Swordsman::~Swordsman() {
+Shooter::~Shooter() {
 }
 
-void Swordsman::update(float time) {
+void Shooter::update(float time) {
   const float defeat_distance = 30.0;
     move(time);
 }
 
-// char Swordsman::getType() { return 'S'; }
-
-void Swordsman::move(float time) {
+void Shooter::move(float time) {
   float frame_life = 12;
   static float current_frame = 0;
 
-  Message* message = new Message;
+/*   Message* message = new Message;
   message->action = ATTACK;
   message->sender = this;
-  Game::getInstance().sendMessage(message);
+  Game::getInstance().sendMessage(message); */
 
   if (current_frame > frame_life) {
     current_frame = 0;
@@ -36,22 +34,18 @@ void Swordsman::move(float time) {
   }
   current_frame += 0.03*time;
   if (side_ > 0)
-    sprite.setTextureRect(sf::IntRect(19, 35, 35, 29));
+    sprite.setTextureRect(sf::IntRect(178, 164, -36, 27));
   else if (side_ < 0) {
-    sprite.setTextureRect(sf::IntRect(19, 35, 35, 29)); 
+    sprite.setTextureRect(sf::IntRect(198, 164, 36, 27)); 
   }
 
   x_+=side_*speed*time;
-  //std::cout << x_ << std::endl;
 
   sprite.setPosition(x_, y_);
 
-  // outMessage_->object_type = getType();
-  // outMessage_->action = ATTACK;
-  // outMessage_->sprite_rect = sprite.getGlobalBounds();
 }
 
-void Swordsman::sendMessage(Message* message) {
+void Shooter::sendMessage(Message* message) {
     if (message->sender == this) return;
     switch (message->action)
     {

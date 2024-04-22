@@ -1,6 +1,7 @@
 #include "../include/Game.hpp"
 #include "../include/Hero.hpp"
 #include "../include/Swordsman.hpp"
+#include "../include/Shooter.hpp"
 #include "../include/Button.hpp"
 #include "../include/Door.hpp"
 #include "../include/UsualSpikes.hpp"
@@ -41,7 +42,7 @@ void Game::initObjects() {
   for (int i = 0; i < map_height; i++) {
     for (int j = 0; j < map_width; j++) {
       switch (map_mask[i][j]) {
-        case'H':
+        case 'H':
           hero_index = objects_counter;
           objects.push_back(new Hero(j*64, i*64));
           break;
@@ -62,6 +63,10 @@ void Game::initObjects() {
           break;
         case '^':
           objects.push_back(new UsualSpikes(j*64, i*64));
+          objects_counter++;
+          break;
+        case 's':
+          objects.push_back(new Shooter(j*64, i*64));
           objects_counter++;
           break;
       }
