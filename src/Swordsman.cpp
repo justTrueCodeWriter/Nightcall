@@ -69,9 +69,9 @@ void Swordsman::sendMessage(Message* message) {
         //check collision of attack rect and my rect
 
       break;
-
     case MOVE:
-
+        break;
+    default:
         break;
     }
 }

@@ -6,7 +6,6 @@
 #include "../include/Door.hpp"
 #include "../include/UsualSpikes.hpp"
 
-#include <iostream>
 #include <string>
 #include <algorithm>
 #include <fstream>
@@ -122,6 +121,9 @@ void Game::gameLoop(sf::RenderWindow &window) {
           if (dynamic_cast<Hero*>(obj)) break;
           hero_index++;
         }
+      }
+      for (auto tile : tiles) {
+        tile->sendMessage(message);
       }
       for (auto obj : objects) {
         obj->sendMessage(message);

@@ -1,9 +1,8 @@
 #include "../include/Hero.hpp"
 #include "../include/Game.hpp"
 #include "../include/ResourceManager.hpp"
-#include <iostream>
-#include <math.h>
 #include <unistd.h>
+#include <iostream>
 
 Hero::Hero(float x, float y) {
   x_ = x, y_ = y;
@@ -118,7 +117,15 @@ void Hero::move(float time) {
     }
 
     x_ += side_*speed*time;
-    //y_ += 0.9*time;
+    if (!isGround)
+      //y_ += 0.9*time;
+    if (speed != 0) {
+      Message *message = new Message;
+      message->action = MOVE;
+      message->sender = this;
+      Game::getInstance().sendMessage(message);
+      std::cout << x_ << "MOVE" << y_ << std::endl;
+    }
     sprite.setPosition(x_, y_); 
 }
 
@@ -151,6 +158,11 @@ void Hero::sendMessage(Message* message) {
         msg->died.who = this;
         Game::getInstance().sendMessage(msg);
       }
+      break;
+    case COLLIDE:
+      if (message->collide.direction == UP)
+        isGround = true;
+    default:
       break;
   }
 }

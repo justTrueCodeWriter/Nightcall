@@ -1,6 +1,5 @@
 #ifndef MESSAGE_HPP
 #define MESSAGE_HPP
-#include "SFML/Graphics.hpp"
 
 class Object;
 
@@ -9,7 +8,15 @@ enum Action {
   ATTACK, 
   DIED,
   INTERACT,// WITH BUTTON/TILE
-  MOVE
+  MOVE,
+  COLLIDE
+};
+
+enum Direction {
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT
 };
 
 struct Message {
@@ -30,8 +37,10 @@ struct Message {
     struct {
     } interact;
     struct {
-      
     } move;
+    struct {
+      Direction direction;
+    } collide;
   };
 };
 #endif
