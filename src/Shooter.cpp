@@ -11,9 +11,6 @@ Shooter::Shooter(float x, float y) {
   sprite.setPosition(x_, y_); 
 }
 
-Shooter::~Shooter() {
-}
-
 void Shooter::update(float time) {
   const float defeat_distance = 30.0;
     move(time);
@@ -58,7 +55,6 @@ void Shooter::sendMessage(Message* message) {
         msg->sender = this;
         msg->died.who = this;
         Game::getInstance().sendMessage(msg);
-
       }
         //check collision of attack rect and my rect
 
@@ -66,6 +62,8 @@ void Shooter::sendMessage(Message* message) {
 
     case MOVE:
 
+        break;
+    default:
         break;
     }
 }

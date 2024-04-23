@@ -1,14 +1,14 @@
 #include "Object.hpp"
 
-class Shooter : public Object {
+class Projectile : public Object {
   public:
-    Shooter(float x, float y);
+    Projectile(float x, float y);
 
     void update(float time);
     void sendMessage(Message* message);
 
   private:
     short side_ = 1;
-    float speed = 0.2;
+    float speed = 0.5;
     void move(float time);
 };

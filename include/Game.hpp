@@ -24,6 +24,7 @@ class Game
     void initObjects();
     void deInitObjects();
     void sendMessage(Message* message);
+    void push_object(Object* object);
 
     class Level {
       public:

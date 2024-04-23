@@ -78,6 +78,10 @@ void Game::deInitObjects() {
   objects.clear();
 }
 
+void Game::push_object(Object* object) {
+  objects.push_back(object);
+}
+
 void Game::sendMessage(Message *message) { message_buffer.push_back(message); }
 
 void Game::gameLoop(sf::RenderWindow &window) {

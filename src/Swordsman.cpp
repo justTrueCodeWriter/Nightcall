@@ -38,7 +38,7 @@ void Swordsman::move(float time) {
   if (side_ > 0)
     sprite.setTextureRect(sf::IntRect(19, 35, 35, 29));
   else if (side_ < 0) {
-    sprite.setTextureRect(sf::IntRect(19, 35, 35, 29)); 
+    sprite.setTextureRect(sf::IntRect(54, 33, -35, 29)); 
   }
 
   x_+=side_*speed*time;
