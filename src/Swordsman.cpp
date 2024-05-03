@@ -32,16 +32,16 @@ void Swordsman::move(float time) {
 
   if (current_frame > frame_life) {
     current_frame = 0;
-    side_ = -side_;
+    direction_ = -direction_;
   }
   current_frame += 0.03*time;
-  if (side_ > 0)
+  if (direction_ > 0)
     sprite.setTextureRect(sf::IntRect(19, 35, 35, 29));
-  else if (side_ < 0) {
+  else if (direction_ < 0) {
     sprite.setTextureRect(sf::IntRect(54, 33, -35, 29)); 
   }
 
-  x_+=side_*speed*time;
+  x_+=direction_*speed*time;
   //std::cout << x_ << std::endl;
 
   sprite.setPosition(x_, y_);

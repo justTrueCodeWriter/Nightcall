@@ -9,7 +9,7 @@ class Swordsman : public Object {
     void sendMessage(Message* message);
 
   private:
-    short side_ = 1;
+    short direction_ = 1;
     float speed = 0.5;
     void move(float time);
 };

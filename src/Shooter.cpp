@@ -29,16 +29,16 @@ void Shooter::move(float time) {
 
   if (current_frame > frame_life) {
     current_frame = 0;
-    side_ = -side_;
+    direction_ = -direction_;
   }
   current_frame += 0.03*time;
-  if (side_ > 0)
+  if (direction_ > 0)
     sprite.setTextureRect(sf::IntRect(178, 164, -36, 27));
-  else if (side_ < 0) {
+  else if (direction_ < 0) {
     sprite.setTextureRect(sf::IntRect(198, 164, 36, 27)); 
   }
 
-  x_+=side_*speed*time;
+  x_+=direction_*speed*time;
 
   sprite.setPosition(x_, y_);
 
@@ -63,12 +63,21 @@ void Shooter::sendMessage(Message* message) {
       break;
 
     case MOVE:
-        if (dynamic_cast<Hero*>(message->sender)!=nullptr && 
-            (fabs(message->sender->getSprite().getGlobalBounds().left + message->sender->getSprite().getGlobalBounds().width - sprite.getGlobalBounds().left) <= trigger_range || 
-            fabs(message->sender->getSprite().getGlobalBounds().left - sprite.getGlobalBounds().left + sprite.getGlobalBounds().width) <= trigger_range
-        )) {
-          Game::getInstance().push_object(new Projectile(x_, y_)); // TODO: fix projectile creation
-        }
+      if (dynamic_cast<Hero *>(message->sender) != nullptr &&
+          fabs(message->sender->getSprite().getGlobalBounds().left +
+               message->sender->getSprite().getGlobalBounds().width -
+               sprite.getGlobalBounds().left) <= trigger_range &&
+          !isBulletPulled) {
+        Game::getInstance().push_object(new Projectile(x_, y_, -1));
+        isBulletPulled = true;
+      } else if (dynamic_cast<Hero *>(message->sender) != nullptr &&
+                 fabs(message->sender->getSprite().getGlobalBounds().left -
+                      sprite.getGlobalBounds().left +
+                      sprite.getGlobalBounds().width) <= trigger_range &&
+                 !isBulletPulled) {
+        Game::getInstance().push_object(new Projectile(x_, y_, 1));
+        isBulletPulled = true;
+      }
         break;
     default:
         break;

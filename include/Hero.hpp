@@ -11,7 +11,7 @@ class Hero : public Object {
   private:
     float walk_speed_ = 0.5;
     float run_speed_ = 0.6;
-    short side_ = 1;
+    short direction_ = 1;
     bool isGround = false;
     bool isAttack = false;
 

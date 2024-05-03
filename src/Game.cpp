@@ -137,7 +137,7 @@ void Game::gameLoop(sf::RenderWindow &window) {
 
     
     window.setView(Camera);
-    window.clear(sf::Color::Black);  
+    window.clear(sf::Color(245, 239, 230, 255));  
     //window.draw(backgroundSprite);
     for (auto object : objects) 
       window.draw(object->getSprite());
