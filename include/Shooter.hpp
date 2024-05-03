@@ -10,5 +10,6 @@ class Shooter : public Object {
   private:
     short side_ = 1;
     float speed = 0.2;
+    float trigger_range = 10;
     void move(float time);
 };

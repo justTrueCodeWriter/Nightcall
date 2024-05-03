@@ -124,7 +124,7 @@ void Hero::move(float time) {
       message->action = MOVE;
       message->sender = this;
       Game::getInstance().sendMessage(message);
-      std::cout << x_ << "MOVE" << y_ << std::endl;
+      //std::cout << x_ << "MOVE" << y_ << std::endl;
     }
     sprite.setPosition(x_, y_); 
 }

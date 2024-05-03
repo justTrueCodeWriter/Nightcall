@@ -1,6 +1,7 @@
 #include "../include/Projectile.hpp"
 #include "../include/ResourceManager.hpp"
 #include "../include/Game.hpp"
+#include <iostream>
 
 
 Projectile::Projectile(float x, float y){
@@ -12,7 +13,7 @@ Projectile::Projectile(float x, float y){
 }
 
 void Projectile::update(float time){
-
+  std::cout << time << std::endl;
 }
 
 void Projectile::sendMessage(Message* message){

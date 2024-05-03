@@ -2,6 +2,8 @@
 #include "../include/ResourceManager.hpp"
 #include "../include/Hero.hpp"
 #include "../include/Game.hpp"
+#include "../include/Projectile.hpp"
+#include <math.h>
 
 Shooter::Shooter(float x, float y) {
   x_ = x, y_ = y;
@@ -61,7 +63,12 @@ void Shooter::sendMessage(Message* message) {
       break;
 
     case MOVE:
-
+        if (dynamic_cast<Hero*>(message->sender)!=nullptr && 
+            (fabs(message->sender->getSprite().getGlobalBounds().left + message->sender->getSprite().getGlobalBounds().width - sprite.getGlobalBounds().left) <= trigger_range || 
+            fabs(message->sender->getSprite().getGlobalBounds().left - sprite.getGlobalBounds().left + sprite.getGlobalBounds().width) <= trigger_range
+        )) {
+          Game::getInstance().push_object(new Projectile(x_, y_)); // TODO: fix projectile creation
+        }
         break;
     default:
         break;
