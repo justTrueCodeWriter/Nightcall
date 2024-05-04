@@ -5,7 +5,7 @@
 
 
 Projectile::Projectile(float x, float y, short direction){
-  x_ = x, y_ = y;
+  x_ = x, y_ = y, direction_ = direction;
   sprite.setTexture(*ResourceManager::getInstance().getTexture('s'));
   sprite.setTextureRect(sf::IntRect(354, 289, 13, 13));
   sprite.scale(2, 2);
@@ -21,7 +21,6 @@ void Projectile::update(float time){
 }
 
 void Projectile::move(float time){
-  std::cout << time << std::endl;
   x_+=direction_*speed*time;
   sprite.setPosition(x_, y_);
 

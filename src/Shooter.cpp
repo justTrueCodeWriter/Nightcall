@@ -19,7 +19,7 @@ void Shooter::update(float time) {
 }
 
 void Shooter::move(float time) {
-  float frame_life = 12;
+  float frame_life = 30;
   static float current_frame = 0;
 
 /*   Message* message = new Message;
@@ -63,17 +63,12 @@ void Shooter::sendMessage(Message* message) {
       break;
 
     case MOVE:
-      if (dynamic_cast<Hero *>(message->sender) != nullptr &&
-          fabs(message->sender->getSprite().getGlobalBounds().left +
-               message->sender->getSprite().getGlobalBounds().width -
-               sprite.getGlobalBounds().left) <= trigger_range &&
+      if (dynamic_cast<Hero *>(message->sender) == nullptr) return;
+      if ((message->sender->getSprite().getGlobalBounds().left + message->sender->getSprite().getGlobalBounds().width -sprite.getGlobalBounds().left >= -trigger_range) &&
           !isBulletPulled) {
         Game::getInstance().push_object(new Projectile(x_, y_, -1));
         isBulletPulled = true;
-      } else if (dynamic_cast<Hero *>(message->sender) != nullptr &&
-                 fabs(message->sender->getSprite().getGlobalBounds().left -
-                      sprite.getGlobalBounds().left +
-                      sprite.getGlobalBounds().width) <= trigger_range &&
+      } else if ((message->sender->getSprite().getGlobalBounds().left - sprite.getGlobalBounds().left + sprite.getGlobalBounds().width <= trigger_range) &&
                  !isBulletPulled) {
         Game::getInstance().push_object(new Projectile(x_, y_, 1));
         isBulletPulled = true;

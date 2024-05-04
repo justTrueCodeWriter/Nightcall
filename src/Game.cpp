@@ -5,7 +5,9 @@
 #include "../include/Button.hpp"
 #include "../include/Door.hpp"
 #include "../include/UsualSpikes.hpp"
+#include "../include/Laser.hpp"
 
+#include <SFML/Window/Keyboard.hpp>
 #include <string>
 #include <algorithm>
 #include <fstream>
@@ -68,6 +70,10 @@ void Game::initObjects() {
           objects.push_back(new Shooter(j*64, i*64));
           objects_counter++;
           break;
+        case '|':
+          objects.push_back(new Laser(j*64, i*64));
+          objects_counter++;
+          break;
       }
     }
   }
@@ -76,6 +82,7 @@ void Game::initObjects() {
 
 void Game::deInitObjects() {
   objects.clear();
+  tiles.clear();
 }
 
 void Game::push_object(Object* object) {
@@ -102,9 +109,20 @@ void Game::gameLoop(sf::RenderWindow &window) {
     sf::Event event;
     while (window.pollEvent(event))
     {
+      static bool isQKeyPressed;
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
         deInitObjects();
         return;
+      }
+      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
+        if (!isQKeyPressed) {
+          Camera.zoom(-4);
+          Camera.rotate(180);
+          isQKeyPressed = true;
+        }
+      } else {
+        isQKeyPressed = false;
+        Camera.reset(sf::FloatRect(0, 0, 600, 300));
       }
     } 
 
