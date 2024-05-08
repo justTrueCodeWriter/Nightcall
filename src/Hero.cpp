@@ -117,8 +117,10 @@ void Hero::move(float time) {
     }
 
     x_ += direction_*speed*time;
-    //if (!isGround)
-      //y_ += 0.9*time;
+    if (!isGround) {
+      y_ += 0.9*time;
+      speed = 1;
+    }
     if (speed != 0) {
       Message *message = new Message;
       message->action = MOVE;

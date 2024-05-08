@@ -18,21 +18,20 @@ void UsualTile::sendMessage(Message* message) {
 
   switch (message->action) {
     case MOVE:
-      std::cout << "Correct MOVE" << std::endl;
       if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) { // TODO: fix collision problem
-        Message* message = new Message;
-        message->sender = this;
-        message->action = COLLIDE;
-        if (message->sender->getSprite().getGlobalBounds().left < sprite.getGlobalBounds().left)
-          message->collide.direction = LEFT;
-        else if (message->sender->getSprite().getGlobalBounds().left + message->sender->getSprite().getGlobalBounds().width > sprite.getGlobalBounds().left + sprite.getGlobalBounds().width)
-          message->collide.direction = RIGHT;
+        std::cout << message->sender->getSprite().getGlobalBounds().left << ":" << message->sender->getSprite().getGlobalBounds().top << " = " << sprite.getGlobalBounds().left << ":" << sprite.getGlobalBounds().top << std::endl;
+        Message* msg = new Message;
+        msg->sender = this;
+        msg->action = COLLIDE;
+        if (msg->sender->getSprite().getGlobalBounds().left < sprite.getGlobalBounds().left)
+          msg->collide.direction = LEFT;
+        else if (msg->sender->getSprite().getGlobalBounds().left + msg->sender->getSprite().getGlobalBounds().width > sprite.getGlobalBounds().left + sprite.getGlobalBounds().width)
+          msg->collide.direction = RIGHT;
         else if (message->sender->getSprite().getGlobalBounds().top < sprite.getGlobalBounds().top)
-          message->collide.direction = UP;
-        else if (message->sender->getSprite().getGlobalBounds().top + message->sender->getSprite().getGlobalBounds().height > sprite.getGlobalBounds().top + sprite.getGlobalBounds().height)
-          message->collide.direction = DOWN;
-        Game::getInstance().sendMessage(message);
-        std::cout << "Correct collision" << std::endl;
+          msg->collide.direction = UP;
+        else if (msg->sender->getSprite().getGlobalBounds().top + msg->sender->getSprite().getGlobalBounds().height > sprite.getGlobalBounds().top + sprite.getGlobalBounds().height)
+          msg->collide.direction = DOWN;
+        Game::getInstance().sendMessage(msg);
       }
       break;
     default:

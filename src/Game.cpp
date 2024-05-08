@@ -6,6 +6,7 @@
 #include "../include/Door.hpp"
 #include "../include/UsualSpikes.hpp"
 #include "../include/Laser.hpp"
+#include "../include/Trampoline.hpp"
 
 #include <SFML/Window/Keyboard.hpp>
 #include <string>
@@ -72,6 +73,10 @@ void Game::initObjects() {
           break;
         case '|':
           objects.push_back(new Laser(j*64, i*64));
+          objects_counter++;
+          break;
+        case '~':
+          objects.push_back(new Trampoline(j*64, i*64));
           objects_counter++;
           break;
       }

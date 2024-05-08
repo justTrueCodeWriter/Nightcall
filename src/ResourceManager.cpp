@@ -13,7 +13,8 @@ ResourceManager::ResourceManager() {
     "media/img/door.png",
     "media/img/usual_spikes.png",
     "media/img/shooter.png",
-    "media/img/laser.png",};
+    "media/img/laser.png",
+    "media/img/trampoline.png"};
 
   for (auto filename : filenames) {
     sf::Texture texture;
