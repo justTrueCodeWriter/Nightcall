@@ -1,3 +1,4 @@
+#include "Message.hpp"
 #include "Object.hpp"
 
 class Hero : public Object {
@@ -15,7 +16,7 @@ class Hero : public Object {
     bool isGround = false;
     bool isAttack = false;
 
-    sf::FloatRect collide_rect;
+    Direction collide_side = NONE;
 
     void move(float time);
     void jump();

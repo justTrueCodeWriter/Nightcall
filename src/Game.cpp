@@ -149,9 +149,9 @@ void Game::gameLoop(sf::RenderWindow &window) {
           hero_index++;
         }
       }
-      for (auto tile : tiles) {
+/*       for (auto tile : tiles) {
         tile->sendMessage(message);
-      }
+      } */
       for (auto obj : objects) {
         obj->sendMessage(message);
       }
@@ -161,7 +161,6 @@ void Game::gameLoop(sf::RenderWindow &window) {
     
     window.setView(Camera);
     window.clear(sf::Color(245, 239, 230, 255));  
-    //window.draw(backgroundSprite);
     for (auto object : objects) 
       window.draw(object->getSprite());
     for (auto tile : tiles)

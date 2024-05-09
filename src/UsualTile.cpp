@@ -19,14 +19,17 @@ void UsualTile::sendMessage(Message* message) {
   switch (message->action) {
     case MOVE:
       if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) { // TODO: fix collision problem
-        std::cout << message->sender->getSprite().getGlobalBounds().left << ":" << message->sender->getSprite().getGlobalBounds().top << " = " << sprite.getGlobalBounds().left << ":" << sprite.getGlobalBounds().top << std::endl;
         Message* msg = new Message;
         msg->sender = this;
         msg->action = COLLIDE;
-        if (msg->sender->getSprite().getGlobalBounds().left < sprite.getGlobalBounds().left)
+        if (msg->sender->getSprite().getGlobalBounds().left < sprite.getGlobalBounds().left) {
           msg->collide.direction = LEFT;
-        else if (msg->sender->getSprite().getGlobalBounds().left + msg->sender->getSprite().getGlobalBounds().width > sprite.getGlobalBounds().left + sprite.getGlobalBounds().width)
+          std::cout << "left" << std::endl;
+        }
+        else if (msg->sender->getSprite().getGlobalBounds().left + msg->sender->getSprite().getGlobalBounds().width > sprite.getGlobalBounds().left + sprite.getGlobalBounds().width) {
           msg->collide.direction = RIGHT;
+          std::cout << "right" << std::endl;
+        }
         else if (message->sender->getSprite().getGlobalBounds().top < sprite.getGlobalBounds().top)
           msg->collide.direction = UP;
         else if (msg->sender->getSprite().getGlobalBounds().top + msg->sender->getSprite().getGlobalBounds().height > sprite.getGlobalBounds().top + sprite.getGlobalBounds().height)
