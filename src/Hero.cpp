@@ -71,7 +71,7 @@ void Hero::move(float time) {
       if (current_frame > 8) current_frame = 0;
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*33)+33, 79, -33, 44));
 
-      //collide_side = NONE;
+      collide_side = NONE;
     }
 // ------------ GO RIGHT -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && collide_side!=LEFT) {
@@ -83,6 +83,7 @@ void Hero::move(float time) {
       if (current_frame > 8) current_frame = 0;
       sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*33), 79, 33, 44));
 
+      collide_side = NONE;
     }
 // ------------ ATTACK -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || isAttack) {
@@ -132,7 +133,6 @@ void Hero::move(float time) {
       Game::getInstance().sendMessage(message);
     } 
     sprite.setPosition(x_, y_); 
-    collide_side = NONE;
 }
 
 float Hero::dash(float time) {

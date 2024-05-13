@@ -32,6 +32,10 @@ void Door::sendMessage(Message *message) {
   if (message->sender == this)
     return;
   switch (message->action) {
+  case ATTACK:
+      if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds()))
+        isOpen = true;
+    break;
   case MOVE:
     if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds()) && !isOpen) { 
       Message *msg = new Message;
