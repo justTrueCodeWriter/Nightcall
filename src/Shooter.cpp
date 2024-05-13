@@ -66,11 +66,11 @@ void Shooter::sendMessage(Message* message) {
       if (dynamic_cast<Hero *>(message->sender) == nullptr) return;
       if ((message->sender->getSprite().getGlobalBounds().left + message->sender->getSprite().getGlobalBounds().width -sprite.getGlobalBounds().left >= -trigger_range) &&
           !isBulletPulled) {
-        Game::getInstance().push_object(new Projectile(x_, y_, -1));
+        Game::getInstance().pushObject(new Projectile(x_, y_, -1));
         isBulletPulled = true;
       } else if ((message->sender->getSprite().getGlobalBounds().left - sprite.getGlobalBounds().left + sprite.getGlobalBounds().width <= trigger_range) &&
                  !isBulletPulled) {
-        Game::getInstance().push_object(new Projectile(x_, y_, 1));
+        Game::getInstance().pushObject(new Projectile(x_, y_, 1));
         isBulletPulled = true;
       }
         break;

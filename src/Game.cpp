@@ -90,7 +90,7 @@ void Game::deInitObjects() {
   tiles.clear();
 }
 
-void Game::push_object(Object* object) {
+void Game::pushObject(Object* object) {
   objects.push_back(object);
 }
 
@@ -153,6 +153,7 @@ void Game::gameLoop(sf::RenderWindow &window) {
         tile->sendMessage(message);
       } */
       for (auto obj : objects) {
+        // check collision between objects and tile
         obj->sendMessage(message);
       }
       delete message;
