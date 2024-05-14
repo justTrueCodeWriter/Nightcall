@@ -1,6 +1,7 @@
 #include "../include/UsualTile.hpp"
 #include "../include/ResourceManager.hpp"
 #include "../include/Game.hpp"
+#include <SFML/Graphics/Rect.hpp>
 #include <iostream>
 
 UsualTile::UsualTile(float x, float y) {
@@ -18,6 +19,8 @@ void UsualTile::sendMessage(Message* message) {
 
   switch (message->action) {
     case MOVE:
+      sf::FloatRect rect;
+      bool is_intersection = message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds(), rect); // TODO: check collision rect
       if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) { // TODO: fix collision problem
         Message* msg = new Message;
         msg->sender = this;
