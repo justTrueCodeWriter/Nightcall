@@ -15,8 +15,6 @@ Door::Door(float x, float y) {
   id_counter++;
 }
 
-Door::~Door() {}
-
 void Door::update(float time) {
 
   if (isOpen) {

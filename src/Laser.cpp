@@ -13,9 +13,6 @@ Laser::Laser(float x, float y) {
   sprite.setPosition(x_, y_);
 }
 
-Laser::~Laser() {
-}
-
 void Laser::update(float time) {
 
 }

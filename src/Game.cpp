@@ -96,6 +96,26 @@ void Game::pushObject(Object* object) {
 
 void Game::sendMessage(Message *message) { message_buffer.push_back(message); }
 
+void Game::processCollision(Object &object, UsualTile &tile) {
+  sf::FloatRect collide_rect;
+
+  if (!object.isColliding())
+    return;
+
+  if (object.getSprite().getGlobalBounds().intersects(tile.getSprite().getGlobalBounds(), collide_rect)) {
+    if (collide_rect.width > collide_rect.height && object.getSprite().getGlobalBounds().top > tile.getSprite().getGlobalBounds().top) 
+     object.shift(0, -collide_rect.height); 
+    if (collide_rect.width > collide_rect.height && object.getSprite().getLocalBounds().top < tile.getSprite().getGlobalBounds().top)
+      object.shift(0, collide_rect.height);
+    if (collide_rect.width < collide_rect.height && object.getSprite().getGlobalBounds().left < tile.getSprite().getGlobalBounds().left)
+      object.shift(-collide_rect.width, 0);
+    if (collide_rect.width < collide_rect.height && object.getSprite().getGlobalBounds().left > tile.getSprite().getGlobalBounds().left)
+      object.shift(collide_rect.width, 0);
+    
+  }
+}
+
+
 void Game::gameLoop(sf::RenderWindow &window) {
 
   sf::Sprite backgroundSprite(*ResourceManager::getInstance().getTexture('B'));
@@ -133,8 +153,15 @@ void Game::gameLoop(sf::RenderWindow &window) {
 
     Camera.setCenter(objects[hero_index]->getSprite().getPosition()); 
 
+
     for (auto &obj : objects) {
       obj->update(time);
+    }
+
+    for (auto &obj : objects) {
+      for (auto &tile : tiles) {
+        processCollision(*obj, *tile);
+      }
     }
 
     while (!message_buffer.empty()) {

@@ -1,6 +1,6 @@
-#include "Object.hpp"
+#include "Enemy.hpp"
 
-class Shooter : public Object {
+class Shooter : public Enemy {
   public:
     Shooter(float x, float y);
 

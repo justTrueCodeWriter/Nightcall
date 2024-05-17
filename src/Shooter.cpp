@@ -6,6 +6,7 @@
 #include <math.h>
 
 Shooter::Shooter(float x, float y) {
+  isColliding_ = true;
   x_ = x, y_ = y;
   sprite.setTexture(*ResourceManager::getInstance().getTexture('s'));
   sprite.setTextureRect(sf::IntRect(198, 164, 36, 27));
@@ -39,6 +40,7 @@ void Shooter::move(float time) {
   }
 
   x_+=direction_*speed*time;
+  y_+=0.5*time;
 
   sprite.setPosition(x_, y_);
 

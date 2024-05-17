@@ -13,8 +13,6 @@ Button::Button(float x, float y) {
   sprite.setPosition(x_, y_);
   id_counter++;
 }
-Button::~Button() {
-}
 
 //TODO: fix button activation
 void Button::update(float time) {

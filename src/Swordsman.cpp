@@ -4,14 +4,12 @@
 #include "../include/Game.hpp"
 
 Swordsman::Swordsman(float x, float y) {
+  isColliding_ = true;
   x_ = x, y_ = y;
   sprite.setTexture(*ResourceManager::getInstance().getTexture('S'));
   sprite.setTextureRect(sf::IntRect(19, 35, 35, 29));
   sprite.scale(2, 2);
   sprite.setPosition(x_, y_); 
-}
-
-Swordsman::~Swordsman() {
 }
 
 void Swordsman::update(float time) {
@@ -42,6 +40,7 @@ void Swordsman::move(float time) {
   }
 
   x_+=direction_*speed*time;
+  y_+=0.5*time;
   //std::cout << x_ << std::endl;
 
   sprite.setPosition(x_, y_);

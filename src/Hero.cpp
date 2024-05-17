@@ -5,14 +5,12 @@
 #include <iostream>
 
 Hero::Hero(float x, float y) {
+  isColliding_ = true;
   x_ = x, y_ = y;
   sprite.setTexture(*ResourceManager::getInstance().getTexture('H'));
   sprite.setPosition(x_, y_); 
   //collide_rect = {x_, y_+sprite.getGlobalBounds().height, 10, 10};
 
-}
-
-Hero::~Hero() {
 }
 
 void Hero::update(float time) { 
@@ -114,18 +112,16 @@ void Hero::move(float time) {
       current_frame += 0.01*time;
         if (current_frame > 4) current_frame = 0;
         if (direction_ > 0) {
-          sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32), 650, 32, 44));
+          sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32), 650, 32, 48));
         }
         else if  (direction_ < 0) {
-          sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32)+32, 650, -32, 44));
+          sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32)+32, 650, -32, 48));
         }
     }
 
     x_ += direction_*speed*time;
-/*     if (!isGround) {
-      y_ += 0.9*time;
-      speed = 1;
-    } */
+    y_ += 0.5*time;
+
     if (speed != 0) {
       Message *message = new Message;
       message->action = MOVE;

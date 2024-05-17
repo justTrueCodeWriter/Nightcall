@@ -1,6 +1,6 @@
-#include "Object.hpp"
+#include "Enemy.hpp"
 
-class Swordsman : public Object {
+class Swordsman : public Enemy {
   public:
     Swordsman(float x, float y);
 

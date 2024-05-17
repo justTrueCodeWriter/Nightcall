@@ -36,12 +36,15 @@ class Game
     };
 
   private:
-    Game(){}; 
-    Game(const Game&){};
 
     Level level;
     std::vector <Object*> objects;
     std::vector<UsualTile*> tiles;
     std::list<Message*> message_buffer;
     int hero_index = 0;
+
+    Game(){}; 
+    Game(const Game&){};
+
+    void processCollision(Object &object, UsualTile &tile);
 };

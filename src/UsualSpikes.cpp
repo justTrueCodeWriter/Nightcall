@@ -9,9 +9,6 @@ UsualSpikes::UsualSpikes(float x, float y) {
   sprite.setPosition(x_, y_);
 }
 
-UsualSpikes::~UsualSpikes() {
-}
-
 void UsualSpikes::update(float time) {
   Message* message = new Message;
   message->action = ATTACK;
