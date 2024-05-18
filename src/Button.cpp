@@ -14,21 +14,17 @@ Button::Button(float x, float y) {
   id_counter++;
 }
 
-//TODO: fix button activation
 void Button::update(float time) {
-  const float activation_distance = 30.0;
-  float sprite_width = sprite.getLocalBounds().width;
-  float sprite_height = sprite.getGlobalBounds().width;
 }
 
-// char Button::getType() { return 'b'; }
-
 void Button::sendMessage(Message* message) {
-
+    static sf::Clock cooldown_clock;
     if (message->sender == this) return;
     switch (message->action) {
       case INTERACT:
-        if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) {
+        if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds()) &&
+            cooldown_clock.getElapsedTime().asSeconds() > 1) {
+          cooldown_clock.restart();
           Message* msg = new Message;
           msg->action = ACTIVATE;
           msg->sender = this;

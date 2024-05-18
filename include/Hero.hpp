@@ -12,13 +12,14 @@ class Hero : public Object {
     float walk_speed_ = 0.5;
     float run_speed_ = 0.6;
     short direction_ = 1;
-    bool isGround = false;
     bool isAttack = false;
+    bool isJump = false;
+
 
     Direction collide_side = NONE;
 
     void move(float time);
-    void jump();
+    void jump(float time);
     float dash(float time);
 
 };

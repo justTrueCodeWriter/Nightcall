@@ -105,9 +105,9 @@ void Game::processCollision(Object &object, UsualTile &tile) {
   if (object.getSprite().getGlobalBounds().intersects(tile.getSprite().getGlobalBounds(), collide_rect)) {
     if (collide_rect.width > collide_rect.height) {
       if (object.getSprite().getGlobalBounds().top > tile.getSprite().getGlobalBounds().top) 
-        object.shift(0, -(collide_rect.height+5)); 
+        object.shift(0, -(collide_rect.height)); 
       else if (object.getSprite().getLocalBounds().top < tile.getSprite().getGlobalBounds().top)
-        object.shift(0, collide_rect.height+5);
+        object.shift(0, collide_rect.height);
     }
     else if (collide_rect.width < collide_rect.height) {
       if(object.getSprite().getGlobalBounds().left < tile.getSprite().getGlobalBounds().left)

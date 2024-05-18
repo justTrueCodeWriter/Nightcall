@@ -1,5 +1,6 @@
 #include "../include/Trampoline.hpp"
 #include "../include/ResourceManager.hpp"
+#include "../include/Game.hpp"
 
 Trampoline::Trampoline(float x, float y) {
   x_ = x, y_ = y;
@@ -14,5 +15,19 @@ void Trampoline::update(float time) {
 }
 
 void Trampoline::sendMessage(Message* message) {
+  if (message->sender == this) return;
 
+  switch (message->action) {
+    case MOVE:
+      if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) {
+        Message* msg = new Message;
+        message->sender = this;
+        message->action = INTERACT; 
+        Game::getInstance().sendMessage(msg);
+      }
+      break;
+    default:
+      break;
+  
+  }
 }

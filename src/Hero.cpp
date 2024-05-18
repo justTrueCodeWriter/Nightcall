@@ -1,6 +1,7 @@
 #include "../include/Hero.hpp"
 #include "../include/Game.hpp"
 #include "../include/ResourceManager.hpp"
+#include "../include/Trampoline.hpp"
 #include <unistd.h>
 
 Hero::Hero(float x, float y) {
@@ -35,8 +36,12 @@ void Hero::move(float time) {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && 
             sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) &&
             collide_side!=RIGHT) {
+      isAttack = false;
+      isJump = false;
+
       direction_ = -1;
       speed = run_speed_;
+
 
       current_frame += 0.01*time;
       if (current_frame > 10) current_frame = 0;
@@ -48,6 +53,9 @@ void Hero::move(float time) {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && 
             sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) &&
             collide_side!=LEFT) {
+      isAttack = false;
+      isJump = false;
+
       direction_ = 1;
       speed = run_speed_;
 
@@ -60,6 +68,7 @@ void Hero::move(float time) {
 // ------------ GO LEFT -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && collide_side!=RIGHT) {
       isAttack = false;
+      isJump = false;
       direction_ = -1;
       speed = walk_speed_/2.0;
       
@@ -72,6 +81,7 @@ void Hero::move(float time) {
 // ------------ GO RIGHT -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && collide_side!=LEFT) {
       isAttack = false;
+      isJump = false;
       direction_ = 1;
       speed = walk_speed_/2.0;
 
@@ -90,16 +100,13 @@ void Hero::move(float time) {
       speed = dash(time);
     }
 // ------------ JUMP -----------
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || isJump){
       isAttack = false;
-      isGround = false;
-        y_ -= 0.9*time;
-        current_frame += 0.01*time;
-        if (current_frame > 4) current_frame = 0;
-        if (direction_ > 0)
-          sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32), 650, 32, 44));
-        else if  (direction_ < 0)
-          sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32)+32, 650, -32, 44));
+
+      static sf::Clock jump_cooldown;
+      if (jump_cooldown.getElapsedTime().asSeconds() > 1)
+
+      jump(time);
     }
 // ------------ FLY DOWN(TEMPORERILY) -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
@@ -110,15 +117,16 @@ void Hero::move(float time) {
       current_frame += 0.01*time;
         if (current_frame > 4) current_frame = 0;
         if (direction_ > 0) {
-          sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32), 650, 32, 48));
+          sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32), 650, 32, 44));
         }
         else if  (direction_ < 0) {
-          sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32)+32, 650, -32, 48));
+          sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32)+32, 650, -32, 44));
         }
     }
 
     x_ += direction_*speed*time;
-    y_ += 0.5*time;
+    if (!isJump)
+      y_ += 0.5*time;
 
     if (speed != 0) {
       Message *message = new Message;
@@ -145,6 +153,29 @@ float Hero::dash(float time) {
   return run_speed_*3;
 }
 
+void Hero::jump(float time) {
+  static float current_frame = 0;
+
+  isJump = true;
+
+  static sf::Clock jump_clock;
+  if (jump_clock.getElapsedTime().asSeconds() > 0.1) {
+    jump_clock.restart();
+    isJump = false;
+  } 
+
+  y_ -= 0.9 * time;
+  current_frame += 0.01 * time;
+  if (current_frame > 4)
+    current_frame = 0;
+  if (direction_ > 0)
+    sprite.setTextureRect(
+        sf::IntRect(39 + (int(current_frame) * 32), 650, 32, 44));
+  else if (direction_ < 0)
+    sprite.setTextureRect(
+        sf::IntRect(39 + (int(current_frame) * 32) + 32, 650, -32, 44));
+}
+
 void Hero::sendMessage(Message* message) {
   if (message->sender == this) return;
 
@@ -161,6 +192,13 @@ void Hero::sendMessage(Message* message) {
       break;
     case COLLIDE:
       collide_side = message->collide.direction;
+    case INTERACT:
+      if (dynamic_cast<Trampoline*>(message->sender) == nullptr) return;
+
+      if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) {
+        //for (int i = 0; i < 3; i++)
+          //jump();
+      }
     default:
       break;
   }
