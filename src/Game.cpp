@@ -103,14 +103,18 @@ void Game::processCollision(Object &object, UsualTile &tile) {
     return;
 
   if (object.getSprite().getGlobalBounds().intersects(tile.getSprite().getGlobalBounds(), collide_rect)) {
-    if (collide_rect.width > collide_rect.height && object.getSprite().getGlobalBounds().top > tile.getSprite().getGlobalBounds().top) 
-     object.shift(0, -collide_rect.height); 
-    if (collide_rect.width > collide_rect.height && object.getSprite().getLocalBounds().top < tile.getSprite().getGlobalBounds().top)
-      object.shift(0, collide_rect.height);
-    if (collide_rect.width < collide_rect.height && object.getSprite().getGlobalBounds().left < tile.getSprite().getGlobalBounds().left)
-      object.shift(-collide_rect.width, 0);
-    if (collide_rect.width < collide_rect.height && object.getSprite().getGlobalBounds().left > tile.getSprite().getGlobalBounds().left)
-      object.shift(collide_rect.width, 0);
+    if (collide_rect.width > collide_rect.height) {
+      if (object.getSprite().getGlobalBounds().top > tile.getSprite().getGlobalBounds().top) 
+        object.shift(0, -(collide_rect.height+5)); 
+      else if (object.getSprite().getLocalBounds().top < tile.getSprite().getGlobalBounds().top)
+        object.shift(0, collide_rect.height+5);
+    }
+    else if (collide_rect.width < collide_rect.height) {
+      if(object.getSprite().getGlobalBounds().left < tile.getSprite().getGlobalBounds().left)
+        object.shift(-collide_rect.width, 0);
+      else if (object.getSprite().getGlobalBounds().left > tile.getSprite().getGlobalBounds().left)
+        object.shift(collide_rect.width, 0);
+    }
     
   }
 }
@@ -158,12 +162,6 @@ void Game::gameLoop(sf::RenderWindow &window) {
       obj->update(time);
     }
 
-    for (auto &obj : objects) {
-      for (auto &tile : tiles) {
-        processCollision(*obj, *tile);
-      }
-    }
-
     while (!message_buffer.empty()) {
       Message *message = message_buffer.back();
       message_buffer.pop_back();
@@ -176,17 +174,18 @@ void Game::gameLoop(sf::RenderWindow &window) {
           hero_index++;
         }
       }
-/*       for (auto tile : tiles) {
-        tile->sendMessage(message);
-      } */
       for (auto obj : objects) {
-        // check collision between objects and tile
         obj->sendMessage(message);
       }
       delete message;
     }
 
-    
+    for (auto &obj : objects) {
+      for (auto &tile : tiles) {
+        processCollision(*obj, *tile);
+      }
+    }
+
     window.setView(Camera);
     window.clear(sf::Color(245, 239, 230, 255));  
     for (auto object : objects) 

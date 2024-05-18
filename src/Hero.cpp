@@ -2,7 +2,6 @@
 #include "../include/Game.hpp"
 #include "../include/ResourceManager.hpp"
 #include <unistd.h>
-#include <iostream>
 
 Hero::Hero(float x, float y) {
   isColliding_ = true;
@@ -31,7 +30,6 @@ void Hero::move(float time) {
      message->action = INTERACT;
      message->sender = this;
      Game::getInstance().sendMessage(message);
-     usleep(80*1000);
     }
 // ------------ RUN LEFT -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && 

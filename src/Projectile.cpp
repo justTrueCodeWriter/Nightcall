@@ -1,6 +1,7 @@
 #include "../include/Projectile.hpp"
 #include "../include/ResourceManager.hpp"
 #include "../include/Game.hpp"
+#include <SFML/System/Clock.hpp>
 #include <iostream>
 
 
@@ -13,6 +14,16 @@ Projectile::Projectile(float x, float y, short direction){
 }
 
 void Projectile::update(float time){
+  static sf::Clock life_clock;
+
+  if (life_clock.getElapsedTime().asSeconds() > 1) {
+    life_clock.restart();
+    Message *message = new Message;
+    message->action = DIED;
+    message->sender = this;
+    Game::getInstance().sendMessage(message);
+  }
+
   move(time);
   Message* message = new Message;
   message->action = ATTACK;

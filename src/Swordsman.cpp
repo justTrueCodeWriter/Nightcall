@@ -2,6 +2,7 @@
 #include "../include/ResourceManager.hpp"
 #include "../include/Hero.hpp"
 #include "../include/Game.hpp"
+#include <SFML/System/Clock.hpp>
 
 Swordsman::Swordsman(float x, float y) {
   isColliding_ = true;
@@ -20,19 +21,23 @@ void Swordsman::update(float time) {
 // char Swordsman::getType() { return 'S'; }
 
 void Swordsman::move(float time) {
-  float frame_life = 12;
+  int direction_time = 5;
   static float current_frame = 0;
+
+  static sf::Clock direction_clock;
 
   Message* message = new Message;
   message->action = ATTACK;
   message->sender = this;
   Game::getInstance().sendMessage(message);
 
-  if (current_frame > frame_life) {
-    current_frame = 0;
+  if (direction_clock.getElapsedTime().asSeconds() > direction_time) {
+    direction_clock.restart();
     direction_ = -direction_;
   }
+
   current_frame += 0.03*time;
+
   if (direction_ > 0)
     sprite.setTextureRect(sf::IntRect(19, 35, 35, 29));
   else if (direction_ < 0) {

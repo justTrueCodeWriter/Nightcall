@@ -3,6 +3,7 @@
 #include "../include/Hero.hpp"
 #include "../include/Game.hpp"
 #include "../include/Projectile.hpp"
+#include <SFML/System/Clock.hpp>
 #include <math.h>
 
 Shooter::Shooter(float x, float y) {
@@ -20,19 +21,18 @@ void Shooter::update(float time) {
 }
 
 void Shooter::move(float time) {
-  float frame_life = 30;
+  float direction_time = 5;
   static float current_frame = 0;
 
-/*   Message* message = new Message;
-  message->action = ATTACK;
-  message->sender = this;
-  Game::getInstance().sendMessage(message); */
+  static sf::Clock direction_clock;
 
-  if (current_frame > frame_life) {
-    current_frame = 0;
+  if (direction_clock.getElapsedTime().asSeconds() > direction_time) {
+    direction_clock.restart();
     direction_ = -direction_;
   }
+
   current_frame += 0.03*time;
+
   if (direction_ > 0)
     sprite.setTextureRect(sf::IntRect(178, 164, -36, 27));
   else if (direction_ < 0) {
@@ -66,14 +66,17 @@ void Shooter::sendMessage(Message* message) {
 
     case MOVE:
       if (dynamic_cast<Hero *>(message->sender) == nullptr) return;
-      if ((message->sender->getSprite().getGlobalBounds().left + message->sender->getSprite().getGlobalBounds().width -sprite.getGlobalBounds().left >= -trigger_range) &&
-          !isBulletPulled) {
-        Game::getInstance().pushObject(new Projectile(x_, y_, -1));
-        isBulletPulled = true;
-      } else if ((message->sender->getSprite().getGlobalBounds().left - sprite.getGlobalBounds().left + sprite.getGlobalBounds().width <= trigger_range) &&
-                 !isBulletPulled) {
-        Game::getInstance().pushObject(new Projectile(x_, y_, 1));
-        isBulletPulled = true;
+      static sf::Clock cooldown_clock;
+      if (fabs(message->sender->getSprite().getGlobalBounds().left-sprite.getGlobalBounds().left) <= 300 && 
+          cooldown_clock.getElapsedTime().asSeconds() > 1) {
+        if (message->sender->getSprite().getGlobalBounds().left - sprite.getGlobalBounds().left < 0) {
+          Game::getInstance().pushObject(new Projectile(x_, y_, -1));
+          cooldown_clock.restart();
+        }
+        else {
+          Game::getInstance().pushObject(new Projectile(x_, y_, 1));
+          cooldown_clock.restart();
+        }
       }
         break;
     default:
