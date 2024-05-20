@@ -16,7 +16,6 @@ Shooter::Shooter(float x, float y) {
 }
 
 void Shooter::update(float time) {
-  const float defeat_distance = 30.0;
     move(time);
 }
 

@@ -3,7 +3,6 @@
 #include "../include/Game.hpp"
 #include "../include/Hero.hpp"
 #include <SFML/Graphics/Rect.hpp>
-#include <cstddef>
 
 Laser::Laser(float x, float y) {
   x_ = x, y_ = y; 

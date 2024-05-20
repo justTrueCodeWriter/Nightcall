@@ -32,5 +32,7 @@ void Button::sendMessage(Message* message) {
           Game::getInstance().sendMessage(msg);
         }
         break;
+      default:
+        break;
     }
 }

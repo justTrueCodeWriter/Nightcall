@@ -14,7 +14,6 @@ Swordsman::Swordsman(float x, float y) {
 }
 
 void Swordsman::update(float time) {
-  const float defeat_distance = 30.0;
     move(time);
 }
 

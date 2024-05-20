@@ -14,7 +14,7 @@ class ResourceManager {
 
   private:
     std::vector<sf::Texture> textures;
-    char possibleObjectTypes_[11] = {'B', 'M','H', '=', 'S', 'b', 'd', '^', 's', '|', '~'};
+    char possibleObjectTypes_[14] = {'B', 'M','H', '=', 'S', 'b', 'd', '^', 's', '|', '~', '?', 'T', '@'};
     ResourceManager();
     ResourceManager(const ResourceManager&);
 };

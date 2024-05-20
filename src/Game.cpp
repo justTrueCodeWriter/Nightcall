@@ -7,6 +7,9 @@
 #include "../include/UsualSpikes.hpp"
 #include "../include/Laser.hpp"
 #include "../include/Trampoline.hpp"
+#include "../include/AutomaticSpikes.hpp"
+#include "../include/Trigger.hpp"
+#include "../include/SavePoint.hpp"
 
 #include <SFML/Window/Keyboard.hpp>
 #include <string>
@@ -79,6 +82,19 @@ void Game::initObjects() {
           objects.push_back(new Trampoline(j*64, i*64));
           objects_counter++;
           break;
+        case 'T':
+          objects.push_back(new Trigger(j*64, i*64));
+          objects_counter++;
+          break;
+        case '?':
+          objects.push_back(new AutomaticSpikes(j*64, i*64));
+          objects_counter++;
+          tiles.push_back(new UsualTile(j*64, i*64));
+          break;
+        case '@':
+          objects.push_back(new SavePoint(j*64, i*64));
+          break;
+
       }
     }
   }

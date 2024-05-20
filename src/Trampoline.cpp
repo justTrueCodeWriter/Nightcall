@@ -21,8 +21,8 @@ void Trampoline::sendMessage(Message* message) {
     case MOVE:
       if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) {
         Message* msg = new Message;
-        message->sender = this;
-        message->action = INTERACT; 
+        msg->sender = this;
+        msg->action = INTERACT; 
         Game::getInstance().sendMessage(msg);
       }
       break;
