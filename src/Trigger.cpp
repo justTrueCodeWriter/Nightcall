@@ -19,6 +19,7 @@ void Trigger::update(float time) {}
 
 void Trigger::sendMessage(Message* message) {
     if (message->sender == this) return;
+    
     switch (message->action) {
         case ATTACK:
             if (dynamic_cast<Hero *>(message->sender) != nullptr)
