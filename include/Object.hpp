@@ -11,6 +11,7 @@ class Object {
     virtual ~Object(){};
 
     bool isColliding_ = false;
+    bool isGround = false;
     float x_ = 0, y_ = 0;
     sf::Sprite sprite;
 

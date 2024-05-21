@@ -32,6 +32,11 @@ void Hero::move(float time) {
      message->sender = this;
      Game::getInstance().sendMessage(message);
     }
+// ------------ JUMP -----------
+    else if (isJump) {
+      isAttack = false;
+      jump(time);
+    }
 // ------------ RUN LEFT -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && 
             sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) &&
@@ -41,7 +46,6 @@ void Hero::move(float time) {
 
       direction_ = -1;
       speed = run_speed_;
-
 
       current_frame += 0.01*time;
       if (current_frame > 10) current_frame = 0;
@@ -99,14 +103,11 @@ void Hero::move(float time) {
       Game::getInstance().sendMessage(message);
       speed = dash(time);
     }
-// ------------ JUMP -----------
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || isJump){
+// ------------ JUMP BY KEY -----------
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
       isAttack = false;
-
-      static sf::Clock jump_cooldown;
-      if (jump_cooldown.getElapsedTime().asSeconds() > 1)
-
-      jump(time);
+      if (isGround)
+        isJump = true;
     }
 // ------------ FLY DOWN(TEMPORERILY) -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
@@ -125,7 +126,7 @@ void Hero::move(float time) {
     }
 
     x_ += direction_*speed*time;
-    if (!isJump)
+    if (!isJump && !isGround)
       y_ += 0.5*time;
 
     if (speed != 0) {
@@ -156,15 +157,13 @@ float Hero::dash(float time) {
 void Hero::jump(float time) {
   static float current_frame = 0;
 
-  isJump = true;
-
   static sf::Clock jump_clock;
-  if (jump_clock.getElapsedTime().asSeconds() > 0.1) {
+  if (jump_clock.getElapsedTime().asSeconds() > 0.3) {
     jump_clock.restart();
     isJump = false;
   } 
 
-  y_ -= 0.9 * time;
+  y_ -= jump_multiplier * time;
   current_frame += 0.01 * time;
   if (current_frame > 4)
     current_frame = 0;
@@ -196,8 +195,8 @@ void Hero::sendMessage(Message* message) {
       if (dynamic_cast<Trampoline*>(message->sender) == nullptr) return;
 
       if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) {
-        //for (int i = 0; i < 3; i++)
-          //jump();
+        isJump = true;
+        jump_multiplier = 1.5;
       }
     default:
       break;

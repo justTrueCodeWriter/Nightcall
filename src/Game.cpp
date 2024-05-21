@@ -114,11 +114,12 @@ void Game::pushObject(Object* object) {
 
 void Game::sendMessage(Message *message) { message_buffer.push_back(message); }
 
-void Game::processCollision(Object &object, UsualTile &tile) {
+//return weight of collision with ground
+int Game::processCollision(Object &object, UsualTile &tile) {
   sf::FloatRect collide_rect;
 
   if (!object.isColliding())
-    return;
+    return -1;
 
   if (object.getSprite().getGlobalBounds().intersects(tile.getSprite().getGlobalBounds(), collide_rect)) {
     if (collide_rect.width > collide_rect.height) {
@@ -126,6 +127,7 @@ void Game::processCollision(Object &object, UsualTile &tile) {
         object.shift(0, -(collide_rect.height)); 
       else if (object.getSprite().getLocalBounds().top < tile.getSprite().getGlobalBounds().top)
         object.shift(0, collide_rect.height);
+      return 1;
     }
     else if (collide_rect.width < collide_rect.height) {
       if(object.getSprite().getGlobalBounds().left < tile.getSprite().getGlobalBounds().left)
@@ -133,8 +135,8 @@ void Game::processCollision(Object &object, UsualTile &tile) {
       else if (object.getSprite().getGlobalBounds().left > tile.getSprite().getGlobalBounds().left)
         object.shift(collide_rect.width, 0);
     }
-    
   }
+  return 0;
 }
 
 void Game::checkSaveMessage(Message* message) {
@@ -195,6 +197,7 @@ void Game::gameLoop(sf::RenderWindow &window) {
           objects[hero_index]->x_ = save_point.x;
           objects[hero_index]->y_ = save_point.y;
           message_buffer.clear();
+          delete message;
           break;
         }
         auto it = std::find(objects.begin(), objects.end(), message->died.who);
@@ -212,10 +215,16 @@ void Game::gameLoop(sf::RenderWindow &window) {
       delete message;
     }
 
+//------Collision processing
     for (auto &obj : objects) {
+      int collision_weights_sum = 0;
       for (auto &tile : tiles) {
-        processCollision(*obj, *tile);
+        int collision_weight = processCollision(*obj, *tile);
+        if (collision_weight == -1)
+          break;
+        collision_weights_sum += collision_weight;
       }
+      collision_weights_sum == 0 ? obj->isGround=false : obj->isGround=true;
     }
 
     window.setView(Camera);

@@ -49,6 +49,6 @@ class Game
     Game(){}; 
     Game(const Game&){};
 
-    void processCollision(Object &object, UsualTile &tile);
+    int processCollision(Object &object, UsualTile &tile);
     void checkSaveMessage(Message* message);
 };
