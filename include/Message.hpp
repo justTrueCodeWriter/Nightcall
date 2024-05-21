@@ -9,7 +9,9 @@ enum Action {
   DIED,
   INTERACT,// WITH BUTTON/TILE
   MOVE,
-  COLLIDE
+  COLLIDE,
+  SAVE
+
 };
 
 enum Direction {
@@ -30,15 +32,10 @@ struct Message {
     } activate;
     struct {
       int direction;
-      float dmg;
     } attack;
     struct {
       Object *who;
     } died;
-    struct {
-    } interact;
-    struct {
-    } move;
     struct {
       Direction direction;
     } collide;

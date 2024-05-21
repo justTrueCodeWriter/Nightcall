@@ -20,7 +20,10 @@ void SavePoint::sendMessage(Message* message) {
         default:
             if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds()) &&
                 dynamic_cast<Hero*>(message->sender) != nullptr) {
-                    //SavePoint message to Game implementation 
+                Message* msg = new Message;
+                msg->action = SAVE;
+                msg->sender = this;
+                Game::getInstance().sendMessage(msg);
             }
             break;
     }

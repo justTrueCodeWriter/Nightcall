@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <fstream>
 #include <vector>
+#include <iostream>
 
 void Game::Level::initMap() {
   std::vector<std::string> map;
@@ -50,6 +51,7 @@ void Game::initObjects() {
         case 'H':
           hero_index = objects_counter;
           objects.push_back(new Hero(j*64, i*64));
+          save_point.x = j*64, save_point.y = i*64;
           break;
         case '=':
           tiles.push_back(new UsualTile(j*64, i*64));
@@ -135,6 +137,12 @@ void Game::processCollision(Object &object, UsualTile &tile) {
   }
 }
 
+void Game::checkSaveMessage(Message* message) {
+  if (dynamic_cast<SavePoint*>(message->sender) != nullptr && message->action == SAVE) {
+    save_point.x = message->sender->getSprite().getPosition().x;
+    save_point.y = message->sender->getSprite().getPosition().y; 
+  }
+}
 
 void Game::gameLoop(sf::RenderWindow &window) {
 
@@ -181,12 +189,20 @@ void Game::gameLoop(sf::RenderWindow &window) {
     while (!message_buffer.empty()) {
       Message *message = message_buffer.back();
       message_buffer.pop_back();
+      checkSaveMessage(message);
       if (message->action == DIED) {
+        if (dynamic_cast<Hero*>(message->died.who) != nullptr) {
+          objects[hero_index]->x_ = save_point.x;
+          objects[hero_index]->y_ = save_point.y;
+          message_buffer.clear();
+          break;
+        }
         auto it = std::find(objects.begin(), objects.end(), message->died.who);
         objects.erase(it);
         hero_index = 0;
         for (auto obj : objects) {
-          if (dynamic_cast<Hero*>(obj)) break;
+          if (dynamic_cast<Hero *>(obj))
+            break;
           hero_index++;
         }
       }

@@ -1,4 +1,5 @@
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <string>
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Graphics.hpp>
@@ -43,8 +44,11 @@ class Game
     std::list<Message*> message_buffer;
     int hero_index = 0;
 
+    sf::Vector2f save_point = sf::Vector2f(0.0, 0.0);
+
     Game(){}; 
     Game(const Game&){};
 
     void processCollision(Object &object, UsualTile &tile);
+    void checkSaveMessage(Message* message);
 };

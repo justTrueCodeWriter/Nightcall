@@ -46,15 +46,13 @@ void AutomaticSpikes::sendMessage(Message* message) {
        if (message->activate.id == id)
         isActive = true;
     break;
-    case MOVE:
+    default:
       if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) {
         Message* msg = new Message;
         msg->action = ATTACK;
         msg->sender = this;
         Game::getInstance().sendMessage(msg);
       }
-    break;
-  default:
     break;
   }
 }

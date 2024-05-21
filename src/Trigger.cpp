@@ -24,9 +24,10 @@ void Trigger::sendMessage(Message* message) {
         case ATTACK:
             if (dynamic_cast<Hero *>(message->sender) != nullptr)
                 return;
+            break;
         default:
             if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds()) &&
-                dynamic_cast<Hero*>(message->sender) != nullptr) {
+                dynamic_cast<Hero*>(message->sender) != nullptr && message->action!=ATTACK) {
                 Message* msg = new Message;
                 msg->action = ACTIVATE;
                 msg->sender = this;
