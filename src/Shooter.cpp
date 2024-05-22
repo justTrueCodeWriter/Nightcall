@@ -22,7 +22,6 @@ void Shooter::update(float time) {
 
 void Shooter::move(float time) {
   float direction_time = 5;
-  static float current_frame = 0;
 
   if (direction_clock.getElapsedTime().asSeconds() > direction_time) {
     direction_clock.restart();
@@ -36,8 +35,8 @@ void Shooter::move(float time) {
   }
 
   x_+=direction_*speed*time;
-  if (!isGround)
-    y_+=0.5*time;
+/*   if (!isGround)
+    y_+=0.5*time; */
 
   sprite.setPosition(x_, y_);
 
@@ -52,8 +51,6 @@ void Shooter::sendMessage(Message* message) {
     case ATTACK:
       if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) {
         if (dynamic_cast<Hero*>(message->sender) == nullptr) {
-          direction_ = -direction_; 
-          direction_clock.restart();
           return;
         }
         Message* msg = new Message;

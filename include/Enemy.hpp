@@ -5,8 +5,8 @@
 
 class Enemy : public Object {
     protected:
-     short direction_ = 1;
-     float speed = 0;
-     sf::Clock direction_clock;
+      short direction_ = 1;
+      float speed = 0;
+      sf::Clock direction_clock;
 };
 #endif

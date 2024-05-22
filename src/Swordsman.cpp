@@ -22,7 +22,6 @@ void Swordsman::update(float time) {
 
 void Swordsman::move(float time) {
   int direction_time = 5;
-  static float current_frame = 0;
 
   Message* message = new Message;
   message->action = ATTACK;
@@ -34,8 +33,6 @@ void Swordsman::move(float time) {
     direction_ = -direction_;
   }
 
-  current_frame += 0.03*time;
-
   if (direction_ > 0)
     sprite.setTextureRect(sf::IntRect(19, 35, 35, 29));
   else if (direction_ < 0) {
@@ -43,8 +40,8 @@ void Swordsman::move(float time) {
   }
 
   x_+=direction_*speed*time;
-  if (!isGround)
-    y_+=0.5*time;
+/*   if (!isGround)
+    y_+=0.5*time; */
 
   sprite.setPosition(x_, y_);
 
@@ -62,8 +59,6 @@ void Swordsman::sendMessage(Message* message) {
     case ATTACK:
       if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) {
         if (dynamic_cast<Hero*>(message->sender) == nullptr) {
-          direction_ = -direction_;
-          direction_clock.restart();
           return;
         }
         Message* msg = new Message;
