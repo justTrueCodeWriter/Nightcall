@@ -31,9 +31,6 @@ struct Message {
       int id = 0;
     } activate;
     struct {
-      int direction;
-    } attack;
-    struct {
       Object *who;
     } died;
     struct {

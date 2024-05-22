@@ -24,8 +24,6 @@ void Swordsman::move(float time) {
   int direction_time = 5;
   static float current_frame = 0;
 
-  static sf::Clock direction_clock;
-
   Message* message = new Message;
   message->action = ATTACK;
   message->sender = this;
@@ -47,7 +45,6 @@ void Swordsman::move(float time) {
   x_+=direction_*speed*time;
   if (!isGround)
     y_+=0.5*time;
-  //std::cout << x_ << std::endl;
 
   sprite.setPosition(x_, y_);
 
@@ -58,12 +55,17 @@ void Swordsman::move(float time) {
 
 void Swordsman::sendMessage(Message* message) {
     if (message->sender == this) return;
+
+
     switch (message->action)
     {
     case ATTACK:
       if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds())) {
-        if (dynamic_cast<Hero*> (message->sender) == nullptr)
-            return;
+        if (dynamic_cast<Hero*>(message->sender) == nullptr) {
+          direction_ = -direction_;
+          direction_clock.restart();
+          return;
+        }
         Message* msg = new Message;
         msg->action = DIED;
         msg->sender = this;

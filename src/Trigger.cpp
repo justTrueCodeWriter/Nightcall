@@ -25,15 +25,17 @@ void Trigger::sendMessage(Message* message) {
             if (dynamic_cast<Hero *>(message->sender) != nullptr)
                 return;
             break;
-        default:
+        case MOVE:
             if (message->sender->getSprite().getGlobalBounds().intersects(sprite.getGlobalBounds()) &&
-                dynamic_cast<Hero*>(message->sender) != nullptr && message->action!=ATTACK) {
+                dynamic_cast<Hero*>(message->sender) != nullptr) {
                 Message* msg = new Message;
                 msg->action = ACTIVATE;
                 msg->sender = this;
                 msg->activate.id = id;
                 Game::getInstance().sendMessage(msg);
             }
+            break;
+        default:
             break;
     }
 }

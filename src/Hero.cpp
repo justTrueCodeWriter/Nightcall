@@ -110,10 +110,6 @@ void Hero::move(float time) {
       if (isGround)
         isJump = true;
     }
-// ------------ FLY DOWN(TEMPORERILY) -----------
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-      y_ += 0.9*time;
-    }
 // ------------ STAY STILL -----------
     else {
       current_frame += 0.01*time;
@@ -128,7 +124,7 @@ void Hero::move(float time) {
     if (!isJump && !isGround)
       y_ += 0.5*time;
 
-    if (speed != 0) {
+    if (speed != 0 && !isAttack) {
       Message *message = new Message;
       message->action = MOVE;
       message->sender = this;

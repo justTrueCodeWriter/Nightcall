@@ -3,8 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include "Message.hpp"
 
-//TODO: fix object symlinks
-
 class Object {
   protected:
     float x_ = 0, y_ = 0;

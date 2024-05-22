@@ -1,4 +1,5 @@
 #include "Object.hpp"
+#include <SFML/System/Clock.hpp>
 
 class Projectile : public Object {
   public:
@@ -10,5 +11,6 @@ class Projectile : public Object {
   private:
     short direction_ = 1;
     float speed = 0.5;
+    sf::Clock life_clock;
     void move(float time);
 };

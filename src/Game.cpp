@@ -95,6 +95,7 @@ void Game::initObjects() {
           break;
         case '@':
           objects.push_back(new SavePoint(j*64, i*64));
+          objects_counter++;
           break;
 
       }

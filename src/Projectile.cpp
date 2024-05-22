@@ -14,7 +14,6 @@ Projectile::Projectile(float x, float y, short direction){
 }
 
 void Projectile::update(float time){
-  static sf::Clock life_clock;
 
   if (life_clock.getElapsedTime().asSeconds() > 1) {
     life_clock.restart();

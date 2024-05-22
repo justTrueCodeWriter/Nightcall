@@ -1,4 +1,5 @@
 #include "Enemy.hpp"
+#include <SFML/System/Clock.hpp>
 
 class Shooter : public Enemy {
   public:
@@ -10,5 +11,6 @@ class Shooter : public Enemy {
   private:
     float trigger_range = 300;
     bool isBulletPulled = false;
+    sf::Clock cooldown_clock;
     void move(float time);
 };
