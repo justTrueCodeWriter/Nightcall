@@ -123,11 +123,13 @@ int Game::processCollision(Object &object, UsualTile &tile) {
 
   if (object.getSprite().getGlobalBounds().intersects(tile.getSprite().getGlobalBounds(), collide_rect)) {
     if (collide_rect.width > collide_rect.height) {
-      if (object.getSprite().getGlobalBounds().top > tile.getSprite().getGlobalBounds().top) 
+      if (object.getSprite().getGlobalBounds().top > tile.getSprite().getGlobalBounds().top) {
         object.shift(0, -(collide_rect.height)); 
-      else if (object.getSprite().getLocalBounds().top < tile.getSprite().getGlobalBounds().top)
+      }
+      else if (object.getSprite().getLocalBounds().top < tile.getSprite().getGlobalBounds().top) {
         object.shift(0, collide_rect.height);
-      return 1;
+        return 1;
+      }
     }
     else if (collide_rect.width < collide_rect.height) {
       if(object.getSprite().getGlobalBounds().left < tile.getSprite().getGlobalBounds().left)
@@ -157,19 +159,16 @@ void Game::gameLoop(sf::RenderWindow &window) {
 
   sf::View Camera(sf::FloatRect(0, 0, 600, 300));
 
-  while (window.isOpen())
-  {
+  while (window.isOpen()) {
     float time = clock.getElapsedTime().asMilliseconds();
     clock.restart();
     sf::Event event;
-    while (window.pollEvent(event))
-    {
+    while (window.pollEvent(event)) {
       static bool isQKeyPressed;
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
         deInitObjects();
         return;
-      }
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
+      } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
         if (!isQKeyPressed) {
           Camera.zoom(-4);
           Camera.rotate(180);
@@ -179,9 +178,9 @@ void Game::gameLoop(sf::RenderWindow &window) {
         isQKeyPressed = false;
         Camera.reset(sf::FloatRect(0, 0, 600, 300));
       }
-    } 
+    }
 
-    Camera.setCenter(objects[hero_index]->getSprite().getPosition()); 
+    Camera.setCenter(objects[hero_index]->getSprite().getPosition());
 
 
     for (auto &obj : objects) {
@@ -193,9 +192,8 @@ void Game::gameLoop(sf::RenderWindow &window) {
       message_buffer.pop_back();
       checkSaveMessage(message);
       if (message->action == DIED) {
-        if (dynamic_cast<Hero*>(message->died.who) != nullptr) {
-          objects[hero_index]->x_ = save_point.x;
-          objects[hero_index]->y_ = save_point.y;
+        if (dynamic_cast<Hero *>(message->died.who) != nullptr) {
+          objects[hero_index]->setPosition(save_point.x, save_point.y);
           message_buffer.clear();
           delete message;
           break;
@@ -215,7 +213,8 @@ void Game::gameLoop(sf::RenderWindow &window) {
       delete message;
     }
 
-//------Collision processing
+
+    //------Collision processing
     for (auto &obj : objects) {
       int collision_weights_sum = 0;
       for (auto &tile : tiles) {
@@ -224,12 +223,12 @@ void Game::gameLoop(sf::RenderWindow &window) {
           break;
         collision_weights_sum += collision_weight;
       }
-      collision_weights_sum == 0 ? obj->isGround=false : obj->isGround=true;
+      collision_weights_sum == 0 ? obj->isGround = false : obj->isGround = true;
     }
 
     window.setView(Camera);
-    window.clear(sf::Color(245, 239, 230, 255));  
-    for (auto object : objects) 
+    window.clear(sf::Color(245, 239, 230, 255));
+    for (auto object : objects)
       window.draw(object->getSprite());
     for (auto tile : tiles)
       window.draw(tile->getSprite());

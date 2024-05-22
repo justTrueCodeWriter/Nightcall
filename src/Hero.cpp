@@ -106,6 +106,7 @@ void Hero::move(float time) {
 // ------------ JUMP BY KEY -----------
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
       isAttack = false;
+      jump_multiplier = 0.9;
       if (isGround)
         isJump = true;
     }
@@ -116,13 +117,11 @@ void Hero::move(float time) {
 // ------------ STAY STILL -----------
     else {
       current_frame += 0.01*time;
-        if (current_frame > 4) current_frame = 0;
-        if (direction_ > 0) {
-          sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32), 650, 32, 44));
-        }
-        else if  (direction_ < 0) {
-          sprite.setTextureRect(sf::IntRect(39+(int(current_frame)*32)+32, 650, -32, 44));
-        }
+         if (current_frame > 12) current_frame = 0;
+        if (direction_ > 0)
+          sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*36), 244, 36, 44));
+        else if  (direction_ < 0)
+          sprite.setTextureRect(sf::IntRect(44+(int(current_frame)*36)+36, 244, -36, 44));
     }
 
     x_ += direction_*speed*time;

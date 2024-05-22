@@ -8,8 +8,6 @@ class Shooter : public Enemy {
     void sendMessage(Message* message);
 
   private:
-    short direction_ = 1;
-    float speed = 0.2;
     float trigger_range = 300;
     bool isBulletPulled = false;
     void move(float time);

@@ -5,6 +5,7 @@
 #include <SFML/System/Clock.hpp>
 
 Swordsman::Swordsman(float x, float y) {
+  speed = 0.5;
   isColliding_ = true;
   x_ = x, y_ = y;
   sprite.setTexture(*ResourceManager::getInstance().getTexture('S'));
@@ -44,7 +45,8 @@ void Swordsman::move(float time) {
   }
 
   x_+=direction_*speed*time;
-  y_+=0.5*time;
+  if (!isGround)
+    y_+=0.5*time;
   //std::cout << x_ << std::endl;
 
   sprite.setPosition(x_, y_);

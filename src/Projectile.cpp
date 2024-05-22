@@ -21,6 +21,7 @@ void Projectile::update(float time){
     Message *message = new Message;
     message->action = DIED;
     message->sender = this;
+    message->died.who = this;
     Game::getInstance().sendMessage(message);
   }
 
