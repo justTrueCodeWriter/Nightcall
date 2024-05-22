@@ -8,7 +8,7 @@
 #include "../include/Laser.hpp"
 #include "../include/Trampoline.hpp"
 #include "../include/AutomaticSpikes.hpp"
-#include "../include/Trigger.hpp"
+#include "../include/TriggerGates.hpp"
 #include "../include/SavePoint.hpp"
 
 #include <SFML/Window/Keyboard.hpp>
@@ -85,7 +85,7 @@ void Game::initObjects() {
           objects_counter++;
           break;
         case 'T':
-          objects.push_back(new Trigger(j*64, i*64));
+          objects.push_back(new TriggerGates(j*64, i*64));
           objects_counter++;
           break;
         case '?':

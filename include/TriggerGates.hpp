@@ -1,8 +1,8 @@
 #include "Trigger.hpp"
 
-class Button : public Trigger {
+class TriggerGates : public Trigger {
   public: 
-    Button(float x, float y);
+    TriggerGates(float x, float y);
 
     void update(float time);
     void sendMessage(Message* message);

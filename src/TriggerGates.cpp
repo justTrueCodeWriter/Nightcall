@@ -1,11 +1,11 @@
-#include "../include/Trigger.hpp"
+#include "../include/TriggerGates.hpp"
 #include "../include/Game.hpp"
 #include "../include/ResourceManager.hpp"
 #include "../include/Hero.hpp"
 
-int Trigger::id_counter = 0;
+int TriggerGates::id_counter = 0;
 
-Trigger::Trigger(float x, float y) {
+TriggerGates::TriggerGates(float x, float y) {
   id = id_counter;
   x_ = x, y_ = y;
   sprite.setTexture(*ResourceManager::getInstance().getTexture('|'));
@@ -15,9 +15,9 @@ Trigger::Trigger(float x, float y) {
   id_counter++;
 }
 
-void Trigger::update(float time) {}
+void TriggerGates::update(float time) {}
 
-void Trigger::sendMessage(Message* message) {
+void TriggerGates::sendMessage(Message* message) {
     if (message->sender == this) return;
     
     switch (message->action) {
