@@ -15,6 +15,7 @@ class Hero : public Object{
     short direction_ = 1;
     bool isAttack = false;
     bool isJump = false;
+    sf::Clock jump_clock;
 
 
     Direction collide_side = NONE;

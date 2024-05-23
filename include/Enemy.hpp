@@ -8,5 +8,6 @@ class Enemy : public Object {
       short direction_ = 1;
       float speed = 0;
       sf::Clock direction_clock;
+      int swap_direction_time = 0;
 };
 #endif

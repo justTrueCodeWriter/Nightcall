@@ -12,11 +12,16 @@
 #include "../include/SavePoint.hpp"
 
 #include <SFML/Window/Keyboard.hpp>
+#include <cstdlib>
 #include <string>
 #include <algorithm>
 #include <fstream>
 #include <vector>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+
 
 void Game::Level::initMap() {
   std::vector<std::string> map;
@@ -39,6 +44,7 @@ void Game::Level::deInitMap() {
 }
 
 void Game::initObjects() {
+  srand((unsigned)time(0));
   static int objects_counter = 0;
   level.initMap();  
   std::vector<std::string> map_mask = *level.getMapMask(); 

@@ -8,4 +8,5 @@ class Button : public Trigger {
     void sendMessage(Message* message);
   private:
     static int id_counter;
+    sf::Clock cooldown_clock;
 };

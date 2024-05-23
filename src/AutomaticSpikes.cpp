@@ -4,7 +4,6 @@
 #include "../include/Hero.hpp"
 #include <SFML/System/Clock.hpp>
 
-#include <codecvt>
 #include <iostream>
 
 int AutomaticSpikes::id_counter = 0;
@@ -23,7 +22,6 @@ AutomaticSpikes::AutomaticSpikes(float x, float y) {
 
 void AutomaticSpikes::update(float time) {
     if (isActive) {
-      static sf::Clock activation_clock;
         if (!isAlreadyActivated) {
           sprite.move(0, -sprite.getGlobalBounds().height);
           isAlreadyActivated = true;

@@ -7,12 +7,13 @@
 #include <math.h>
 
 Shooter::Shooter(float x, float y) {
+  swap_direction_time = (rand() % 9) + 1;
   speed = 0.2;
   isColliding_ = true;
   x_ = x, y_ = y;
   sprite.setTexture(*ResourceManager::getInstance().getTexture('s'));
   sprite.setTextureRect(sf::IntRect(198, 164, 36, 27));
-  sprite.scale(1, 1);
+  sprite.scale(2, 2);
   sprite.setPosition(x_, y_); 
 }
 
@@ -21,9 +22,8 @@ void Shooter::update(float time) {
 }
 
 void Shooter::move(float time) {
-  float direction_time = 5;
 
-  if (direction_clock.getElapsedTime().asSeconds() > direction_time) {
+  if (direction_clock.getElapsedTime().asSeconds() > swap_direction_time) {
     direction_clock.restart();
     direction_ = -direction_;
   }
@@ -35,8 +35,8 @@ void Shooter::move(float time) {
   }
 
   x_+=direction_*speed*time;
-/*   if (!isGround)
-    y_+=0.5*time; */
+  if (!isGround)
+    y_+=0.1*time;
 
   sprite.setPosition(x_, y_);
 

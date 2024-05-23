@@ -2,9 +2,14 @@
 #include "../include/ResourceManager.hpp"
 #include "../include/Hero.hpp"
 #include "../include/Game.hpp"
+
 #include <SFML/System/Clock.hpp>
+#include <cstdlib>
+#include "iostream"
+#include "ctime"
 
 Swordsman::Swordsman(float x, float y) {
+  swap_direction_time = (rand() % 9) + 1;
   speed = 0.5;
   isColliding_ = true;
   x_ = x, y_ = y;
@@ -18,17 +23,17 @@ void Swordsman::update(float time) {
     move(time);
 }
 
-// char Swordsman::getType() { return 'S'; }
-
 void Swordsman::move(float time) {
-  int direction_time = 5;
+  int direction_time = 3;
 
   Message* message = new Message;
   message->action = ATTACK;
   message->sender = this;
   Game::getInstance().sendMessage(message);
 
-  if (direction_clock.getElapsedTime().asSeconds() > direction_time) {
+  std::cout << direction_clock.getElapsedTime().asSeconds() << std::endl;
+
+  if (direction_clock.getElapsedTime().asSeconds() > swap_direction_time) {
     direction_clock.restart();
     direction_ = -direction_;
   }
@@ -40,14 +45,11 @@ void Swordsman::move(float time) {
   }
 
   x_+=direction_*speed*time;
-/*   if (!isGround)
-    y_+=0.5*time; */
+  if (!isGround)
+    y_+=0.3*time;
 
   sprite.setPosition(x_, y_);
 
-  // outMessage_->object_type = getType();
-  // outMessage_->action = ATTACK;
-  // outMessage_->sprite_rect = sprite.getGlobalBounds();
 }
 
 void Swordsman::sendMessage(Message* message) {
@@ -68,11 +70,7 @@ void Swordsman::sendMessage(Message* message) {
         Game::getInstance().sendMessage(msg);
 
       }
-        //check collision of attack rect and my rect
-
       break;
-    case MOVE:
-        break;
     default:
         break;
     }

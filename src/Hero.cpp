@@ -152,7 +152,6 @@ float Hero::dash(float time) {
 void Hero::jump(float time) {
   static float current_frame = 0;
 
-  static sf::Clock jump_clock;
   if (jump_clock.getElapsedTime().asSeconds() > 0.3) {
     jump_clock.restart();
     isJump = false;

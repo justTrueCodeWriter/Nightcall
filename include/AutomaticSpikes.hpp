@@ -12,4 +12,5 @@ class AutomaticSpikes : public Object {
     bool isAlreadyActivated = false;
     static int id_counter;
     int id = 0;
+    sf::Clock activation_clock;
 };

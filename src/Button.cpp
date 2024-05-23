@@ -18,7 +18,6 @@ void Button::update(float time) {
 }
 
 void Button::sendMessage(Message* message) {
-    static sf::Clock cooldown_clock;
     if (message->sender == this) return;
     switch (message->action) {
       case INTERACT:
