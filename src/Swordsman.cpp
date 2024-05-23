@@ -31,8 +31,6 @@ void Swordsman::move(float time) {
   message->sender = this;
   Game::getInstance().sendMessage(message);
 
-  std::cout << direction_clock.getElapsedTime().asSeconds() << std::endl;
-
   if (direction_clock.getElapsedTime().asSeconds() > swap_direction_time) {
     direction_clock.restart();
     direction_ = -direction_;

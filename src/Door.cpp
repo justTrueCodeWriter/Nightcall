@@ -41,19 +41,15 @@ void Door::sendMessage(Message *message) {
       msg->action = COLLIDE;
       if (message->sender->getSprite().getGlobalBounds().left < sprite.getGlobalBounds().left) {
         msg->collide.direction = LEFT;
-        std::cout << "left" << std::endl;
       } 
       else if (message->sender->getSprite().getGlobalBounds().left + msg->sender->getSprite().getGlobalBounds().width > sprite.getGlobalBounds().left + sprite.getGlobalBounds().width) {
         msg->collide.direction = RIGHT;
-        std::cout << "right" << std::endl;
       }
       else if (message->sender->getSprite().getGlobalBounds().top < sprite.getGlobalBounds().top) {
         msg->collide.direction = UP;
-        std::cout << "up" << std::endl;
       }
       else if (message->sender->getSprite().getGlobalBounds().top + msg->sender->getSprite().getGlobalBounds().height > sprite.getGlobalBounds().top + sprite.getGlobalBounds().height) {
         msg->collide.direction = DOWN;
-        std::cout << "down" << std::endl;
       }
       Game::getInstance().sendMessage(msg);
     }
